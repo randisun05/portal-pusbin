@@ -1,0 +1,26 @@
+@extends('layout.main-main')
+@section('container')
+@include('layout.partial.header-componen')
+<div class="container py-5 px-lg-5">
+    <article>
+        <h2 class="text-center mb-4">REKOMENDASI KEBUTUHAN</h2>
+        <div style="text-align:justify;text-justify: " >
+            <p>Untuk mewujudkan kesesuaian jumlah Jabatan Fungsional Kepegawaian (JFK) dengan beban kerja dan kebutuhan organisasi pada instansi pemerintah, diperlukan pedoman saat melakukan penyusunan kebutuhan JFK. Pedoman penyusunan kebutuhan Jabatan Fungsional Kepegawaian ini menjadi acuan bagi instansi pembina dan instansi pengguna dalam menyusun kebutuhan setiap jabatan fungsional Kepegawaiannya berdasarkan jenjang jabatannya. Secara teknis, ada 4 (empat) tahapan yang harus dilakukan saat penyusunan kebutuhan JFK sesuai Peraturan BKN, yakni mulai dari (1)Menyusun Standar Kebutuhan Rata-rata (SKR) dan Persentase Kontribusi, (2)Penghitungan Volume Beban Kerja, (3)Penghitungan Kebutuhan, dan (4)Penyusunan Peta Jabatan.</p>
+            <p>Berikut dokumen pedoman penyusunan kebutuhan Jabatan Fungsional Kepegawaian berdasarkan jabatan fungsional : </p>
+            <p class="mb-0">Analis Sumber Daya Manusia Aparatur</p>
+            <p><a href="{{asset('dokumen/perbknno2thn2022.pdf')}}">Peraturan BKN No. 2 Tahun 2022 </a></p>
+            <p class="mb-0">Pranata Sumber Daya Manusia Aparatur</p>
+            <p><a href="{{asset('dokumen/perbknno3thn2022.pdf')}}">Peraturan BKN No. 3 Tahun 2022</a></p>
+            <p class="mb-0">Asesor Sumber Daya Manusia Aparatur</p>
+            <p><a href="{{asset('dokumen/perbknno4thn2022.pdf')}}">Peraturan BKN No. 3 Tahun 2022</a></p>
+
+            <p>Adapun tujuan dari rekomendasi kebutuhan JFK diantaranya : </p>
+            <p class="mb-0">-	Sebagai syarat pengusulan Uji Kompetensi</p>
+            <p class="mb-0">-	Sebagai syarat perubahan nomenklatur</p>
+            <p class="mb-0">-	Sabagai bagian pengangkatan dan pengembangan karier</p>
+            <p class="mb-0">-	Pengisian volume beban kerja berdasarkan indicator yang sudah ditetapkan</p>
+            <p class="mb-0">-	Rekomendasi yang diberikan sebanding dengan jumlah kebutuhan per jenjang, unit kerja penempatan, dan peta jabatan</p>
+    </article>
+</div>
+@include('layout.partial.footer')
+@endsection

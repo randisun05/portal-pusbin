@@ -1,0 +1,289 @@
+<?php
+
+namespace Database\Seeders;
+
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Category;
+use App\Models\Dashboard;
+use App\Models\highlight;
+use App\Models\JadwalUkom;
+use App\Models\Jdihjfk;
+use App\Models\Kegiatan;
+use App\Models\KodeKonsultasi;
+use App\Models\Konsultasi;
+use App\Models\Layanan;
+use App\Models\Post;
+use App\Models\Survei;
+use App\Models\SurveiIndikator;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // \App\Models\User::factory(10)->create();
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        User::create([
+            'name' => 'Administrator',
+            'username' => 'administrator',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('password')
+
+        ]);
+
+
+        Category::create([
+            'name' => 'Umum',
+            'slug' => 'umum',
+
+        ]);
+
+        Category::create([
+            'name' => 'Regulasi',
+            'slug' => 'regulasi',
+
+        ]);
+
+        Category::create([
+            'name' => 'Kegiatan',
+            'slug' => 'kegiatan',
+
+        ]);
+
+        Layanan::create([
+            'nama' => "Web",
+            'deskripsi' => "Kunjungi Web Kami",
+            'link' => "/webpusbin",
+            'image' => "post-image\website.png",
+        ]);
+
+        Layanan::create([
+            'nama' => "Pendaftaran Ujikom",
+            'deskripsi' => "Pendaftaran Ujikom",
+            'link' => "/ujikom.bkn.go.id",
+            'image' => "post-image\logoukom.png",
+        ]);
+
+        Layanan::create([
+            'nama' => "CBT",
+            'deskripsi' => "CBT",
+            'link' => "/ujikom.bkn.go.id",
+            'image' => "post-image\cbt.webp",
+        ]);
+
+
+
+        Layanan::create([
+            'nama' => "Konsultasi Online",
+            'deskripsi' => "Konsultasi Online",
+            'link' => "/konsultasi",
+            'image' => "post-image\konsul.png",
+        ]);
+
+        Layanan::create([
+            'nama' => "Dashboard JFK",
+            'deskripsi' => "Dashboard JFK",
+            'link' => "https://dashboard.skom.id/",
+            'image' => "post-image\data.png",
+        ]);
+
+        Layanan::create([
+            'nama' => "Peraturan Terkait JFK",
+            'deskripsi' => "Dashboard JFK",
+            'link' => "/jdihjfk",
+            'image' => "post-image\jdih.png",
+        ]);
+
+
+
+        Layanan::create([
+            'nama' => "Absensi",
+            'deskripsi' => "Absensi Kegiatan",
+            'link' => "/absensi",
+            'image' => "post-image\absen.png",
+        ]);
+
+        Layanan::create([
+            'nama' => "Survei Layanan",
+            'deskripsi' => "Survei Layanan",
+            'link' => "/survei",
+            'image' => "post-image\survei.png",
+        ]);
+
+
+        // Konsultasi::create([
+        //     'nip' => "123",
+        //     'perihal' => "Konsultasi",
+        //     'jadwal' => "12-12-12",
+        // ]);
+
+
+        JadwalUkom::create([
+            'periode' => 'I',
+            'bulan' => 'Februari',
+            'batasdaftar' => 'Akhir Desember Tahun Sebelumnya',
+        ]);
+        JadwalUkom::create([
+            'periode' => 'II',
+            'bulan' => 'April',
+            'batasdaftar' => 'Akhir Februari Tahun Berjalan',
+        ]);
+        JadwalUkom::create([
+            'periode' => 'III',
+            'bulan' => 'Juli',
+            'batasdaftar' => 'Akhir Mei Tahun Berjalan',
+        ]);
+        JadwalUkom::create([
+            'periode' => 'IV',
+            'bulan' => 'Oktober',
+            'batasdaftar' => 'Akhir Agustus Tahun Berjalan',
+        ]);
+
+        Kegiatan::create([
+            'nama' => 'Konsultasi Online',
+            'slug' => 'konsultasi-online',
+            'waktu' => 'Oktober',
+            'link' => 'www.konsultasi.com',
+            'jenis' => 'survei',
+
+        ]);
+        Kegiatan::create([
+            'nama' => 'Ujikompetensi Kenaikan Jenjang Periode I',
+            'slug' => 'ujikompetensi-kenaikan-jenjang-periode-1',
+            'waktu' => 'Oktober',
+            'link' => 'www.konsultasi.com',
+            'jenis' => 'ujikom',
+        ]);
+        Kegiatan::create([
+            'nama' => 'Pemaparan Perubahan Nomenklatur Baru',
+            'slug' => 'pemaparan-perubahan-nomenklatur-baru',
+            'waktu' => 'Oktober',
+            'link' => 'www.konsultasi.com',
+            'jenis' => 'pemaparan',
+        ]);
+
+
+        Post::factory(20)->create();
+
+        KodeKonsultasi::create([
+            'jenis' => 'Uji Kompetensi',
+            'kode' => '001',
+        ]);
+
+        KodeKonsultasi::create([
+            'jenis' => 'Pengajuan PAK',
+            'kode' => '002',
+        ]);
+
+
+        highlight::create([
+            'name' => 'Highlight 1',
+            'desc' => 'Highlight 1',
+            'image' => 'post-image\high(1).png',
+        ]);
+
+        highlight::create([
+            'name' => 'Highlight 2',
+            'desc' => 'Highlight 2',
+            'image' => 'post-image\high(2).png',
+        ]);
+
+        highlight::create([
+            'name' => 'Highlight 3',
+            'desc' => 'Highlight 3',
+            'image' => 'post-image\high(3).png',
+        ]);
+
+        Survei::create([
+            'title' => 'Pengumpulan Data JFK',
+            'type' => '1'
+        ]);
+
+        Survei::create([
+            'title' => 'Pengumpulan Data Quesioner',
+            'type' => '2'
+        ]);
+
+        Survei::create([
+            'title' => 'Survei Pelaksanaan Pelatihan',
+            'type' => '3'
+        ]);
+
+        Survei::create([
+            'title' => 'Survei Kepuasan Layanan Pusbin',
+            'type' => '4'
+        ]);
+        Survei::create([
+            'title' => 'Survei Pelaksanaan Ujikompetensi',
+            'type' => '5'
+        ]);
+
+        SurveiIndikator::create([
+            'title' => 'Bagaimana Kwalitas Uji Kompetensi',
+        ]);
+
+        SurveiIndikator::create([
+            'title' => 'Bagaimana Kwalitas Rekomenasi Kebutuhan',
+        ]);
+
+        SurveiIndikator::create([
+            'title' => 'Bagaimana pendapat Anda tentang proses penilaian dan penetapan Angka Kredit?',
+        ]);
+        SurveiIndikator::create([
+            'title' => 'Bagaimana pendapat Anda tentang pemberian dan pengiriman Rekomendasi/ Pertimbangan Pengangkatan ?',
+        ]);
+        SurveiIndikator::create([
+            'title' => 'Bagaimana pendapat Anda tentang proses perhitungan kebutuhan formasi Jabatan Fungsional Kepegawaian?',
+        ]);
+        SurveiIndikator::create([
+            'title' => 'Bagaimana pendapat Anda tentang bahan/ data Jabatan Fungsional Kepegawaian?',
+        ]);
+        SurveiIndikator::create([
+            'title' => 'Bagaimana pendapat Anda tentang pelaksanaan Uji Kompetensi Jabatan Fungsional Kepegawaian?',
+        ]); SurveiIndikator::create([
+            'title' => 'Bagaimana pendapat Anda tentang pelaksanaan fasilitasi/ sosialisasi/ bimtek/ workshop Jabatan Fungsional Kepegawaian?',
+        ]);
+        SurveiIndikator::create([
+            'title' => 'Nama',
+        ]);
+        SurveiIndikator::create([
+            'title' => 'No HP',
+        ]);
+        SurveiIndikator::create([
+            'title' => 'Link',
+        ]);
+        
+
+        
+
+
+        Jdihjfk::create([
+            'title' => 'Peraturan BKN Nomor 3 Tahun 2023',
+            'deskripsi' => 'Peraturan BKN Nomor 3 Tahun 2023 tentang Angka Kredit, Kenaikan Pangkat dan Jenjang Jabatan Fungsional',
+            'link' => 'https://www.bkn.go.id/regulasi/peraturan-bkn-nomor-3-tahun-2023/',
+            'image' => 'post-image/perbkn_3.png',
+        ]);
+
+        Jdihjfk::create([
+            'title' => 'Undang-undang (UU) Nomor 20 Tahun 2023 tentang Aparatur Sipil Negara',
+            'deskripsi' => 'UU ini mengatur tentang Aparatur Sipil Negara dengan menetapkan batasan istilah yang digunakan dalam pengaturannya. Pokok-pokok pengaturan yang terdapat di dalam Undang-Undang ini',
+            'link' => 'https://peraturan.bpk.go.id/Details/269470/uu-no-20-tahun-2023',
+            'image' => 'post-image/uu_20.png',
+        ]);
+
+
+    }
+
+}
