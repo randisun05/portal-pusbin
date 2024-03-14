@@ -45,7 +45,7 @@ Route::get('/webpusbin', [PostController::class, 'index1'] );
 Route::get('/notfound', function () {
     return view('errors.404',[
         'title' => "Page Not Found"
-    ]);
+    ]); 
 });
 
 //route publikasi
