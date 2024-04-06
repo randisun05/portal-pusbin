@@ -37,24 +37,24 @@
                   <div data-i18n="Analytics">Layanan</div>
                 </a>
               </li>
-              <li class="menu-item {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
+              {{-- <li class="menu-item {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
                 <a href="/admin/dashboard" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Dashboard</div>
                 </a>
-              </li>
+              </li> --}}
               <li class="menu-item {{ Request::is('admin/konsultasi*') ? 'active' : '' }}">
                 <a href="/admin/konsultasi" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Jadwal Konsultasi</div>
                 </a>
               </li>
-              <li class="menu-item {{ Request::is('admin/jadwalukom*') ? 'active' : '' }}">
+              {{-- <li class="menu-item {{ Request::is('admin/jadwalukom*') ? 'active' : '' }}">
                 <a href="/admin/jadwalukom" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Jadwal UKom</div>
                 </a>
-              </li>
+              </li> --}}
               <li class="menu-item {{ Request::is('admin/kegiatan*') ? 'active' : '' }}">
                 <a href="/admin/kegiatan" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>

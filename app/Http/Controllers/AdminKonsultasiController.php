@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendEmail;
+use App\Models\Absensi;
+use App\Models\Kegiatan;
 use App\Models\Konsultasi;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use function Ramsey\Uuid\v1;
 use Illuminate\Http\Request;
 use App\Models\KodeKonsultasi;
-use Illuminate\Support\Carbon;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -25,11 +27,22 @@ class AdminKonsultasiController extends Controller
     public function index()
     {
 
-        return view('admin.konsultasi.index', [
-            "konsultasis" => Konsultasi::all(),
+        $absensis = Absensi::latest();
+        $ids = Kegiatan::where('jenis', '!=', 'Konsultasi')->pluck('id');
 
+            if (request('search')) {
+                // Menambahkan kondisi pencarian jika ada parameter 'search' yang dikirimkan
+                $absensis->where('kegiatan_id', 'like', '%' . request('search') . '%');
+            }
 
-        ]);
+            // Menambahkan kondisi whereNotIn setelah penanganan pencarian
+            $absensis->whereNotIn('kegiatan_id', $ids);
+            $absensis = $absensis->paginate(10);
+
+            return view('admin.konsultasi.index', [
+                'kegiatans' => Kegiatan::where('jenis', 'Konsultasi')->get(),
+                "absensis" => $absensis
+            ]);
     }
 
 
@@ -38,19 +51,13 @@ class AdminKonsultasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        // return view('konsultasi.create', [
-        //     'title' => "Konsultasi Online",
-        //     'konsultasis' => Konsultasi::all(),
-        //     'konsultasi' => $konsultasi,
-        // ]);
+        $konsultasi = Kegiatan::findOrFail($id);
 
-        $kode = KodeKonsultasi::all();
-
-        return view('konsultasi.create', [
-            'kode' => $kode,
-            'title' => "Usul Konsultasi Online",
+        return view('public.konsultasi.create', [
+            'title' => "Daftar Konsultasi Online",
+            'konsultasi' => $konsultasi,
         ]);
 
     }
@@ -99,7 +106,7 @@ class AdminKonsultasiController extends Controller
             'email' => $request->nip,
             'tiket' => $tiket
         ];
-    
+
         Mail::to($data['email'])->send(new SendEmail($data));
         dd("Email Berhasil dikirim.");
         return view('konsultasi.tiket',[
@@ -120,7 +127,7 @@ class AdminKonsultasiController extends Controller
     public function show(Konsultasi $konsultasi)
     {
 
-        return view('konsultasi.show', [
+        return view('public.konsultasi.show', [
             'title' => "Jawaban",
             'konsultasi' => $konsultasi,
         ]);

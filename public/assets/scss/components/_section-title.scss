@@ -1,0 +1,274 @@
+@use '../utils' as *;
+
+/*----------------------------------------*/
+/*  2.16 Section Title
+/*----------------------------------------*/
+
+.#{$theme-prifix}-section{
+    &-title{
+        font-size: 49px;
+        letter-spacing: -2px;
+        line-height: 1.2;
+        font-weight: 800;
+        text-transform: capitalize;
+        margin: 0;
+        @media #{$lg}{
+            font-size: 46px;
+        }
+        @media #{$md}{
+            font-size: 44px;
+        }
+        @media #{$sm}{
+            font-size: 40px;
+        } 
+        @media #{$xs}{
+            font-size: 35px;
+        }
+        &-wrapper{
+            & p{
+                & br{
+                    @media #{$md,$sm,$xs}{
+                        display: none;
+                    }
+                }
+            }
+        }
+        & br{
+            @media #{$md,$sm,$xs}{
+                display: none;
+            }
+        }
+        &-para{
+            color: #e7d9ff;
+            @media #{$md,$sm,$xs}{
+                & br{
+                    display: none;
+                }
+            }
+        }
+        &-agen{
+            font-size: 48px;
+            @media #{$md}{
+               font-size: 44px;
+            }
+            @media #{$sm}{
+                font-size: 40px;
+            }
+            @media #{$xs}{
+                font-size: 35px;
+            }
+        }
+        &-wrapper{
+            @media #{$xs}{
+                margin-bottom: 20px;
+            }
+        }
+        &-insu{
+            color: var(--tp-heading-black9);
+            margin-bottom: 28px;
+        }
+        &-bus{
+            color: var(--tp-heading-black12);
+        }
+        &-agen{
+            color: var(--tp-heading-black13);
+        }
+        &-provide{
+            @media #{$xxl,$xl,$lg,$md}{
+                & br{
+                    display: block;
+                }
+            }
+        }
+    }
+    &-title2{
+        color: var(--tp-common-white);
+        @media #{$md}{
+            font-size: 44px;
+        }
+        @media #{$sm}{
+            font-size: 40px;
+        } 
+        @media #{$xs}{
+            font-size: 35px;
+        }
+    }
+    &-title3{
+        font-size: 60px;
+        @media #{$md}{
+            font-size: 44px;
+        }
+        @media #{$sm}{
+            font-size: 40px;
+        } 
+        @media #{$xs}{
+            font-size: 35px;
+        }
+    }
+    &-title-pre{
+        font-size: 16px;
+        letter-spacing: 0px;
+        text-transform: uppercase;
+        color: var(--tp-blue-2);
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: inline-block;
+        &-2{
+            color: var(--tp-yellow-1);
+        }
+        &-4{
+            color: var(--tp-red-2);
+            margin-bottom: 20px;
+        }
+        &-5{
+            color: var(--tp-red-2);
+        }
+        &-6{
+            color: var(--tp-grey-15);
+        }
+        &-bus{
+            color: var(--tp-green-5);
+        }
+    }
+    
+    &-title-pre1{
+        color: var(--tp-grey-17);
+    }
+    &-title-pre2{
+        color: var(--tp-common-white);
+    }
+    &-title-pre3{
+        color: var(--tp-blue-3);
+    }
+    &-title-pre4{
+        color: var(--tp-green-1);
+    }
+    @media #{$xl}{
+        font-size: 45px;
+    }
+
+    @media #{$lg}{
+        font-size: 35px;
+    }
+
+    @media #{$md, $sm, $xs}{
+        font-size: 30px;
+    }
+}
+
+
+.#{$theme-prifix}-section{
+    &-title-3{
+        font-weight: 500;
+        font-size: 44px;      
+        @media #{$xs}{
+            font-size: 35px;
+        }
+    }
+    &-title-pre-3{
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 14px;      
+        color: var(--tp-theme-brown);
+        display: inline-block;
+    }
+}
+.#{$theme-prifix}-section{
+    &-title-wrapper-4{
+        & p{
+            font-size: 18px;
+        }
+    }
+    &-title-4{
+        font-weight: 500;
+        font-size: 44px;
+        line-height: 1.12;
+        margin-bottom: 5px;
+        @media #{$xs}{
+            font-size: 35px;
+        }
+        &.fz-50{
+            font-size: 50px;
+
+            @media #{$lg}{
+                font-size: 33px;
+            }
+
+            @media #{$xs}{
+                font-size: 41px;
+            }
+        }
+    }
+    
+}
+
+
+.#{$theme-prifix}-section{
+    &-title-5{
+        font-weight: 500;
+        font-size: 44px;
+        
+        @media #{$sm}{
+            font-size: 40px;
+        }
+        
+        @media #{$xs}{
+            font-size: 35px;
+        }
+    }
+}
+
+.#{$theme-prifix}-section{
+    &-title-6{
+        font-size: 44px;
+        font-weight: 500;
+        position: relative;
+        z-index: 1;
+
+        @media #{$xl}{
+            font-size: 45px;
+        }
+
+        @media #{$lg}{
+            font-size: 35px;
+        }
+
+        @media #{$md, $sm, $xs}{
+            font-size: 30px;
+        }
+
+
+    }
+}
+
+.#{$theme-prifix}-section{
+    &-title-7{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 1.07;
+        position: relative;
+        z-index: 1;
+
+        @media #{$xl}{
+            font-size: 45px;
+        }
+
+        @media #{$lg}{
+            font-size: 35px;
+        }
+
+        @media #{$md, $sm, $xs}{
+            font-size: 30px;
+        }
+
+
+    }
+    &-title-pre-7{
+        font-size: 20px;
+        color: var(--tp-theme-primary);
+        display: inline-block;
+        text-transform: capitalize;
+        font-weight: 400;
+        margin-bottom: 10px;
+    }
+}

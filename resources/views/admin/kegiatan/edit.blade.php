@@ -11,7 +11,7 @@
     <div class="card shadow">
         <div class="card-body">
             <div class="col-lg-6">
-                <form class="post" action="/admin/kegiatan/{{ $kegiatan->id }}" method="POST" class="ms-5" enctype="multipart/form-data">
+                <form action="/admin/kegiatan/{{ $kegiatan->id }}" method="POST" class="ms-5" enctype="multipart/form-data">
                     @method('put')
                     @csrf
                     <div class="mb-3">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="slug" class="form-label">Waktu Pelaksanaan</label>
-                        <input type="text" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{old('waktu', $kegiatan->waktu)}}">
+                        <input type="datetime-local" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{old('waktu', $kegiatan->waktu)}}">
                         @error('waktu')
                         <div class="invalid-feedback">
                             {{ $message}}
@@ -46,15 +46,36 @@
                           <div class="mb-3">
                             <label for="title" class="form-label">Jenis Kegiatan</label>
                             <select class="form-select @error('jenis') is-invalid @enderror" id="jenis" name="jenis">
-                                @if (old('jenis',$kegiatan->jenis) == $kegiatan->jenis)
-                                <option value="{{$kegiatan->jenis}}">{{$kegiatan->jenis}}</option>
-                                @else
-                                <option value="survei">Survei</option>
-                                <option value="ujikom">Ujikom</option>
-                                <option value="pemaparan">Pemaparan</option>
-                                @endif
+                                <option value="Konsultasi" {{ old('jenis', $kegiatan->jenis) == 'Konsultasi' ? 'selected' : '' }}>Konsultasi</option>
+                                <option value="Uji Kompetensi" {{ old('jenis', $kegiatan->jenis) == 'Uji Kompetensi' ? 'selected' : '' }}>Uji Kompetensi</option>
+                                <option value="Sosialisasi" {{ old('jenis', $kegiatan->jenis) == 'Sosialisasi' ? 'selected' : '' }}>Sosialisasi</option>
+                                <option value="Lainnya" {{ old('jenis', $kegiatan->jenis) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                            </select>
+                            @error('jenis')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+
+                          <div class="mb-3">
+                            <label for="title" class="form-label">Status Kegiatan</label>
+                            <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
+                                <option value="1" {{ old('jenis', $kegiatan->status) == '1' ? 'selected' : '' }}>Aktif</option>
+                                <option value="0" {{ old('jenis', $kegiatan->status) == '0' ? 'selected' : '' }}>Non Aktif</option>
                             </select>
                               @error('jenis')
+                                  <div class="invalid-feedback">
+                                      {{ $message}}
+                                  </div>
+                              @enderror
+                          </div>
+
+                          <div class="mb-3">
+                            <label for="title" class="form-label">Image</label>
+                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept=".png, .jpg, .JPG, .JPEG, .jpeg"">
+                              @error('image')
                                   <div class="invalid-feedback">
                                       {{ $message}}
                                   </div>
@@ -72,33 +93,5 @@
 </div>
 
 <!-- End of Main Content -->
-
-        <script>
-
-            const title = document.querySelector('#title');
-            const title = document.querySelector('#slug');
-
-            title.addEventListner('change', function(){
-                fetch('/admin/publikasi/cekSlug?title=' + title.value)
-                .then(response => response.json())
-                .then(data => slug.value = data.slug)
-            });
-
-        // const title = document.querySelector('#title');
-        // const slug = document.querySelector('#slug');
-
-        // title.addEventListener('change', function(){
-        //     fetch('/admin/publikasi/checkSlug?title=' + title.value)
-        //     .then(response => response.json())
-        //     .then(data => slug.value = data.slug)
-        // });
-        // document.addEventListener('trix-files-accept',function(e){
-        //     e.preventDefault();
-        // })
-        document.addEventListener('trix-files-accept',function(e){
-    e.preventDefault();
-})
-        </script>
-
 
 @endsection

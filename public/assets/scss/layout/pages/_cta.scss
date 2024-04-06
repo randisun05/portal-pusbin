@@ -1,0 +1,108 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.5 cta css
+/*----------------------------------------*/
+
+.tp-cta{
+    &-sub{
+        &-title{
+            font-size: 16px;
+            line-height: 20px;
+            text-transform: uppercase;
+            color: #bdbfd2;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: inline-block;
+        }
+    }
+    &-bg{
+        margin-left: -176px;
+        margin-right: -176px;
+        &-2{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: var(--tp-grey-4);
+            z-index: -1;
+        }
+        @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+    &-title{
+        font-size: 50px;
+        letter-spacing: -2px;
+        line-height: 60px;
+        color: var(--tp-common-white);
+        font-weight: 800;
+        @media #{$xl,$lg,$md,$sm,$xs}{
+            font-size: 35px;
+            line-height: 40px;
+            & br{
+                display: none;
+            }
+        }
+    }
+    &-content{
+        p{
+            line-height: 26px;
+            color: #e7d9ff;
+        }
+        &-2{
+            margin: 0 75px;
+            @media #{$xs}{
+                margin: 0 30px;
+            }
+        }
+    }
+    &-bus{
+        &-wrapper{
+            border-radius: 15px;
+            margin-left: -75px;
+            margin-right: -75px;
+            @media #{$xl,$lg,$md,$sm,$xs}{
+                margin: 0;
+            }
+        }
+    }
+    &-shape{
+        bottom: 0;
+        left: -15px;
+        bottom: -15px;
+        @media #{$lg,$md,$sm,$xs}{
+            bottom: -85px;
+        }
+        &-2{
+            margin-left: -95px;
+            bottom: -22px;
+            @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+                margin-left: 0;
+                width: 16%;
+            }
+        }
+        @media #{$md,$sm,$xs}{
+            bottom: -70px;
+            width: 142px;
+		}
+    }
+    &-btn{
+        margin-right: 20px;
+        margin-top: 30px;
+        &-2{
+            margin-top:0;
+        }
+        &-insu{
+            float: right;
+            @media #{$md,$sm,$xs}{
+                float: left;
+            }
+        }
+        @media #{$md,$sm,$xs}{
+            text-align: left;
+        }
+    }
+}

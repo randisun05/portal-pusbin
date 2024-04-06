@@ -24,7 +24,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="slug" class="form-label">Waktu Pelaksanaan</label>
-                        <input type="date" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{old('waktu')}}">
+                        <input type="datetime-local" class="form-control @error('waktu') is-invalid @enderror" id="waktu" name="waktu" value="{{old('waktu')}}">
                         @error('waktu')
                         <div class="invalid-feedback">
                             {{ $message}}
@@ -44,12 +44,24 @@
 
                       <div class="mb-3">
                         <label for="title" class="form-label">Jenis Kegiatan</label>
-                        <select class="form-select @error('jenis') is-invalid @enderror" id="jenis" name="jenis" >
-                        <option value="survei">Survei</option>
-                                <option value="ujikom">Ujikom</option>
-                                <option value="pemaparan">Pemaparan</option>
+                        <select class="form-select @error('jenis') is-invalid @enderror" id="jenis" name="jenis">
+                        <option value="Konsultasi">Konsultasi</option>
+                        <option value="Sosialisasi">Uji Kompetensi</option>
+                        <option value="Sosialisasi">Sosialisasi</option>
+                        <option value="Lainnya">Lainnya</option>
                         </select>
                         @error('jenis')
+                              <div class="invalid-feedback">
+                                  {{ $message}}
+                              </div>
+                          @enderror
+                      </div>
+
+
+                      <div class="mb-3">
+                        <label for="title" class="form-label">Image</label>
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept=".png, .jpg, .JPG, .JPEG, .jpeg"">
+                          @error('image')
                               <div class="invalid-feedback">
                                   {{ $message}}
                               </div>
@@ -68,38 +80,6 @@
 
 
 <!-- End of Main Content -->
-
-
-        <script>
-
-            // const title = document.querySelector('#title');
-            // const slug = document.querySelector('#slug');
-
-            // title.addEventListener('change', function(){
-            //     fetch('/admin/publikasi/cekSlug?title='+title.value)
-            //     .then(response => response.json())
-            //     .then(data => slug.value = data.slug)
-            // });
-
-        const title = document.querySelector('#title');
-        const slug = document.querySelector('#slug');
-
-        title.addEventListener('change', function(){
-            fetch('/admin/publikasi/checkSlug?title=' + title.value)
-            .then(response => response.json())
-            .then(data => slug.value = data.slug)
-        });
-
-
-        // document.addEventListener('trix-files-accept',function(e){
-        //     e.preventDefault();
-        // })
-
-
-        document.addEventListener('trix-files-accept',function(e){
-    e.preventDefault();
-})
-        </script>
 
 
 @endsection

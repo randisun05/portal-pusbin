@@ -1,0 +1,499 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.12 hero css
+/*----------------------------------------*/
+
+.tp-hero {
+    &-area{
+        &-fin{
+            padding: 200px 0;
+            
+            @media #{$md,$sm,$xs}{
+                padding: 115px 0;
+            }
+        }
+    }
+    &-btn{
+        &-fin{
+            animation-delay: 0.7s;
+        }
+    }
+    &-img{
+        &-fin{
+            & img{
+                animation-delay: 0.8s;
+            }
+        }
+    }
+    &-shape{
+        &-fin{
+            bottom: 65px;
+            left: 58px;
+        }
+    }
+    &-title{
+        &-fin{
+            font-size: 80px;
+            letter-spacing: -3px;
+            line-height: 80px;
+            color: var(--tp-common-white);
+            font-weight: 400;
+            margin-bottom: 38px;
+            animation-delay: 0.6s;
+            @media #{$lg,$md,$sm}{
+                font-size: 65px;
+                line-height: 70px;
+            }
+            @media #{$xs}{
+                font-size: 40px;
+                line-height: 52px;
+                letter-spacing: 1px !important;
+            }
+            & br{
+                @media #{$xs}{
+                    display: none;
+                }
+            }
+            & span{
+                color: var(--tp-yellow-1);
+            }
+        }
+        &-insu{
+            font-size: 90px;
+            letter-spacing: -4px;
+            line-height: 90px;
+            color: var(--tp-heading-black8);
+            font-weight: 500;
+            margin-bottom: 45px;
+            animation-delay: 0.8s;
+            @media #{$xl,$lg,$sm,$md,$xs}{
+                font-size: 70px;
+                line-height: 80px;
+            }
+            @media #{$xs}{
+                font-size: 50px;
+                line-height: 60px;
+                & br{
+                    display: none;
+                }
+            }
+            & span{
+                color: var(--tp-red-2);
+            }
+        }
+    }
+    &-btn{
+        &-fin{
+            @media #{$xs}{
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+        }
+    }
+    &-play{
+        &-fin{
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background-color: var(--tp-green-3);
+            display: inline-block;
+            text-align: center;
+            line-height: 65px;
+            animation: tp-pulse-2 2s infinite;
+            & i{
+                color: var(--tp-heading-black3);
+            }
+            &:hover{
+                background: var(--tp-common-black);
+                & i{
+                    color: var(--tp-common-white);
+                }
+            }
+        }
+    }
+    &-video-content{
+        font-size: 16px;
+        line-height: 80px;
+        color: var(--tp-common-white);
+        font-weight: 500;
+        margin-left: 20px;
+    }
+    &-video{
+        margin-left: 30px;
+        @media #{$xs}{
+            margin: 0;
+            margin-top: 15px;
+        }
+    }
+    &-shape{
+        bottom: 112px;
+        right: 0;
+        &-fin{
+            bottom: 64px;
+            left: 55px;
+        }
+        @media #{$xs}{
+            display: none;
+        }
+    }
+    &-img {
+        &-fin{
+            bottom: 0;
+            right: 275px;
+            @media #{$x3l,$xxl,$xl,$lg}{
+                right: 0; 
+            }
+            @media #{$md,$sm,$xs}{
+                position: inherit;
+                margin-top: 50px; 
+            }
+            & img{
+                @media #{$lg}{
+                    width: 73%;
+                    float: right;
+                }
+                @media #{$md,$sm,$xs}{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    &-bus{
+        &-btn-2{
+            @media #{$lg,$sm,$md,$xs}{
+                text-align: left;
+            }
+        }
+    }
+    &-insu{
+        &-img{
+            &-1{
+                bottom: 0;
+                @media #{$x4l,$x3l,$xxl,$xl,$lg,$sm,$md,$xs}{
+                    width: 100%;
+                }
+                @media #{$md,$sm,$xs}{
+                    position: inherit;
+                }
+            }
+            &-2{
+                bottom: 0;
+                right: 0;
+                z-index: -1;
+                @media #{$x4l,$x3l,$xxl,$xl,$lg,$sm,$md,$xs}{
+                    z-index: 1;
+                }
+                @media #{$xs}{
+                    width: 200px;
+                }
+            }
+            &-3{
+                bottom: 0;
+                margin-left: -138px;
+                z-index: 1;
+                animation-delay: 0.9s;
+                @media #{$md,$sm,$xs}{
+                    margin-left: 0;
+                    left: 0;
+                }
+                @media #{$xs}{
+                    width: 200px;
+                }
+            }
+            &-4{
+                top: 14%;
+                right: -88px;
+                @media #{$x4l,$x3l}{
+                    top: 25%;
+                    right: -25px;
+                }
+                @media #{$xxl}{
+                    top: 25%;
+                    right: -25px;
+                }
+                @media #{$xl,$lg,$sm,$md,$xs}{
+                    top: 27%;
+                    right: -25px;
+                }
+                @media #{$md}{
+                    top: 13%;
+                }
+                @media #{$sm}{
+                    top: 8%;
+                }
+                @media #{$xs}{
+                    top: -12%;
+                    right: 20px;
+                }
+            }
+            &-5{
+                top: 35%;
+                right: 80px;
+                @media #{$x4l,$x3l,$xxl,$xl,$lg,$sm,$md,$xs}{
+                    top: 4%;
+                }
+            }
+            &-6{
+                top: 17%;
+                left: 75px;
+                @media #{$xs}{
+                    top: -12%;
+                    right: 20px;
+                }
+            }
+            &-7{
+                bottom: 217px;
+                z-index: 1;
+                right: 188px;
+                @media #{$xs}{
+                    top: 54%;
+                    right: 20px;
+                }
+            }
+        }
+        &-spa{
+            padding-top: 235px;
+            padding-bottom: 135px;
+            @media #{$xl,$lg,$sm,$md,$xs}{
+                padding-top: 135px;
+            }
+        }
+        &-shape{
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 15%;
+        }
+        &-shape2{
+            bottom: -10px;
+            left: 82px;
+            @media #{$xs}{
+                left: 0;
+                bottom: -20px
+            }
+        }
+    }
+    &-brands{
+        &-insu{
+            display: flex;
+            align-items: center;
+            margin-top: 75px;
+            animation-delay: 0.9s;
+           & a{
+                margin-right: 30px;
+                display: inline-block;
+                & img{
+                    @media #{$xs}{
+                        width: 100%;
+                    }
+                }
+           }
+        }
+    }
+    &-top{
+        padding-top: 180px;
+        padding-bottom: 190px;
+    }
+    &-bus{
+        &-btn{
+            animation-delay: 0.9s;
+            @media #{$sm,$xs}{
+                text-align: left;
+                margin-top: 0;
+                margin-bottom: 30px;
+            }
+            &-3{
+                @media #{$lg,$md,$sm,$xs}{
+                    text-align: center;
+                    margin: 10px;
+                    margin-top: 0;
+                    margin-bottom: 30px;
+                }
+                & a{
+                    @media #{$sm}{
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+        }
+        &-tit{
+            font-size: 80px;
+            letter-spacing: -3px;
+            line-height: 84px;
+            color: var(--tp-heading-black12);
+            font-weight: 800;
+            @media #{$lg,$md}{
+                font-size: 60px;
+                list-style: 64px;
+            }
+            @media #{$sm,$xs}{
+                font-size: 37px;
+                line-height: 45px;
+            }
+            & span{
+                background: rgb(67,147,250);
+                background: linear-gradient(90deg, rgba(67,147,250,1) 0%, rgba(179,61,187,1) 35%, rgba(244,68,127,1) 60%, rgba(68,208,78,1) 100%);
+                background-clip: text;
+                padding-right: 4px;
+                -webkit-text-fill-color: transparent;
+            }
+            
+        }
+        &-para{
+            font-size: 16px;
+            line-height: 30px;
+            color: var(--tp-gray-3);
+            font-weight: 400;
+            text-align: center;
+            animation-delay: 0.7s;
+            @media #{$lg,$md,$sm,$xs}{
+                & br{
+                    display: none;
+                }
+            }
+        }
+        &-shape{
+            bottom: -163px;
+            right: 0;
+            &-2{
+                right: 177px;
+                top: 98px;
+            }
+            &-3{
+                right: -71px;
+                top: 50%;
+                @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+                    right: 0;
+                }
+            }
+            &-4{
+                bottom: 68px;
+                right: 0;
+                @media #{$xl,$lg,$md,$sm,$xs}{
+                    right: 30px;
+                }
+            }
+            &-5{
+                bottom: 68px;
+                left: 70px;
+            }
+            &-6{
+                left: 233px;
+                bottom: 130px;
+                @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+                    left: 0;
+                    bottom: 0;
+                }
+            }
+            &-7{
+                left: 48px;
+                top: 20px;
+            }
+            &-8{
+                left: 32px;
+                top: -26px;
+            }
+        }
+    }
+    &-right{
+        @media #{$md,$sm,$xs}{
+            margin-top: 30px;
+        }
+    }
+    &-agen{
+        &-sub{
+            font-size: 16px;
+            letter-spacing: 0px;
+            line-height: 20px;
+            text-transform: uppercase;
+            color: var(--tp-blue-2);
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        &-title{
+            font-size: 80px;
+            letter-spacing: -3px;
+            line-height: 80px;
+            color: var(--tp-heading-black13);
+            font-weight: 500;
+            margin-bottom: 20px;
+            animation-delay: 0.7s;
+            @media #{$md,$sm,$xs}{
+                font-size: 60px;
+                line-height: 65px;
+            }
+            @media #{$xs}{
+                font-size: 55px;
+            }
+            & b{
+                color: var(--tp-blue-2);
+            }
+        }
+        &-area{
+            padding-top: 220px;
+            padding-bottom: 215px;
+            z-index: 1;
+            @media #{$md,$sm,$xs}{
+                padding-top: 120px;
+                padding-bottom: 115px;
+            }
+        }
+        &-video{
+            color: var(--tp-heading-black13);
+        }
+        &-play{
+            background: var(--tp-common-white);
+            color: var(--tp-heading-black13);
+        }
+        &-para{
+            margin-bottom: 40px;
+            animation-delay: 0.8s;
+        }
+        &-shape{
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            animation-delay: 0.6s;
+            @media #{$xl,$lg,$md,$sm,$xs}{
+                width: 75%;
+            }
+            &-2{
+                right: -70px;
+                top: -100px;
+                @media #{$xxl,$xl,$lg}{
+                    right: 0px;
+                }
+                @media #{$md,$sm,$xs}{
+                    position: inherit;
+                    right: inherit;
+                    top: inherit;
+                }
+            }
+            &-3{
+                top: -15px;
+                right: 245px;
+            }
+            &-4{
+                top: 240px;
+                left: 100px;
+                @media #{$md,$sm,$xs}{
+                    position: inherit;
+                    top: inherit;
+                    left: inherit;
+                }
+            }
+            &-5{
+                top: -80px;
+                left: -44px;
+                @media #{$md,$sm,$xs}{
+                    position: inherit;
+                    left: inherit;
+                    top: inherit;
+                }
+            }
+        }
+    }
+}
+  

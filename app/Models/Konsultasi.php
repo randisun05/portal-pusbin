@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class Konsultasi extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
     protected $guarded = ['id'];
 
     public function getCreatedAttribut()

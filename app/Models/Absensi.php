@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Absensi extends Model
 {
@@ -17,13 +18,4 @@ class Absensi extends Model
         return $this ->belongsTo(Kegiatan::class);
     }
 
-    // public function scopeFilter ($query, array $filters)
-    // {
-
-    //     $query->when($filters['search'] ?? false, function($query, $search){
-    //         return $query->where('kegiatan_id','%' . $search . '%')
-    //                      ->orWhere('nama','like','%' . $search . '%');
-    //     });
-
-    // }
 }

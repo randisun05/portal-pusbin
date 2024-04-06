@@ -57,7 +57,7 @@
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="image">image</label></div>
                   <div class="col"> <input type="file" class="form-control" @error('image') is-invalid @enderror name="image" id="image"
-                    placeholder="Masukan image Layanan"></div>
+                    placeholder="Masukan image Layanan" accept=".jpg, .png, .jpeg"></div>
                     @error('image')
                     <div class="invalid-feedback">
                         Masukan Image Layanan.

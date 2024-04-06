@@ -46,7 +46,7 @@
                 <div class="row row-cols-3 mb-4">
                     <div class="col col-lg-2"><label for="logo">Image</label></div>
                     <input type="hidden" name="oldImage" value="{{$highlight->image}}">
-                    <div class="col"> <input type="file" class="form-control" @error('image') is-invalid @enderror name="image" id="image" placeholder="Masukan Image Highlight"></div>
+                    <div class="col"> <input type="file" class="form-control" @error('image') is-invalid @enderror name="image" id="image" placeholder="Masukan Image Highlight" accept=".jgp, .jpeg, .png"></div>
                       @error('image')
                       <div class="invalid-feedback">
                         Please input Image Highlight.

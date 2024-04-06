@@ -1,0 +1,97 @@
+@use '../../utils' as *;
+/*----------------------------------------*/
+/* 7.17 banking css
+/*----------------------------------------*/
+.tp-banking{
+    &-list{
+        position: relative;
+        @media #{$sm,$xs}{
+            margin: 30px 0;
+        }
+        &:after{
+            content: "";
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            width: 2px;
+            background:#dcdcdc;
+            top: 0;
+            left: 0;
+        }
+    }
+    &-sub{
+        & br{
+            @media #{$md,$sm,$xs}{
+                display: none;
+            }
+        }
+    }
+    &-item{
+        padding: 35px 40px;
+        background: var(--tp-common-white);
+        border-radius: 0 15px 15px 0;
+        transition: all .3s ease;
+        width: 420px;
+        text-align: left;
+        @media #{$md,$sm,$xs}{
+            padding: 12px 22px;
+        }
+        @media #{$sm,$xs}{
+            width: 100%;
+        }
+        &:hover{
+            filter: drop-shadow(0 0 30px rgba(13,4,28,0.06));
+            & .tp-banking-title{
+                color: var(--tp-common-black);
+            }
+        }
+    }
+    &-img-wrapper{
+        margin-left: 16px;
+    }
+    &-btn{
+        &.active{
+            color: var(--tp-common-black);
+            background: var(--tp-common-white);
+            filter: drop-shadow(0 0 30px rgba(13,4,28,0.06));
+        }
+    }
+    &-icon{
+        font-size: 48px;
+        color: var(--tp-blue-2);
+        @media #{$md,$sm,$xs}{
+            font-size: 37px;
+        }
+    }
+    &-img{
+        &-1{
+            margin-top: 60px;
+        }
+        &-6{
+            box-shadow: 0px 14px 60px 0px rgba(0, 0, 0, 0.06);
+            right: 100px;
+            top: 0;  
+        }
+    }
+    &-title{
+        margin: 0;
+        font-size: 24px;
+        letter-spacing: 0px;
+        line-height: 28px;
+        color: var(--tp-grey-3);
+        margin-left: 30px;
+        transition: all .4s ease;
+        @media #{$md,$sm,$xs}{
+            font-size: 17px;
+            line-height: 22px;
+            margin-left: 13px;
+            display: flex;
+            align-items: center;
+        }
+        & br{
+            @media #{$sm,$xs}{
+                display: none;
+            }
+        }
+    }
+}

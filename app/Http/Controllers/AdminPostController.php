@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use \Cviebrock\EloquentSluggable\Services\SlugService;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 
 class AdminPostController extends Controller
@@ -21,7 +22,7 @@ class AdminPostController extends Controller
     public function index()
     {
         return view('admin.posts.index', [
-            "posts" => Post::all(),
+            "posts" => Post::latest()->paginate(10),
             "sum" => Post::count(),
         ]);
     }
@@ -47,16 +48,25 @@ class AdminPostController extends Controller
     public function store(Request $request)
     {
 
-// return $request->file('image')->store('post-image');
         $validateData = $request->validate([
             'title' => 'required',
-            'slug' => 'required',
             'category_id' => 'required',
-            'image' => 'image|file|max:1024',
-            'namadocument' => '',
-            'document' => 'file|mimetypes:application/pdf|max:2048',
+            'image' => '|image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable',
             'body' => 'required'
+
         ]);
+
+        $today = Carbon::now()->format('l, d F Y H:i:s');
+
+        $slug = strtolower(str_replace(' ', '-', $request->title));
+        $originalSlug = $slug;
+        $counter = 1;
+
+        // Check if the generated slug is unique, if not, append a number
+        while (Post::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
 
 
         // $validateData['slug'] = Str::slug($request->title,'-');
@@ -67,10 +77,21 @@ class AdminPostController extends Controller
         if($request->file('document')){
             $validateData['document'] = $request->file('document')->store('post-document');
         }
+
+        if($request->file('document')){
+            $validateData['document'] = $request->file('document')->store('post-document');
+        }
+
+        if($request->has('link')) {
+            $validateData['link'] = $request->input('link');
+        }
+
         $validateData['user_id'] = auth()->user()->id;
         $validateData['excerpt'] = Str::limit(strip_tags($request->body), 200, '...');
+        $validateData['publish_at'] = $today;
+        $validateData['slug'] = $slug;
 
-
+        return $validateData;
         Post::create($validateData);
 
         return redirect('/admin/publikasi')->withSuccess('Publikasi Berhasil Dibuat');
@@ -87,7 +108,7 @@ class AdminPostController extends Controller
 
         return view('admin.posts.show', [
             'post' => $post,
-            'title' => "Berita"
+            'title' => "Publikasi"
             ]);
     }
 
@@ -116,43 +137,52 @@ class AdminPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
         $rules = [
             'title' => 'required',
             'category_id' => 'required',
-            'category_id' => 'required',
-            'image' => 'image|file|max:1024',
-            'namadocument' => '',
-            'document' => 'file|mimetypes:application/pdf|max:2048',
             'body' => 'required',
         ];
 
-        // if($request->slug != $post->slug){
-        //     $rules['slug'] = 'required|unique:posts';
-        // }
-
         $validateData = $request->validate($rules);
+
+        $slug = strtolower(str_replace(' ', '-', $request->title));
+        $originalSlug = $slug;
+        $counter = 1;
+
+        if($request->title === $post->title){
+            $validateData['slug'] = $slug;
+        } else {
+
+            // Check if the generated slug is unique, if not, append a number
+        while (Post::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+            $validateData['slug'] = $slug;
+             }
+
+                }
 
         if($request->file('image')){
             if($request->oldImage){
-
                 Storage::delete($request->oldImage);
-
             }
             $validateData['image'] = $request->file('image')->store('post-image');
         }
 
-
         if($request->file('document')){
-            if($request->oldDocument){
-
-                Storage::delete($request->oldDocument);
-
+            if($request->oldDoc){
+                Storage::delete($request->oldDoc);
             }
             $validateData['document'] = $request->file('document')->store('post-document');
         }
 
         $validateData['user_id'] =auth()->user()->id;
         $validateData['excerpt'] = Str::limit(strip_tags($request->body), 200, '...');
+
+        if($request->has('link')) {
+            $validateData['link'] = $request->input('link');
+        }
 
         Post::where('id', $post->id)
                 ->update($validateData);
@@ -180,17 +210,10 @@ class AdminPostController extends Controller
 
     // public function checkSlug(Request $request)
     // {
-    //     $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+
+    //     $slug = SlugService::createSlug (Post::class, 'slug', $request->title);
     //     return response()->json(['slug' => $slug]);
     // }
-
-    public function checkSlug(Request $request)
-    {
-
-        $slug = SlugService::createSlug (Post::class, 'slug', $request->title);
-
-        return response()->json(['slug' => $slug]);
-    }
 
 
 }

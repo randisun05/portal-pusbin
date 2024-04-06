@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class JadwalUkom extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
     protected $guarded =['id'];
 }

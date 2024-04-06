@@ -14,13 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kegiatans', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('nama');
-            $table->string('slug')->nullable();
-            $table->string('waktu')->nullable();
-            $table->string('link')->nullable();
+            $table->string('slug')->unique();
+            $table->string('deskripsi')->nullable();
+            $table->string('waktu');
+            $table->string('link');
             $table->string('jenis');
-            $table->boolean('aktif')->default(1);
+            $table->string('image');
+            $table->enum('status',["0","1","2"])->default(1);
             $table->timestamps();
         });
     }

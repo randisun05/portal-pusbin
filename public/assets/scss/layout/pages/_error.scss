@@ -1,0 +1,27 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.8 error css
+/*----------------------------------------*/
+
+.tp-error{
+    &-title{
+        font-size: 50px;
+        letter-spacing: -2px;
+        line-height: 1.1;
+        color: var(--tp-heading-black);
+        font-weight: 700;
+    }
+    &-wrapper{
+        & .tp-error-btn{
+            @media #{$md,$sm,$xs}{
+                text-align: center;
+            }
+        }
+    }
+    &-img{
+        @media #{$md,$sm,$xs}{
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,1 @@
+sass --watch "C:\Users\User\Dropbox\Harun Pure\rambo\assets\scss\main.scss":"C:\Users\User\Dropbox\Harun Pure\rambo\assets\css\main.css"

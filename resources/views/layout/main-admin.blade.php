@@ -17,7 +17,7 @@
     <title>Admin Web Pusbin</title>
     <meta name="description" content="" />
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../img/logoK.png" />
+    <link href="{{asset('assets/img/logo-pusbin.png')}}" rel="icon">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,6 +27,7 @@
     />
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/fonts/boxicons.css')}}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/css/core.css')}}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
@@ -43,7 +44,10 @@
 
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
   <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
-  
+
+
+
+
 </head>
 
 <body>

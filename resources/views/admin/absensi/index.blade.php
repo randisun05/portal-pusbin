@@ -82,9 +82,9 @@
                 </table>
             </div>
         </div>
-        {{-- <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
             {{$absensis->links()}}
-        </div> --}}
+        </div>
     </div>
 </div>
 

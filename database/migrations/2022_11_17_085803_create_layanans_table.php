@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('layanans', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('nama');
             $table->string('deskripsi');
             $table->string('link');
-            $table->text('image')->nullable();
-            $table->boolean('aktif')->default(1);
+            $table->string('image')->nullable();
+            $table->enum('status',["1","0"])->default(1);
             $table->timestamps();
         });
     }

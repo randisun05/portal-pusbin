@@ -1,0 +1,436 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.23 faq css
+/*----------------------------------------*/
+
+.tp-faq{
+    &-slide{
+        margin-right: 50px;
+        @media #{$xl,$lg,$md,$sm,$xs}{
+            margin: 0;
+         }
+    }
+    &-left{
+        &-wrapper{
+            padding-right: 50px;
+            @media #{$xl,$lg,$md,$sm,$xs}{
+                padding: 0;
+            }
+        }
+    }
+    &-year{
+        @media #{$lg}{
+            text-align: center;
+         }
+    }
+    &-inner{
+        width: 240px;
+        height: 182px;
+        border-radius: 15px;
+        background-color: var(--tp-green-3);
+        text-align: center;
+        display: block;
+        @media #{$xs}{
+            width: 206px;
+            height: 162px;
+         }
+    }
+    &-slider{
+        padding-top: 40px;
+        & i{
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+        &-tit{
+            font-size: 24px;
+            letter-spacing: 0px;
+            line-height: 28px;
+            color: var(--tp-heading-black5);
+            margin: 0;
+        }
+    }
+    &-year{
+        & i{
+            font-size: 68px;
+            display: block;
+            color: var(--tp-yellow-1);
+            margin-bottom: 25px;
+        }
+        &-title{
+            font-size: 24px;
+            letter-spacing: 0px;
+            line-height: 30px;
+            color: var(--tp-common-white);
+            font-weight: 500;
+        }
+    }
+    &-pagenation{
+        margin-top: 17px;
+        text-align: center;
+        @media #{$xl,$lg,$md,$sm,$xs}{
+            text-align: left;
+         }
+        & .swiper-pagination-bullet{
+            width: 20px;
+            height: 2px;
+            background: var(--tp-common-white);
+            opacity: 1;
+            border-radius: inherit;
+            &-active{
+                background: var(--tp-yellow-1);
+                opacity: 1;
+            }
+
+        }
+    }
+    &-collaps{
+        &-wrapper{
+            width: 750px;
+            margin-bottom: -140px;
+            z-index: 99;
+            position: relative;
+            @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+                width: 100%;
+            }
+            @media #{$md,$sm,$xs}{
+               margin-top: 50px;
+            }
+        }
+        &-title{
+            font-size: 36px;
+            letter-spacing: -1px;
+            line-height: 50px;
+            color: var(--tp-common-white);
+            font-weight: 800;
+            margin: 0;
+            padding: 18px 80px;
+            background: var(--tp-green-1);
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            @media #{$xs}{
+                padding: 18px 0;
+                text-align: center;
+                font-size: 30px;
+             }
+            &::before{
+                position: absolute;
+                content: "";
+                width: 0px;
+                height: 0px;
+                border-style: solid;
+                border-width: 19px 6.5px 0 6.5px;
+                border-color: #413df3 transparent transparent transparent;
+                transform: rotate(16deg);
+                bottom: -14px;
+                z-index: 9;
+            }
+        }
+    }
+    &-btn{
+        @media #{$md,$sm,$xs}{
+           margin: 0;
+           float: left;
+           margin-bottom: 30px;
+        }
+        &-2{
+            font-size: 18px;
+            letter-spacing: 0px;
+            line-height: 25px;
+            color: var(--tp-common-black2);
+            font-weight: 700;
+            padding: 20px 0;
+            &:not(.collapsed){
+                color: var(--tp-common-black);
+                &::after{
+                    @include transform(rotate(0deg));
+                }
+                & .accordion-btn{
+                    &::before{
+                        @include transform(translateX(-50%) rotate(90deg));
+                        color: var(--tp-common-black);
+                    }
+                    &::after{
+                        color: var(--tp-common-black);
+                    }
+                }
+            }
+            & .accordion-btn{
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+
+                &::after{
+                    position: absolute;
+                    content: '';
+                    width: 100%;
+                    height: 2px;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background-color: var(--tp-common-black2);
+                    border-radius: 2px;
+                    transition: all .4s ease;
+                }
+                &::before{
+                    position: absolute;
+                    content: "";
+                    width: 2px;
+                    height: 100%;
+                    left: 50%;
+                    top: 0;
+                    background-color: var(--tp-common-black2);
+                    transform: translateX(-50%);
+                    border-radius: 2px;
+                    transition: all .4s ease;
+                }
+            }
+            &:focus{
+                z-index: 3;
+                box-shadow: none;
+                border: none;
+            }
+        }
+        &-3{
+            color: var(--tp-heading-black3);
+            font-size: 18px;
+            letter-spacing: 0px;
+            line-height: 30px;
+            padding: 0;
+            font-weight: 700;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            padding-right: 27px;
+        }
+        &-4{
+            background: var(--tp-blue-2);
+            padding: 16px 30px;
+            padding-left: 75px;
+            border-radius: 5px;
+            color: var(--tp-common-white);
+            &.collapsed{
+                & .tp-faq-icon{
+                    left: 6px;
+                    &::after{
+                        background: var(--tp-common-black)!important;
+                    }
+                    &-inner{
+                        width: 25px;
+                        height: 25px;
+                        background: var(--tp-common-white);
+                        position: absolute;
+                        left: 30px;
+                        border-radius: 20px;
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            & .tp-faq-icon{
+                left: 6px;
+                color: var(--tp-common-white);
+                &::after{
+                    background: var(--tp-common-white)!important;
+                }
+                &-inner{
+                    width: 25px;
+                    height: 25px;
+                    background: var(--tp-blue-2);
+                    position: absolute;
+                    left: 30px;
+                    border-radius: 20px;
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+    &-item{
+        border-radius: 15px;
+        border: none;
+        filter: drop-shadow(0 0 30px rgba(29,18,46,0.08));
+    }
+    &-hero{
+        &-shape{
+            text-align: right;
+        }
+    }
+    &-accordion{
+        padding: 78px;
+        background: var(--tp-common-white);
+        border-radius: 0 0 15px 15px;
+        filter: drop-shadow(0 0 30px rgba(27,25,31,0.06));
+        padding-top: 50px;
+        @media #{$lg,$md,$sm,$xs}{
+            padding: 35px;
+        }
+        &-item{
+            background: var(--tp-common-white2);
+            padding: 0 28px;
+            border-radius: 15px!important;
+            border-left: 3px solid var(--tp-green-1)!important;
+        }
+        &-title{
+            font-size: 18px;
+            letter-spacing: 0px;
+            line-height: 60px;
+            color: var(--tp-heading-black3);
+            font-weight: 700;
+            @media #{$md,$xs}{
+                line-height: 30px;
+                padding: 10px 0;
+             }
+            &.collapsed{
+                &::before{
+                    transform: rotate(0);
+                }
+            }
+            &::before{
+                position: absolute;
+                content: "\f107";
+                font-family: "Font Awesome 6 Pro";
+                right: 0;
+                transform: rotate(-180deg);
+                color: var(--tp-green-1);
+                @media #{$md,$xs}{
+                    right: -20px;
+                 }
+            }
+            &:not(.collapsed){
+                color: var(--tp-heading-black3);
+                background: none;  
+            }
+            &:focus {
+                border: none;
+                box-shadow: none;
+            }
+        }
+        &-pera{
+            font-size: 16px;
+            line-height: 30px;
+            color: var(--tp-grey-3);
+            font-weight: 400;
+            padding-bottom: 35px;
+        }
+        &-2{
+            border-radius: 15px;
+            filter: drop-shadow(0 0 10px rgba(24,5,54,0.04));
+            background-color: var(--tp-common-white);
+            border: none;
+            padding-left: 30px;
+            padding-right: 30px;
+            position: relative;
+            & .accordion-button:not(.collapsed) {
+                background: var(--tp-common-white);
+                color: var(--tp-heading-black3);
+                box-shadow: none;
+            }
+            & .accordion-button:focus {
+                z-index: 3;
+                border: none;
+                box-shadow: none;
+            }
+            & .accordion-button::after{
+                display: none;
+            } 
+            & .accordion-button::before {
+                font-family: "Font Awesome 6 Pro";
+                content: "\f107";
+                position: absolute;
+                top: 16px;
+                height: inherit;
+                right: 0;
+                font-weight: 400;
+                background-image: none;
+                color: var(--tp-green-1);
+                transition: all .3s ease-in-out;
+                width: auto;
+                height: auto;
+            }
+            & .accordion-button:not(.collapsed)::before {
+                color: var(--tp-green-1);
+                transform: rotate(-180deg);
+            }
+        }
+    }
+    &-thumb{
+        margin-left: -80px;
+        margin-right: -80px;
+        & img{
+            border-radius: 15px;
+        }
+        @media #{$xl,$lg,$md,$sm,$xs}{
+            margin-left: 0;
+            margin-right: 0;
+        }
+        &-area{
+            margin-top: -182px;
+        }
+    }
+    &-para{
+        padding: 0;
+        & p{
+            font-size: 16px;
+            line-height: 30px;
+            color: var(--tp-grey-3);
+            font-weight: 400;
+            padding-bottom: 44px;
+            margin-bottom: 0;
+        }
+        &-2{
+            & p{
+                margin-bottom: 5px;
+                padding: 0 11px;
+            }
+        }
+        &-3{
+            & p{
+                margin: 0;
+                padding-bottom: 20px;
+            }
+        }
+    }
+    &-wrapper{
+        &-1{
+            margin-top: -15px;
+        }
+        & .accordion-button:not(.collapsed) {
+            color: var(--tp-common-black2);
+            background: none;
+            box-shadow: none;
+        }
+        & .accordion-item {
+            border-bottom: 1px solid#ededed;
+        }
+        & .tp-pricing-accordion{
+            border: none;
+        }
+        & .accordion {
+            --bs-accordion-border-width: 0;
+            --bs-accordion-btn-icon: none;
+            --bs-accordion-btn-active-icon: none;
+        }
+    }
+    &-title{
+        & h2{
+            font-size: 30px;
+            letter-spacing: -1px;
+            line-height: 36px;
+            color: #7a3cdf;
+            font-weight: 700;
+        }
+        &-2{
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            font-size: 24px;
+            letter-spacing: -1px;
+            line-height: 24px;
+            color: var(--tp-common-white);
+            font-weight: 700;
+        }
+    }
+}

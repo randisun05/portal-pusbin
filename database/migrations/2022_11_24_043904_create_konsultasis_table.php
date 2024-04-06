@@ -14,8 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('konsultasis', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('nip');
+            $table->string('nama');
+            $table->string('email');
+            $table->string('instansi');
             $table->foreignId('kode_id');
             $table->timestamp('jadwal');
             $table->timestamp('jadwalfix')->nullable();

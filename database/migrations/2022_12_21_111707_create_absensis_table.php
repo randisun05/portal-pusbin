@@ -14,14 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('absensis', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->foreignId('kegiatan_id');
             $table->string('nip');
             $table->string('nama');
-            $table->string('slug')->nullable();
+            $table->string('email')->nullable();
             $table->string('jabatan');
             $table->string('instansi');
-            $table->boolean('aktif')->default(1);
+            $table->enum('status',['0','1'])->default('0')->nullable();
             $table->timestamps();
         });
     }

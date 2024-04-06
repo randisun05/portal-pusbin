@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Kegiatan extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
 
     protected $guarded =['id'];
 

@@ -16,25 +16,20 @@ class AdminAbsensiController extends Controller
      */
     public function index()
     {
-        $absensis = Absensi::latest()->where('kegiatan_id','not like','1');
+        $absensis = Absensi::latest();
+        $ids = Kegiatan::where('jenis','Konsultasi')->pluck('id');
 
         if(request('search')){
             $absensis->where('kegiatan_id','like',request('search'));
         }
+
+        // Menambahkan kondisi whereNotIn setelah penanganan pencarian
+        $absensis->whereNotIn('kegiatan_id', $ids);
+        $absensis = $absensis->paginate(10);
+
         return view('admin.absensi.index', [
-            'kegiatans' => Kegiatan::all(),
-            "absensis" => $absensis->get(),
-
-        ]);
-
-    }
-
-    public function index1()
-    {
-
-        return view('absensi.select', [
-            'kegiatans' => Kegiatan::all(),
-            'title' => "Absensi"
+            'kegiatans' => Kegiatan::where('jenis','!=', 'Konsultasi')->get(),
+            "absensis" => $absensis
         ]);
 
     }
@@ -47,8 +42,8 @@ class AdminAbsensiController extends Controller
      */
     public function create(Kegiatan $kegiatan)
     {
-        return view('absensi.create', [
-            // 'kegiatans' => Kegiatan::get()->where('id','>','1'),
+        return view('public.absensi.create', [
+
             'title' => "Absensi Kegiatan {$kegiatan->nama}",
             'kegiatan' => $kegiatan,
         ]);

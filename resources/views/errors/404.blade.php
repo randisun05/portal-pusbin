@@ -11,7 +11,7 @@
                 <h1 class="display-1">404</h1>
                 <h1 class="mb-4">Page Not Found</h1>
                 <p class="mb-4">Maaf, Halaman tidak tersedia!, Mungkin kamu ingin mengakses halaman lain?</p>
-                <a class="btn btn-primary rounded-pill py-3 px-5" href="/">Kembali Ke Home</a>
+                <a class="btn btn-primary rounded-pill py-3 px-5" href="/webpusbin">Kembali Ke Home</a>
             </div>
         </div>
     </div>

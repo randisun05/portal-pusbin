@@ -3,70 +3,60 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Rancangan Portal Awal</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
-    <!-- Favicon -->
-    <link href="{{asset('img/logoK.png')}}" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Jost:wght@500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="{{asset('lib/animate/animate.min.css')}}" rel="stylesheet">
-    <link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-    <link href="{{asset('lib/lightbox/css/lightbox.min.css')}}" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="{{asset('/css/style.css')}}" rel="stylesheet">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Pusat Pembinaan Jabatan Fungsional | Badan Kepegawaian Negara </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset ('assets/img/logo/favicon.png') }}">
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{{asset ('assets/css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{asset ('assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{asset ('assets/css/swiper-bundle.css') }}">
+    <link rel="stylesheet" href="{{asset ('assets/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{asset ('assets/css/font-awesome-pro.css') }}">
+    <link rel="stylesheet" href="{{asset ('assets/css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{asset ('assets/css/spacing.css') }}">
+    <link rel="stylesheet" href="{{asset ('assets/css/ion.rangeSlider.min.css') }}">
+    <link rel="stylesheet" href="{{asset ('assets/css/main.css') }}">
 
 </head>
 
 <body>
-
-    <div class="container-fluid bg-white p-0">
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
+    <!-- preloader -->
+    <div id="preloader" class="tp-preloader">
+        <div id="loader-img" class="tp-preloader-img">
+            <div class="tp-preloader-main" id="loader"></div>
         </div>
-        <!-- Spinner End -->
-
-        @yield('container')
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-secondary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <div id="tp-preloader-panel_left" class='tp-preloader-section tp-preloader-section-left'></div>
+        <div id="tp-preloader-panel_right" class='tp-preloader-section tp-preloader-section-right'></div>
     </div>
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="{{ asset('lib/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('lib/waypoints/waypoints.min.js') }}"></script>
-    <script src="{{ asset('lib/counterup/counterup.min.js') }}"></script>
-    <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('lib/isotope/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('lib/lightbox/js/lightbox.min.js') }}"></script>
-      {{-- Sweet Alert --}}
+    <!-- preloader end  -->
+    <div class="back-to-top-wrapper">
+        <button id="back_to_top" type="button" class="back-to-top-btn">
+            <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 6L6 1L1 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
+    </div>
 
-    {{-- @include('sweetalert::alert') --}}
-    {{-- CDN Sweet Alert --}}
-    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
-    <!-- Template Javascript -->
-    <script src="{{ asset('js/main.js') }}"></script>
+
+    @yield('container')
+
+
+    <script src="{{asset ('assets/js/vendor/jquery.js') }}"></script>
+    <script src="{{asset ('assets/js/vendor/waypoints.js') }}"></script>
+    <script src="{{asset ('assets/js/bootstrap-bundle.js') }}"></script>
+    <script src="{{asset ('assets/js/meanmenu.js') }}"></script>
+    <script src="{{asset ('assets/js/swiper-bundle.js') }}"></script>
+    <script src="{{asset ('assets/js/ion.rangeSlider.min.js') }}"></script>
+    <script src="{{asset ('assets/js/magnific-popup.js') }}"></script>
+    {{-- <script src="{{asset ('assets/js/nice-select.js') }}"></script> --}}
+    <script src="{{asset ('assets/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{asset ('assets/js/one-page-nav-min.js') }}"></script>
+    <script src="{{asset ('assets/js/wow.js') }}"></script>
+    <script src="{{asset ('assets/js/ajax-form.js') }}"></script>
+    <script src="{{asset ('assets/js/main.js') }}"></script>
 
 </body>
 

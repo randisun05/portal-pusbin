@@ -45,8 +45,8 @@ class DatabaseSeeder extends Seeder
 
 
         Category::create([
-            'name' => 'Umum',
-            'slug' => 'umum',
+            'name' => 'Pengumuman',
+            'slug' => 'pengumuman',
 
         ]);
 
@@ -152,39 +152,65 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Kegiatan::create([
-            'nama' => 'Konsultasi Online',
-            'slug' => 'konsultasi-online',
-            'waktu' => 'Oktober',
+            'nama' => 'Konsultasi Senin',
+            'slug' => 'konsultasi-online-senin',
+            'waktu' => '2024-03-22',
             'link' => 'www.konsultasi.com',
-            'jenis' => 'survei',
-
+            'jenis' => 'Konsultasi',
+            'image' => 'image',
         ]);
+
+        Kegiatan::create([
+            'nama' => 'Konsultasi Selasa',
+            'slug' => 'konsultasi-online-selasa',
+            'waktu' => '2024-03-22',
+            'link' => 'www.konsultasi.com',
+            'jenis' => 'Konsultasi',
+            'image' => 'image',
+        ]);
+
+        Kegiatan::create([
+            'nama' => 'Konsultasi Rabu',
+            'slug' => 'konsultasi-online-rabu',
+            'waktu' => '2024-03-22',
+            'link' => 'www.konsultasi.com',
+            'jenis' => 'Konsultasi',
+            'image' => 'image',
+        ]);
+
         Kegiatan::create([
             'nama' => 'Ujikompetensi Kenaikan Jenjang Periode I',
             'slug' => 'ujikompetensi-kenaikan-jenjang-periode-1',
-            'waktu' => 'Oktober',
+            'waktu' => '2024-03-22',
             'link' => 'www.konsultasi.com',
-            'jenis' => 'ujikom',
+            'jenis' => 'Uji Kompetensi',
+            'image' => 'image',
         ]);
         Kegiatan::create([
             'nama' => 'Pemaparan Perubahan Nomenklatur Baru',
             'slug' => 'pemaparan-perubahan-nomenklatur-baru',
-            'waktu' => 'Oktober',
+            'waktu' => '2024-03-22',
             'link' => 'www.konsultasi.com',
-            'jenis' => 'pemaparan',
+            'jenis' => 'Sosialisasi',
+            'image' => 'image',
         ]);
 
 
         Post::factory(20)->create();
 
         KodeKonsultasi::create([
-            'jenis' => 'Uji Kompetensi',
+            'jenis' => 'Jabatan Fungsional Kepegawaian',
             'kode' => '001',
         ]);
 
         KodeKonsultasi::create([
-            'jenis' => 'Pengajuan PAK',
+            'jenis' => 'Uji Kompetensi',
             'kode' => '002',
+        ]);
+
+        KodeKonsultasi::create([
+            'jenis' => 'Pembinaan',
+            'kode' => '003',
         ]);
 
 
@@ -264,9 +290,9 @@ class DatabaseSeeder extends Seeder
         SurveiIndikator::create([
             'title' => 'Link',
         ]);
-        
 
-        
+
+
 
 
         Jdihjfk::create([

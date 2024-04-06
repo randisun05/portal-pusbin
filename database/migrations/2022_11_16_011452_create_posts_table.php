@@ -19,12 +19,13 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->String('title');
             $table->String('slug')->unique();
+            $table->String('link')->nullable();
             $table->text('excerpt');
             $table->String('image')->nullable();
             $table->text('body');
             $table->String('namadocument')->nullable();
             $table->String('document')->nullable();
-            $table->timestamp('publish_at')->nullable();
+            $table->String('publish_at')->nullable();
             $table->timestamps();
         });
     }

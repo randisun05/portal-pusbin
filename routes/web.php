@@ -1,28 +1,24 @@
 <?php
 
-use App\Http\Controllers\Admin\HighlightController;
-use App\Http\Controllers\Admin\KodeKonsultasiController;
-use App\Models\Category;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\LayananController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\AdminPostController;
-use App\Http\Controllers\AdminLayananController;
-use App\Http\Controllers\AdminKonsultasiController;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminHomeController;
+use App\Http\Controllers\LayananController;
 use App\Http\Middleware\PreventBackHistory;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AdminHomeController;
+use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\AdminJadwalController;
-use App\Http\Controllers\AdminKegiatanController;
 use App\Http\Controllers\AdminAbsensiController;
-use App\Http\Controllers\Admin\AdminJdifjfkController;
+use App\Http\Controllers\AdminKegiatanController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Admin\HighlightController;
+use App\Http\Controllers\AdminKonsultasiController;
 use App\Http\Controllers\Admin\AdminSurveiController;
+use App\Http\Controllers\Admin\AdminJdifjfkController;
+use App\Http\Controllers\Admin\KodeKonsultasiController;
 use App\Http\Controllers\Admin\AdminSurveiIndikatorController;
-use App\Http\Controllers\JdihjfkController;
-use App\Http\Controllers\SurveiPublicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,22 +31,52 @@ use App\Http\Controllers\SurveiPublicController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('portal.index');
-// });
+//prefix "admin"
+Route::prefix('admin')->group(function() {
 
-//route halaman awal web
-Route::get('/', [PostController::class, 'index2'] );
-Route::get('/webpusbin', [PostController::class, 'index1'] );
-Route::get('/notfound', function () {
-    return view('errors.404',[
-        'title' => "Page Not Found"
-    ]); 
+    //middleware "auth"
+    Route::group(['middleware' => ['auth']], function () {
+
+        Route::get('/publikasi/checkSlug', [AdminPostController::class, 'checkSlug']);
+        Route::get('/', [AdminDashboardController::class, 'home'] )->Middleware(['prevent-back-history']);
+        Route::resource('/publikasi', \App\Http\Controllers\Admin\AdminPostController::class)->parameters(['publikasi' => 'post'])->Middleware(['prevent-back-history']);
+        Route::resource('/layanan', \App\Http\Controllers\Admin\AdminLayananController::class)->Middleware(['auth','prevent-back-history']);
+        Route::resource('/register', RegisterController::class)->parameters(['register' => 'user'])->Middleware(['prevent-back-history']);
+        Route::resource('/konsultasi', AdminKonsultasiController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/highlight', HighlightController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/jdihjfk', AdminJdifjfkController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/konsultasi', AdminKonsultasiController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/survei', AdminSurveiController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/surveiindikator', AdminSurveiIndikatorController::class)->Middleware(['prevent-back-history']);
+        // Route::resource('/konsultasi', AdminKonsultasiController::class);
+        Route::resource('/dashboard', AdminDashboardController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/jadwalukom', AdminJadwalController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/kegiatan', AdminKegiatanController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/absensi', AdminAbsensiController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['prevent-back-history']);
+        //custom route for enrolle create
+        Route::get('/survei/{survei}/create', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'TambahIndikator']);
+        Route::post('/survei/{survei}/store', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'StoreIndikator']);
+        Route::delete('/survei/{indikator}/delete', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'DeleteIndikator']);
+        Route::resource('/highlight', HighlightController::class);
+    });
 });
 
+// route login
+Route::get('/login', [LoginController::class, 'index'] )->name('login')->Middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate'] );
+Route::post('/logout', [LoginController::class, 'logout'] );
+
+//ROUTE PUBLIC
+//route halaman awal web
+Route::get('/', [\App\Http\Controllers\Public\PublicController::class, 'portal']);
+Route::get('/webpusbin', [\App\Http\Controllers\Public\PublicController::class, 'web'] );
+
+
+
 //route publikasi
-Route::get('/publikasi', [PostController::class, 'index'] );       //daftar publikasi
-Route::get('/publikasi/{post:slug}', [PostController::class,'show'] );    //halaman single post
+Route::get('/publikasi', [\App\Http\Controllers\Public\PostController::class, 'index']);       //daftar publikasi
+Route::get('/publikasi/{post:slug}', [\App\Http\Controllers\Public\PostController::class, 'show'] );    //halaman single post
 Route::get('/categories/{category:slug}', function(Category $category ) {
     return view('berita.category', [
         'title' => $category -> name,
@@ -58,8 +84,6 @@ Route::get('/categories/{category:slug}', function(Category $category ) {
         'category' => $category -> name,
     ]);
 });                                                                 //halaman categori post
-
-
 
 Route::get('/categories', function( ) {
 return view('berita.categories', [
@@ -70,116 +94,60 @@ return view('berita.categories', [
 });                                                                 //halaman categori
 
 
-// route admin
-
-// Route::get('/admin', function () {
-//     return view('admin\home');
-// })->Middleware('auth');
-
-Route::get('/admin/publikasi/checkSlug', [AdminPostController::class, 'checkSlug']);
-Route::get('/admin', [AdminDashboardController::class, 'home'] )->Middleware(['auth','prevent-back-history']);
-
-Route::resource('/admin/publikasi', AdminPostController::class)->parameters(['publikasi' => 'post'])->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/layanan', AdminLayananController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/register', RegisterController::class)->parameters(['register' => 'user'])->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/konsultasi', AdminKonsultasiController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/highlight', HighlightController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/jdihjfk', AdminJdifjfkController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/konsultasi', AdminKonsultasiController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/survei', AdminSurveiController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/surveiindikator', AdminSurveiIndikatorController::class)->Middleware(['auth','prevent-back-history']);
-// Route::resource('/konsultasi', AdminKonsultasiController::class);
-Route::resource('/admin/dashboard', AdminDashboardController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/jadwalukom', AdminJadwalController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/kegiatan', AdminKegiatanController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/absensi', AdminAbsensiController::class)->Middleware(['auth','prevent-back-history']);
-Route::resource('/admin/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['auth','prevent-back-history']);
-// route login
-Route::get('/login', [LoginController::class, 'index'] )->name('login')->Middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate'] );
-Route::post('/logout', [LoginController::class, 'logout'] );
-
-Route::get('/konsultasi', [AdminKonsultasiController::class,'create']);
-Route::post('/konsultasi', [AdminKonsultasiController::class,'store']);
-
-Route::post('/absensi/{kegiatan:slug}/berhasil', [AdminAbsensiController::class,'store']);
-Route::get('/absensi/{kegiatan:slug}', [AdminAbsensiController::class,'create']);
-Route::get('/absensi', [AdminAbsensiController::class, 'index1']);
-
-//custom route for enrolle create
-Route::get('/admin/survei/{survei}/create', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'TambahIndikator']);
-Route::post('/admin/survei/{survei}/store', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'StoreIndikator']);
-Route::delete('/admin/survei/{indikator}/delete', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'DeleteIndikator']);
-
-
-
-Route::get('/dashboard', function () {
-    return view('portal.dashboard',[
-        'title' => "Daftar Dashboard"
-    ]);
-});
-
+//ROUTE KONSULTASI
+Route::get('/konsultasi', [\App\Http\Controllers\Public\KonsultasiController::class, 'index'])->name('public.konsultasi.index');
+Route::get('/konsultasi/{kegiatan:slug}', [\App\Http\Controllers\Public\KonsultasiController::class, 'create']);
+Route::post('/konsultasi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\KonsultasiController::class, 'store']);
 Route::get('/konsultasi/cari', function () {
     return view('konsultasi.cari',[
         'title' => "Cari Konsultasi"
     ]);
 });
-
 Route::get('/konsultasi/jadwal', [AdminKonsultasiController::class, 'search']);
 Route::get('/konsultasi/tiket', [AdminKonsultasiController::class, 'tiket']);
 
-//layanan
-Route::get('/layanan/pengajuan-rekomendasi', function () {
-    return view('layanan.pengajuan-rekomendasi',[
-        "title"=>"Pengajuan Rekomendasi",
+//ROUTE ABSENSI
+Route::get('/absensi', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'index']);
+Route::get('/absensi/{kegiatan:slug}', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'create']);
+Route::post('/absensi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'store']);
+
+//ROUTE KEGIATAN
+Route::get('/kegiatan', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'index']);
+Route::get('/kegiatan/{kegiatan:slug}', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'show']);
+Route::get('/kegiatan/{kegiatan:slug}/create', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'create']);
+Route::post('/kegiatan/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'store']);
+
+//DATA JFK
+Route::get('/data-jfk', function () {
+    return view('portal.dashboard',[
+        'title' => "Daftar Dashboard"
     ]);
 });
 
-Route::get('/layanan/pengembangan-kompetensi', function () {
-    return view('layanan.pengembangan-kompetensi',[
-        "title"=>"Pengembangan Kompetensi",
-    ]);
-});
+//RIOUTE JDIH
+Route::get('/jdihjfk', [\App\Http\Controllers\Public\JdihController::class, 'index']);
 
-Route::get('/layanan/pendaftaran-ujikom', function () {
-    return view('layanan.pendaftaran-ukom',[
-        "title"=>"Pendaftara Uji Kompetensi",
-    ]);
-});
+//ROUTE SURVEI
+// Route::get('/survei/', [\App\Http\Controllers\Public\SurveiPublicController::class, 'index']);
+// Route::get('/survei/{survei}/create', [\App\Http\Controllers\Public\SurveiPublicController::class, 'create']);
+// Route::get('/survei/{survei}/create/store', [\App\Http\Controllers\Public\SurveiPublicController::class, 'store']);
 
-Route::get('/layanan/perubahan-nomenklatur', function () {
-    return view('layanan.perubahan-nomenklatur',[
-        "title"=>"Perubahan Nomenklatur",
-    ]);
-});
-
-Route::get('/layanan/konversi-ak', function () {
-    return view('layanan.konversi-ak',[
-        "title"=>"Konversi Angka Kredit",
-    ]);
-});
-
-Route::get('/layanan/perpindahan-audiwan', function () {
-    return view('layanan.perpindahan-audiwan',[
-        "title"=>"Perpindahan JF Audiwan Ke JF Lainnya",
-    ]);
-});
-
-Route::get('/layanan/pengusulan-pak', function () {
-    return view('layanan.pengusulan-pak',[
-        "title"=>"Pengusulan Penetapan Angka Kredit",
-    ]);
-});
+//ROUTE ABOUT
+Route::get('/layanan/pengajuan-rekomendasi', [\App\Http\Controllers\Public\PublicController::class, 'kebutuhan']);
+Route::get('/layanan/pengembangan-kompetensi', [\App\Http\Controllers\Public\PublicController::class, 'pengembangan']);
+Route::get('/layanan/uji-kompetensi', [\App\Http\Controllers\Public\PublicController::class, 'ujikom']);
+Route::get('/layanan/perpindahan-audiwan', [\App\Http\Controllers\Public\PublicController::class, 'audiwan']);
+Route::get('/about/tentang-kami', [\App\Http\Controllers\Public\PublicController::class, 'about']);
+Route::get('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontak']);
+Route::get('/about/kepala-pusat', [\App\Http\Controllers\Public\PublicController::class, 'kapus']);
+Route::get('/about/visi-misi', [\App\Http\Controllers\Public\PublicController::class, 'visimisi']);
+Route::get('/about/struktur-organisasi', [\App\Http\Controllers\Public\PublicController::class, 'struktur']);
 
 
-
-Route::resource('/admin/highlight', HighlightController::class);
-Route::resource('/jdihjfk', JdihjfkController::class);
-Route::get('/survei/', [\App\Http\Controllers\SurveiPublicController::class, 'index']);
-Route::get('/survei/{survei}/create', [\App\Http\Controllers\SurveiPublicController::class, 'create']);
-Route::get('/survei/{survei}/create/store', [\App\Http\Controllers\SurveiPublicController::class, 'store']);
-
-
+Route::get('/getapi', [\App\Http\Controllers\Admin\AdminLayananController::class, 'getData']);
+Route::get('/get', [\App\Http\Controllers\Admin\AdminLayananController::class, 'inputData']);
+Route::get('/getpublic', [\App\Http\Controllers\Admin\AdminLayananController::class, 'getProdtoken']);
+Route::get('/getauth', [\App\Http\Controllers\Admin\AdminLayananController::class, 'getAuthtoken']);
 
 
 

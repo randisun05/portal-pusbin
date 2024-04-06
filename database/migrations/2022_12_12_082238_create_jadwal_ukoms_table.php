@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('jadwal_ukoms', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('periode');
             $table->string('bulan');
             $table->string('batasdaftar');

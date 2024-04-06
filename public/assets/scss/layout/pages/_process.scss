@@ -1,0 +1,278 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.19 process css
+/*----------------------------------------*/
+
+.tp-process {
+    &-main-wrapper{
+        @media #{$md,$sm,$xs}{
+            height: auto;
+            padding: 0;
+        }
+        width: 100%;
+        background: var(--tp-common-white);
+        height: 556px;
+        border-radius: 15px;
+        filter: drop-shadow(0 0 40px rgba(13,4,28,0.06));
+        padding: 60px;
+        padding-left: 0;
+        margin-top: -120px;
+    }
+    &-shape{
+        top: 70px;
+    }
+    &-service3 {
+        @media #{$sm,$xs}{
+            margin-bottom: 30px;
+        } 
+    }
+    &-inner{
+        @media #{$md,$sm,$xs}{
+            display: flex;
+            justify-content: center;
+            margin-top: 9px;
+        }
+    }
+    &-item{
+        display: block;
+        width: 100%;
+        transition: all .4s ease;
+
+        @media #{$md,$sm,$xs}{
+            display: inline-block;
+            width: auto;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        &:hover{
+            & .tp-process-btn{
+                background: var(--tp-blue-2);
+                color: var(--tp-common-white);
+            }
+        }
+    }
+    &-btn{
+        width: 168px;
+        height: 60px;
+        background: var(--tp-grey-4);
+        font-size: 18px;
+        letter-spacing: 0px;
+        line-height: 29px;
+        color: var(--tp-common-black);
+        font-weight: 800;
+        text-align: center;
+        display: inline-block;
+        padding: 0;
+        &.active{
+            background: var(--tp-blue-2);
+            color: var(--tp-common-white);
+        }
+    }
+    &-content-inner{
+        border-radius: 15px;
+        background-color: #f6f4f9;
+    }
+    &-balance-wrapper{
+        padding: 80px;
+        @media #{$lg,$md,$sm,$xs}{
+            padding: 80px 20px;
+        }
+    }
+    &-balance {
+        padding: 40px;
+        background: var(--tp-common-white);
+        border-radius: 15px;
+        filter: drop-shadow(0 0 30px rgba(13,4,28,0.06));
+        @media #{$xs}{
+           margin-bottom: 20px;
+           height: auto;
+        } 
+    }
+    &-content{
+        margin-bottom: 0;
+        font-size: 24px;
+        letter-spacing: 0px;
+        line-height: 29px;
+        color: var(--tp-common-black);
+        font-weight: 800;
+
+    }
+    &-service{
+        background: var(--tp-common-white);
+        width: 160px;
+        padding: 32px 0;
+        border-radius: 15px;
+        filter: drop-shadow(0 0 20px rgba(13,4,28,0.08));
+        transition: all .4s ease;
+        @media #{$sm,$xs}{
+            margin: 0 8px;
+            margin-bottom: 15px;
+        }
+        @media #{$sm}{
+            width: 155px; 
+        }
+        @media #{$xs}{
+            width: 140px; 
+        }
+        &:hover{
+            background: var(--tp-blue-2);
+            & .tp-process-service-icon{
+                color: var(--tp-common-white);
+            }
+            & .tp-process-title{
+                color: var(--tp-common-white);
+            }
+        }
+    }
+    &-service-inner{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @media #{$sm,$xs}{
+            flex-wrap: wrap;
+            margin: 0;
+        } 
+    }
+    &-service-icon{
+        font-size: 24px;
+        color: var(--tp-common-black);
+        margin-bottom: 6px;
+        display: inline-block;
+        transition: all .3s;
+    }
+    &-balance-wrapper2{
+        padding: 60px;
+        @media #{$sm}{
+            padding: 31px;
+        }
+        @media #{$xs}{
+            padding: 0;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+    }
+    &-title{
+        font-size: 16px;
+        line-height: 29px;
+        color: var(--tp-common-black);
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    &-line{
+        top: 50%;
+        left: 0;
+        right: 0;
+        margin: auto;
+        transform: translateY(-50%);
+    }
+    &-img{
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    &-img2{
+        margin-right: 40px;
+        border-radius: 15px;
+        @media #{$lg,$md,$sm,$xs}{
+            margin: 0;
+            width: 100%;
+        }
+    }
+    &-inner3{
+        float: right;
+        margin-right: 14px;
+    }
+    &-service-icon2{
+        font-size: 68px;
+        color: var(--tp-blue-2);
+        margin-bottom: 40px;
+        display: block;
+    }
+    &-title2{
+        font-size: 24px;
+        letter-spacing: 0px;
+        line-height: 30px;
+        color: var(--tp-common-black);
+        font-weight: 500;
+        margin-bottom: 32px;
+    }
+    &-link{
+        font-size: 14px;
+        letter-spacing: 0px;
+        line-height: 100px;
+        text-transform: uppercase;
+        color: var(--tp-blue-2);
+        font-weight: 700;
+        &:hover{
+            color: var(--tp-blue-2);
+        }
+    }
+    &-icon3{
+        font-size: 16px;
+        width: 60px;
+        height: 60px;
+        background: var(--tp-common-white);
+        border-radius: 30px;
+        display: inline-block;
+        text-align: center;
+        line-height: 60px;
+        margin-right: 18px;
+        color: var(--tp-common-black);
+        transition: all .3s ease;
+        flex: 0 0 auto;
+    }
+    &-content-wrapper3{
+        padding-left: 19px;
+        position: relative;
+
+        &:before{
+            position: absolute;
+            content: "";
+            width: 1px;
+            height: 100%;
+            background:#ccccce;
+            top: 0;
+            left: -7px;
+            @media #{$lg,$md,$sm,$xs}{
+                display: none;
+            }
+        }
+    }
+    &-content-inner4{
+        display: flex;
+        align-items: center;
+        &:hover{
+            & .tp-process-icon3{
+                background: var(--tp-blue-2);
+                color: var(--tp-common-white);
+            }
+        }
+    }
+    &-content3{
+        font-size: 18px;
+        letter-spacing: 0px;
+        line-height: 29px;
+        color: var(--tp-common-black);
+        font-weight: 800;
+        margin-bottom: 2px;
+        & p{
+            font-size: 16px;
+            line-height: 24px;
+            color: #6a6a6a;
+            font-weight: 400;
+            margin: 0;
+        }
+    }
+    &-more{
+        & p{
+            margin: 0;
+        }
+        & a{
+            color: var(--tp-blue-2);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+    }
+}

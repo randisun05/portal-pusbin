@@ -6,6 +6,8 @@ use App\Models\highlight;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\ImageManager;
 
 class HighlightController extends Controller
 {
@@ -48,7 +50,9 @@ class HighlightController extends Controller
 
         $file = $request->file('image')->store('post-image');
 
+
         $validatedData['image'] = $file;
+
 
         highlight::create($validatedData);
 

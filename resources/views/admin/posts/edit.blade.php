@@ -16,7 +16,7 @@
                     @csrf
                     <div class="mb-3">
                       <label for="title" class="form-label">Title</label>
-                      <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{old('title', $post->title)}}">
+                      <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{old('title', $post->title)}}" placeholder="Masukan judul">
                         @error('title')
                             <div class="invalid-feedback">
                                 {{ $message}}
@@ -24,9 +24,9 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="slug" class="form-label">Slug</label>
-                        <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" value="{{old('slug', $post->slug)}}">
-                        @error('slug')
+                        <label for="slug" class="form-label">Link (jika mengambil sumber lain)</label>
+                        <input type="text" class="form-control @error('link') is-invalid @enderror" id="link" name="link" value="{{old('link', $post->link)}}" placeholder="Masukan link jika mengambil sumber dari luar, kosongkan jika tidak">
+                        @error('link')
                         <div class="invalid-feedback">
                             {{ $message}}
                         </div>
@@ -49,49 +49,51 @@
                             </div>
                             @enderror
                        </div>
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Foto</label>
-                            <input type="hidden" name="oldImage" value="{{ $post->image}}">
-                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
-                            @error('image')
-                            <div class="invalid-feedback">
-                                {{ $message}}
-                            </div>
-                            @enderror
+
+                       <div class="mb-3">
+                        <label for="image" class="form-label">Foto</label>
+                        <input type="hidden" name="oldImage" value="{{ $post->image}}">
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept=".jpg, .jpeg, .png">
+                        @error('image')
+                        <div class="invalid-feedback">
+                            {{ $message}}
                         </div>
+                        @enderror
+                    </div>
 
-
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Nama Dokumen</label>
-                            <input type="text" class="form-control @error('namadocument') is-invalid @enderror" id="namadocument" name="namadocument" value="{{old('namadocument')}}">
-                              @error('namadocument')
-                                  <div class="invalid-feedback">
-                                      {{ $message}}
-                                  </div>
-                              @enderror
-                          </div>
-
-                          <div class="mb-3">
-                            <label for="category" class="form-label">Dokumen</label>
-                            <input type="hidden" name="oldImage" value="{{ $post->image}}">
-                            <input type="file" name="document" class="form-control @error('document') is-invalid @enderror" id="document" name="document">
-                            @error('document')
-                                <div class="invalid-feedback">
-                                    {{ $message}}
-                                </div>
-                            @enderror
-                          </div>
 
                       <div class="mb-3">
                         <label for="category" class="form-label">Body</label>
                         <input id="body" type="hidden" name="body" class="@error('body') is-invalid @enderror" id="body" name="body" value="{{old('body', $post->body)}}">
-                        <trix-editor input="body"></trix-editor>
+                        <trix-editor input="body" placeholder="Masukan isi publikasi"></trix-editor>
                         @error('body')
                             <div class="invalid-feedback">
                                 {{ $message}}
                             </div>
                         @enderror
                       </div>
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Nama Dokumen</label>
+                        <input type="text" class="form-control @error('namadocument') is-invalid @enderror" id="namadocument" name="namadocument" value="{{old('namadocument')}}"  placeholder="Masukan nama dokumen jika ada, kosongkan jika tidak">
+                          @error('namadocument')
+                              <div class="invalid-feedback">
+                                  {{ $message}}
+                              </div>
+                          @enderror
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="category" class="form-label">Dokumen</label>
+                        <input type="hidden" name="oldDoc" value="{{ $post->document}}">
+                        <input type="file" class="form-control @error('document') is-invalid @enderror" id="document" name="document" accept=".pdf">
+                        @error('document')
+                            <div class="invalid-feedback">
+                                {{ $message}}
+                            </div>
+                        @enderror
+                      </div>
+
 
 
                       <div class="col text-center m-3">
@@ -135,3 +137,4 @@
 
 
 @endsection
+

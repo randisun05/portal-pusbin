@@ -1,0 +1,84 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.15 minutes css
+/*----------------------------------------*/
+
+.tp-minute{
+    &-shape{
+        top: -64px;
+        left: 30%;
+    }
+    &-shape2{
+        top: -114px;
+        left: 72px;
+    }
+    &-shape3{
+        top: 0;
+        left: 112px;
+        @media #{$lg}{
+            top: -87px;
+            left: 188px;
+        }
+    }
+    &-shape4{
+        top: 0;
+        left: -70px;
+        @media #{$lg,$md,$sm}{
+            left: 0;
+        }
+    }
+    &-shape5{
+        top: 90px;
+        left: 58px;
+        @media #{$lg,$md,$sm,$xs}{
+            top: 146px;
+        }
+    }
+    &-shape6{
+        top: -114px;
+        right: 72px;
+    }
+    &-shape7{
+        top: -10;
+        right: -70px;
+        @media #{$lg,$md,$sm}{
+            top: -22px;
+            right: 0;
+        }
+        @media #{$md,$sm}{
+            top: 130px;
+            right: 0;
+        }
+    }
+    &-shape8{
+        top: 0;
+        right: 112px;
+        @media #{$lg}{
+            top: 150px;
+            right: 100px;
+        }
+    }
+    &-shape9{
+        top: 102px;
+        right: 17px;
+    }
+    &-title{
+        & h2{
+            font-size: 50px;
+            letter-spacing: -2px;
+            line-height: 60px;
+            color: var(--tp-common-black);
+            font-weight: 800;
+            margin: 0;
+            @media #{$md,$sm}{
+                font-size: 40px;
+                line-height: 50px;
+            }
+            @media #{$xs}{
+                font-size: 33px;
+                line-height: 43px;
+            }
+        }
+    }
+}

@@ -1,0 +1,348 @@
+@use '../utils' as *;
+
+/*----------------------------------------*/
+/*  2.6 buttons 
+/*----------------------------------------*/
+
+.#{$theme-prifix}-btn{
+	font-weight: 700;
+	font-size: 14px;
+	color: var(--tp-common-white);
+	display: inline-block;
+	line-height: 18px;
+	padding: 21px 50px;
+	border-radius: 15px;
+	text-transform: uppercase;
+	background-color: var(--tp-blue-2);
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	transition: all .3s ease;
+	@media #{$xs}{
+		padding: 18px 35px;
+	}
+	&:hover{
+		color: var(--tp-common-white);
+		background: transparent;
+	}
+	&::before {
+		content: "";
+		position: absolute;
+		width: 0;
+		top: -10px;
+		height: 0;
+		background-color: var(--tp-common-black);
+		border-radius: 50%;
+		transform: translate(-50%,-50%);
+		transition: all .8s ease;
+		z-index: -1;
+	}
+	&-default{
+		line-height: 1;
+		border-radius: 15px;
+		overflow: hidden;
+	}
+	&-default{
+		@media #{$lg,$sm,$md,$xs}{
+			margin-top: 0;
+			margin-bottom: 50px;
+			text-align: left;
+		}
+	}
+	&:hover:before {
+		width: 500px;
+		height: 500px;
+		display: inline-block;
+	}
+	&-about{
+		padding: 16px 40px;
+		@media #{$xl,$lg}{
+			padding: 13px 23px;
+		 }
+	}
+	&-bus{
+		background: var(--tp-common-white);
+		color: var(--tp-common-black);
+		&-2{
+			background: none;
+			border: 1px solid #000541;
+			color: #000541;
+			&:hover{
+				border: 1px solid transparent;
+			}
+		}
+	}
+	&-insu{
+		background: var(--tp-red-2);
+		&::before {
+			background: var(--tp-blue-4);
+		}
+		@media #{$xl,$lg}{
+			padding: 15px 30px;
+		 }
+		 &-2{
+			&:hover{
+				color: var(--tp-common-black);
+			}
+			&::before{
+				background: var(--tp-common-white);
+			}
+		 }
+	}
+	&-02{
+		background: var(--tp-green-2);
+		&::before {
+			background: var(--tp-common-black);
+		}
+		@media #{$xl,$lg}{
+			padding: 18px 30px;
+		 }
+		 @media #{$lg}{
+			padding: 13px 20px;
+		 }
+	}
+	&-transparent{
+		&-bus{
+			background: none;
+			border: 1px solid #e4e6ed;
+			color: var(--tp-green-1);
+			&::before{
+				background: var(--tp-common-white);
+			}
+			@media #{$xs}{
+				margin-top: 30px;
+			}
+			&:hover{
+				color: var(--tp-common-black);
+				border: 1px solid transparent;
+			}
+			&-2{
+				border: 1px solid var(--tp-heading-black12);
+				background: transparent;
+				color: var(--tp-heading-black12);
+				&:hover{
+					border: 1px solid var(--tp-green-2);
+				}
+				@media #{$lg,$md,$sm,$xs}{
+                    float: left;
+					margin-bottom: 30px;
+				}	
+			}
+		}
+		&-white{
+			&:hover{
+				border-color: var(--tp-green-2);
+			}
+			color: var(--tp-common-white);
+			@media #{$xs}{
+				float: left;
+				margin-bottom: 30px;
+			}
+		}
+	}
+	&-yellow{
+		background: var(--tp-yellow-1);
+		font-size: 16px;
+		color: var(--tp-heading-black3);
+		&::before {
+			background: var(--tp-common-black);
+		}
+		&-2{
+			&::before {
+				background: var(--tp-green-1);
+			}
+		}
+		@media #{$sm}{
+			padding: 16px 28px;
+		}
+	}
+	&-green{
+		background: var(--tp-green-1);
+		&-2{
+			background: var(--tp-green-5);
+		}
+		&::before {
+			background: var(--tp-common-black);
+		}
+		@media #{$lg,$md,$sm,$xs}{
+			float: left;
+			margin-bottom: 10px;
+		}
+		&-bus{
+			float: inherit;
+			margin-bottom: 0;
+			@media #{$xs}{
+				margin-right: 0;
+			}
+		}
+	}
+	&-transparent-over{
+		&:hover{
+			color: var(--tp-common-white);
+		}
+		&::before{
+			background: var(--tp-common-black);
+		}
+	}
+	&-black{
+		background: var(--tp-heading-black3);
+		&::before {
+			background: var(--tp-common-white)!important;
+		}
+		&-1{
+			background: var(--tp-common-black);
+		}
+		&-2{
+			width: 100%;
+			text-align: center;
+			position: relative;
+			z-index: 1;
+			&::before{
+				position: absolute;
+				content: "";
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				background: var(--tp-green-1);
+				transform: scaleX(0);
+				transform-origin: left;
+				transition: all .6s ease;
+				border-radius: 15px;
+				z-index: -1;	
+			}
+			&:hover::before{
+				transform: scaleX(1);
+			}
+		}
+		&-3{
+			&:hover::before{
+				background: var(--tp-heading-black3);
+			}
+		}
+	}
+	&-ser{
+		&-fin{
+			width: 100%;
+			height: 48px;
+			border-radius: 15px;
+			background-color: var(--tp-green-3);
+			display: block;
+			padding: 0 30px;
+			line-height: 51px;
+			text-align: center;
+			position: relative;
+			&:hover{
+				&::before{
+					transform: scaleX(0);
+				}
+				& span{
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+			& span{
+				text-align: center;
+				opacity: 0;
+				visibility: hidden;
+				transition: all .7s ease;
+				margin-right: 0;
+				font-size: 16px;
+				letter-spacing: 0px;
+				color: var(--tp-heading-black3);
+				font-weight: 700;
+			}
+			& i{
+				color: var(--tp-heading-black3);
+				float: right;
+			}
+			&::before{
+				position: absolute;
+				content: "";
+				width: 66%;
+				left: 30px;
+				top: 48%;
+				height: 2px;
+				background: var(--tp-heading-black3);
+				transform: scaleX(1);
+				transform-origin: right;
+				transition: all .3s ease;
+				@media #{$xl}{
+					width: 63%;
+				}
+				@media #{$lg}{
+					width: 64%;
+				}
+				@media #{$md}{
+					width: 74%;
+				}
+				@media #{$sm}{
+					width: 352px;
+					left: inherit;
+					right: 35px;
+				}
+				@media #{$xs}{
+					width: 210px;
+					left: inherit;
+					right: 35px;
+				}		
+			}
+		}
+	}
+	& i{
+		margin-left: 8px;
+	}
+	&-3{
+		&:hover{
+			&::before{
+				background: var(--tp-green-2);
+			}
+		}
+	}
+	&-sm{
+		padding: 4px 24px;
+	}
+	&-black{
+		&:hover{
+			color: var(--tp-common-black);
+		}
+	}
+	&-tes{
+		margin-right: 0;
+		padding: 15px 50px;
+		&:hover{
+			color: var(--tp-common-black);
+		}
+		&:before {
+			background: var(--tp-common-white);
+		}
+	}
+	&-over-white{
+		&:hover{
+			color: var(--tp-common-black);
+		}
+		&::before{
+			background: var(--tp-common-white);
+		}
+	}
+}
+.#{$theme-prifix}-btn-2{
+	padding: 17px 40px;
+}
+.#{$theme-prifix}-btn-transparent{
+	background: none;
+	color: var(--tp-blue-2);
+	border: 1px solid var(--tp-blue-2);
+	padding: 20px 47px;
+	&:hover{
+		color: var(--tp-common-white);
+		border: 1px solid var(--tp-green-2);
+	}
+}
+.#{$theme-prifix}-white{
+	background: var(--tp-common-white);
+	color: var(--tp-common-black);
+	&:hover{
+		color: var(--tp-common-white);
+	}
+}

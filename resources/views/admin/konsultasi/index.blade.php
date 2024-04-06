@@ -1,84 +1,94 @@
 @extends('layout.main-admin')
-
 @section('container')
 
- <!-- Begin Page Content -->
+<!-- Begin Page Content -->
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 mt-5 text-center">Daftar Usul Konsultasi Online</h1>
     @if (session()->has('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-     {{ session('success') }}
-     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
 
     <!-- Main Content -->
     <div class="card shadow">
+        <div class="card-header py-3 mt-2">
+            <form class="row g-3" class="Absensi" action="/admin/konsultasi">
+                @csrf
+                <label for="category" class="form-label mb-0">Nama Kegiatan</label>
+                <div class="col-md-6">
+                    <select class="form-select col-md-4 @error('kegiatan') is-invalid @enderror" name="search">
+                        <option value="">Semua</option>
+                        @foreach ($kegiatans as $kegiatan )
+                        @if (old('kegiatan_id') == $kegiatan->id)
+                        <option value="{{$kegiatan->id}}" selected>{{$kegiatan->nama}}</option>
+                        @else
+                        <option value="{{$kegiatan->id}}">{{$kegiatan->nama}}</option>
+                        @endif
+                        @endforeach
+                        @error('kegiatan')
+                        <div class="invalid-feedback">
+                            {{ $message}}
+                        </div>
+                        @enderror
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                </div>
+            </form>
+        </div>
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
-                             <th class="text-center">Tiket</th>
-                            <th class="text-center">nip</th>
-                            <th class="text-center">perihal</th>
-                            <th class="text-center">jadwal</th>
-                            <th class="text-center">Action</th>
-                            <th class="text-center">Jadwal Fix</th>
-                            <th class="text-center">Link</th>
-                            <th class="text-center">PIC</th>
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">Status</th>
+                            <th class="text-center">NIP</th>
+                            <th class="text-center">Nama</th>
+                            <th class="text-center">Jabatan</th>
+                            <th class="text-center">Instansi</th>
+                            <th class="text-center">Kegiatan/Pelaksanaan</th>
                         </tr>
                     </thead>
-                    @foreach ($konsultasis as $konsultasi )
+                    @foreach ($absensis as $absensi )
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{$konsultasi->tiket}}</td>
-                        <td>{{$konsultasi->nip}}</td>
-                        <td>{{$konsultasi->perihal}}</td>
-                        <td>{{$konsultasi->jadwal}}</td>
-                        <td class="text-center">
-                            <a href="/admin/konsultasi/{{$konsultasi->id}}/edit" class="badge bg-warning">Jawab</a>
-                            <form action="/admin/konsultasi/{{$konsultasi->id}}" method="POST" class="d-inline">
-                                @method('delete')
-                                @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Lanjutkan Untuk Menghapus Data')"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                                </svg></button>
-                            </form>
-                        </td>
-                        <td>{{$konsultasi->jadwalfix}}</td>
-                        <td>{{$konsultasi->link}}</td>
-                        <td>{{$konsultasi->pic}}</td>
-                        <td>{{$konsultasi->keterangan}}</td>
-                        <td>{{$konsultasi->status}}</td>
+                        <td>{{$absensi->nip}}</td>
+                        <td>{{$absensi->nama}}</td>
+                        <td>{{$absensi->jabatan}}</td>
+                        <td>{{$absensi->instansi}}</td>
+                        <td>{{$absensi->kegiatan->nama}} / {{$absensi->kegiatan->waktu}} </td>
                     </tr>
                     @endforeach
+
                     <tfoot>
                         <tr>
                             <th class="text-center">No</th>
-                            <th class="text-center">Tiket</th>
-                            <th class="text-center">nip</th>
-                            <th class="text-center">perihal</th>
-                            <th class="text-center">jadwal</th>
-                            <th class="text-center">Action</th>
-                            <th class="text-center">Jadwal Fix</th>
-                            <th class="text-center">Link</th>
-                            <th class="text-center">PIC</th>
-                            <th class="text-center">Keterangan</th>
-                            <th class="text-center">Status</th>
+                            <th class="text-center">NIP</th>
+                            <th class="text-center">Nama</th>
+                            <th class="text-center">Jabatan</th>
+                            <th class="text-center">Instansi</th>
+                            <th class="text-center">Kegiatan/Pelaksanaan</th>
+                        </tr>
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            {{$absensis->links()}}
     </div>
 </div>
+</div>
+
 
 <!-- End of Main Content -->
 
+
 @endsection
+

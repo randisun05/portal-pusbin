@@ -1,0 +1,130 @@
+@use '../../utils' as *;
+
+/*----------------------------------------*/
+/*  7.16 payment css
+/*----------------------------------------*/
+
+.tp-payment {
+    &-position{
+        margin-left: -280px;
+        @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+          margin-left: 0;  
+        }
+    }
+    &-img-wrapper{
+        margin-top: 85px;
+        @media #{$xl,$lg,$md,$sm,$xs}{
+            margin-right: 0;
+            text-align: center;
+            margin-top: 0;
+            padding-bottom: 0;
+            & img{
+                animation: inherit;
+            }
+        }
+        @media #{$xxl}{
+            margin-left: 74px;
+          }
+        &-2{
+            margin-right: 15px;
+            text-align: right;
+            margin-top: 40px;
+            @media #{$xl,$lg,$md,$sm,$xs}{
+                margin-right: 0;
+                text-align: center;
+                margin-top: 0; 
+                padding-bottom: 0;
+                & img{
+                    animation: inherit;
+                }
+            }
+            @media #{$md}{
+                padding-bottom: 15px;
+            }
+            @media #{$xs}{
+                padding: 0;
+            }
+        }
+        &-1{
+            @media #{$xl,$lg,$md,$sm,$xs}{
+                text-align: center;
+                padding-bottom: 15px;
+                & img{
+                    animation: inherit;
+                }
+              }
+               @media #{$md}{
+                padding-bottom: 15px;
+            }
+              @media #{$xs}{
+                padding-bottom: 12px;
+            }
+        }
+        margin-left: 24px;
+    }
+    &-img2{
+        @media #{$xl,$lg,$md,$sm,$xs}{
+            margin-bottom: 15px;
+        }
+        @media #{$sm,$xs}{
+            margin: 0 10px;
+        }
+    }
+    &-img1{
+        @media #{$sm,$xs}{
+            margin: 0;
+        }
+    }
+    &-img3{
+        @media #{$xl,$lg,$md}{
+            margin-bottom: 15px;
+        }
+        @media #{$sm,$xs}{
+            margin-bottom: 0;
+        }
+        @media #{$xs}{
+            margin-top: 10px;
+        }
+    }
+    &-right{
+        text-align: center;
+    }
+    &-apps{
+        float: right;
+        margin-right: 70px;
+        margin-top: 10px;
+        @media #{$xl,$lg,$md,$sm,$xs}{
+            float: inherit;
+            margin-right: 0;
+            margin-top: 60px;
+        }
+    }
+    &-review{
+        top: 165px;
+        right: -125px;
+        @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+            right: 0;
+            z-index: 9;
+        }
+    }
+    &-kirki{
+        top: 175px;
+        right: 535px;
+        @media #{$xxl}{
+            top: 204px;
+            right: 441px;
+        }
+        @media #{$xl,$lg,$md,$sm,$xs}{
+            top: 204px;
+            right: inherit;
+            left: 0;
+        }
+    }
+    &-row{
+        & img{
+            @media #{$xs}{
+                width: 100px;
+            }
+        }
+    }
+}

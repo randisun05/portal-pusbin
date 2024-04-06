@@ -1,0 +1,236 @@
+@use '../utils' as *;
+
+/*----------------------------------------*/
+/*  2.5 breadcrumb
+/*----------------------------------------*/
+
+.tp-breadcrumb{
+    &-area{
+        @media #{$sm,$xs}{
+            padding-top: 120px;
+        }
+        &-1{
+            @media #{$sm,$xs}{
+                padding: 120px 0;
+            }
+        }
+        &-2{
+            padding-top: 360px;
+            @media #{$xs}{
+                padding-top: 250px;
+            }
+        }
+        &-3{
+            padding-bottom: 350px;
+            @media #{$sm,$xs}{
+                padding-bottom: 200px;
+                padding-top: 120px;
+            }
+        }
+        &-4{
+            background: var(--tp-green-6);
+        }
+        &-6{
+            padding-bottom: 415px;
+        }
+        &-space{
+            @media #{$sm,$xs}{
+                padding: 0;
+            }
+            &-2{
+                @media #{$sm,$xs}{
+                    padding: 0;
+                    padding-bottom: 100px;
+                }
+            }
+        }
+    }
+    &-dvdr{
+        margin: 0 5px;
+    }
+    &-about{
+        background-image: linear-gradient(180deg, #efe5ff 0%, #ffffff 100%);
+        
+    }
+    &-list{
+        border-bottom: 1px solid var(--tp-border1-6);
+        & span{
+            font-size: 16px;
+            letter-spacing: 0px;
+            line-height: 20px;
+            text-transform: uppercase;
+            color: var(--tp-grey-3);
+            font-weight: 700;
+            & a{
+                &:hover{
+                    color: var(--tp-common-black);
+                }
+            }
+        }
+        &-inner{
+            &-2{
+                font-size: 16px;
+                letter-spacing: 0px;
+                line-height: 20px;
+                text-transform: uppercase;
+                color: var(--tp-common-white);
+                font-weight: 700;
+                & a{
+                    color: var(--tp-grey-17);
+                }
+            }
+            &-3{
+                text-transform: uppercase;
+            }
+            &-4{
+                & span{
+                    font-size: 16px;
+                    letter-spacing: 0px;
+                    line-height: 20px;
+                    text-transform: uppercase;
+                    color: #e7d9ff;
+                    font-weight: 700;
+                }
+            }
+            &-5{
+                font-size: 16px;
+                letter-spacing: 0px;
+                line-height: 20px;
+                text-transform: uppercase;
+                color: var(--tp-common-black);
+                font-weight: 700;
+                & a{
+                    &:hover{
+                        color: var(--tp-blue-2);
+                    }
+                }
+            }
+        }
+        &-2{
+            padding: 28px 80px 35px 40px;
+            border-radius: 15px 15px 0 0;
+            background-color: var(--tp-blue-2);
+            display: inline-block;
+        }
+        &-3{
+            background: var(--tp-common-white);
+            border-radius: 15px;
+            margin-left: -40px;
+            @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+                margin-left: 0;
+            }
+            @media #{$xs}{
+                padding: 28px 40px 35px 40px;
+            }
+            & span{
+                font-size: 16px;
+                letter-spacing: 0px;
+                line-height: 20px;
+                text-transform: uppercase;
+                background: var(--tp-common-white);
+                font-weight: 700;
+            }
+        }
+        &-5{
+            @media #{$sm,$xs}{
+                padding-top: 120px;
+                padding-bottom: 120px;
+            }
+        }
+    }
+    &-title{
+        font-size: 60px;
+        letter-spacing: -2px;
+        line-height: 70px;
+        color: var(--tp-common-black);
+        font-weight: 800;
+        @media #{$sm,$xs}{
+            font-size: 40px;
+            line-height: 50px;
+        }
+        &-pre{
+            color: var(--tp-green-6)!important;
+            &-2{
+                color: var(--tp-blue-2);
+            }
+        }
+        &-2{
+            font-size: 60px;
+            letter-spacing: -2px;
+            line-height: 65px;
+            color: var(--tp-common-white);
+            @media #{$xs}{
+                font-size: 50px;
+            }
+        }
+        &-3{
+            font-size: 50px;
+            letter-spacing: -2px;
+            line-height: 60px;
+            color: var(--tp-common-white);
+            font-weight: 800;
+        }
+        &-4{
+            color: var(--tp-common-white);
+        }
+        &-5{
+            font-size: 50px;
+            letter-spacing: -2px;
+            line-height: 60px;
+            color: var(--tp-common-white);
+            font-weight: 800;
+            margin-bottom: 13px;
+            @media #{$sm,$xs}{
+                font-size: 40px;
+            }
+        }
+        &-6{
+            font-size: 50px;
+            letter-spacing: -2px;
+            line-height: 60px;
+            color: var(--tp-common-black);
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+    }
+    &-para{
+        color: #e7d9ff;
+        margin: 0;
+    }
+    &-thumb{
+        &-img{
+            margin-left: 112px;
+            z-index: 1;
+            position: relative;
+            @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+        &-shape{
+            top: 120px;
+            left: 0;
+            z-index: 2;
+            filter: drop-shadow(-6px 0 40px rgba(30,22,22,0.12));
+            @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+                top: 0;
+            }
+            &-2{
+                bottom: 25px;
+                right: -190px;
+                z-index: 2;
+                @media #{$xxl,$xl,$lg,$md,$sm,$xs}{
+                    right: 0;
+                }
+            }
+            &-3{
+                top: 75px;
+                right: -270px;
+                @media #{$x4l,$x3l,$xxl,$xl,$lg,$md,$sm,$xs}{
+                    right: 0;
+                    top: -75px;
+                }
+            }
+        }
+    }
+}
