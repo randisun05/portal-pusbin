@@ -22,6 +22,7 @@ return new class extends Migration
             $table->String('link')->nullable();
             $table->text('excerpt');
             $table->String('image')->nullable();
+            $table->String('icon')->nullable();
             $table->text('body');
             $table->String('namadocument')->nullable();
             $table->String('document')->nullable();

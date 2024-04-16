@@ -1,6 +1,7 @@
 @extends('layout.main-main')
 @section('container')
-@include('layout.partial.header-componen')
+@include('layout.web.nav')
+
 
  <!-- 404 Start -->
  <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -16,6 +17,6 @@
         </div>
     </div>
 </div>
-@include('layout.partial.footer')
+@include('layout.web.footer')
 <!-- 404 End -->
 @endsection

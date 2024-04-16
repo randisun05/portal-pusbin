@@ -1,6 +1,6 @@
 
 
-@extends('layout.main-admin')
+@extends('layout.main-main')
 @section('container')
 
 <!-- Begin Page Content -->
@@ -60,7 +60,7 @@
                     <span class="fw-semibold d-block mb-1">Total Layanan</span>
                     <h3 class="card-title mb-2">{{$sumlay}}</h3>
                     <small class="text-success fw-semibold">
-                    
+
                     Layanan</small>
                   </div>
                 </div>
@@ -241,6 +241,6 @@
         </div>
       </div>
       <!-- / Content -->
-  
+
 </div>
 @endsection
