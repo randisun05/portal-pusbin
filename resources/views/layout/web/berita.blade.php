@@ -13,7 +13,7 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="tp-blog-btn-fin tp-blog-btn-fin-02 wow fadeInUp" data-wow-delay=".5s" data-wow-duration="1s">
-                            <a href="/berita" class="tp-btn tp-btn-transparent">Selengkapnya<i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="/publikasi" class="tp-btn tp-btn-transparent">Selengkapnya<i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

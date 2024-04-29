@@ -1,6 +1,6 @@
 
 
-@extends('layout.main-main')
+@extends('layout.main-admin')
 @section('container')
 
 <!-- Begin Page Content -->

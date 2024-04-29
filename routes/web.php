@@ -117,6 +117,7 @@ Route::get('/kegiatan/{kegiatan:slug}', [\App\Http\Controllers\Public\PublicKegi
 Route::get('/kegiatan/{kegiatan:slug}/create', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'create']);
 Route::post('/kegiatan/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'store']);
 
+
 //DATA JFK
 Route::get('/data-jfk', function () {
     return view('portal.dashboard',[

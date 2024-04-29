@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Public;
 
 use App\Models\Post;
 use App\Models\Layanan;
+use App\Models\Kegiatan;
 use App\Models\highlight;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 
 class PublicController extends Controller
@@ -23,10 +25,21 @@ class PublicController extends Controller
     {
         $posts = Post::with('category')->latest()->paginate(3);
         $layanans = Layanan::whereNot('nama','web')->where('status',1)->latest()->get();
+        $kegiatans = Kegiatan::where('jenis','!=', 'Konsultasi')->where('jenis','!=', 'Uji Kompetensi')->latest()->paginate(6);
+        foreach ($kegiatans as $kegiatan) {
+            $waktu = Carbon::parse($kegiatan->waktu);
+            // Set timezone ke Asia/Jakarta agar sesuai dengan waktu Indonesia Barat
+            $waktu->setTimezone('Asia/Jakarta');
+            // Format waktu sesuai dengan format bahasa Indonesia
+            $waktuFormatted = $waktu->isoFormat('D MMMM YYYY, HH:mm');
+            // Update waktu dalam objek $kegiatan
+            $kegiatan->waktu = $waktuFormatted;
+        }
 
         return view('portal.index', [
             "posts" => $posts,
             "layanans" => $layanans,
+            'kegiatans' => $kegiatans,
         ]);
     }
 
