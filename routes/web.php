@@ -115,7 +115,7 @@ Route::post('/logout', [LoginController::class, 'logout'] );
 
 //ROUTE PUBLIC
 //route halaman awal web
-Route::get('/', [\App\Http\Controllers\Public\PublicController::class, 'portal']);
+Route::redirect('/', '/webpusbin');
 Route::get('/webpusbin', [\App\Http\Controllers\Public\PublicController::class, 'web'] );
 
 

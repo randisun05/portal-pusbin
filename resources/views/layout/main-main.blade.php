@@ -9,6 +9,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Place favicon.ico in the root directory -->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset ('assets/img/logo/favicon.png') }}">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
     <!-- CSS here -->
     <link rel="stylesheet" href="{{asset ('assets/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset ('assets/css/animate.css') }}">
@@ -19,6 +23,7 @@
     <link rel="stylesheet" href="{{asset ('assets/css/spacing.css') }}">
     <link rel="stylesheet" href="{{asset ('assets/css/ion.rangeSlider.min.css') }}">
     <link rel="stylesheet" href="{{asset ('assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{asset ('assets/css/modern-theme.css') }}">
 
 </head>
 

@@ -5,8 +5,8 @@
             <button class="close-btn"><i class="fal fa-times"></i></button>
         </div>
         <div class="tpoffcanvas__logo">
-            <a href="index.html">
-                <img src="assets/img/logo/logo5.png" alt="logo">
+            <a href="/webpusbin">
+                <img src="{{ asset('assets/img/logo/logo5.png') }}" alt="logo">
             </a>
         </div>
         <div class="tp-main-menu-mobile d-xl-none"></div>
@@ -57,13 +57,13 @@
                 <div class="col-xl-7 col-6">
                     <div class="tp-header-left tp-header-left-insu d-flex align-items-center">
                         <div class="tp-logo">
-                            <a href="/webpusbin"><img src="assets/img/logo/logo5.png" alt="contact"></a>
+                            <a href="/webpusbin"><img src="{{ asset('assets/img/logo/logo5.png') }}" alt="contact"></a>
                         </div>
                         <div class="tp-main-menu tp-main-menu-insu d-none d-xl-block">
                             <nav class="tp-main-menu-content">
                                 <ul>
                                     <li class="has-dropdown position-static">
-                                        <a href="/webpusbin">Beranda</a>
+                                        <a href="/webpusbin" class="{{ Request::is('webpusbin') ? 'active' : '' }}">Beranda</a>
                                     </li>
                                     <li class="has-dropdown">
                                         <a href="#" class="{{ Request::is('about*',) ? 'active' : '' }}">Profil <i class="fa-solid fa-caret-down"></i></a>

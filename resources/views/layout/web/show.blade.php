@@ -7,7 +7,7 @@
                 <span class="tp-section-title-pre tp-section-title-pre-4">Perlu Kamu Tau</span>
                 <h2 class="tp-section-title tp-section-title-insu">Pelaksanaan Uji Kompetensi JFK</h2>
                 <div class="tp-about-idea  tree-move d-none d-xxl-block p-absolute">
-                   <img src="assets/img/about/about-insu12.png" alt="idea">
+                   <img src="{{ asset('assets/img/about/about-insu12.png') }}" alt="idea">
                 </div>
              </div>
              <div class="tp-about-thumb-wrapper mb-30 wow fadeInLeft" data-wow-delay=".4s" data-wow-duration="1s">
@@ -15,7 +15,7 @@
                    <div class="col-lg-5 col-md-5">
                       <div class="tp-about-thumb tp-thumb">
                          <div class="tp-thumb-overlay wow"></div>
-                         <img src="assets/img/ujikom.png" alt="about1">
+                         <img src="{{ asset('assets/img/ujikom.png') }}" alt="about1">
                       </div>
                    </div>
                    <div class="col-lg-7 col-md-7">

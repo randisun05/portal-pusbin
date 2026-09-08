@@ -1,0 +1,558 @@
+/* ==========================================================================
+   Modern Theme Overlay - Portal Pusbin JFK
+   Loaded AFTER main.css/bootstrap.css. Refreshes the existing template with
+   a cleaner, more modern visual language while keeping all tp-* class hooks
+   (and their JS behaviour) intact.
+   ========================================================================== */
+
+:root {
+  --pk-primary: #f92c24;
+  --pk-primary-dark: #d21f18;
+  --pk-primary-tint: #fdeceb;
+  --pk-secondary: #fd346e;
+  --pk-ink: #14172b;
+  --pk-body: #4b5163;
+  --pk-muted: #6c7382;
+  --pk-line: #eceff3;
+  --pk-surface: #ffffff;
+  --pk-bg: #f7f8fb;
+  --pk-radius-sm: 10px;
+  --pk-radius: 18px;
+  --pk-radius-lg: 26px;
+  --pk-shadow-sm: 0 2px 12px rgba(20, 23, 43, .06);
+  --pk-shadow: 0 14px 34px rgba(20, 23, 43, .10);
+  --pk-shadow-lg: 0 26px 60px rgba(20, 23, 43, .16);
+  --pk-ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Base typography                                                        */
+/* ---------------------------------------------------------------------- */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--pk-body);
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--pk-ink);
+  letter-spacing: -.01em;
+}
+
+p { font-family: inherit; color: var(--pk-body); }
+
+::selection { background: var(--pk-primary); color: #fff; }
+
+img { border-radius: 2px; }
+
+/* ---------------------------------------------------------------------- */
+/* Section eyebrow + titles                                               */
+/* ---------------------------------------------------------------------- */
+.tp-section-title-pre,
+.tp-section-title-pre4,
+.tp-section-title-pre-4,
+.tp-section-title-pre-5 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pk-primary-tint);
+  color: var(--pk-primary) !important;
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 7px 18px;
+  border-radius: 999px;
+}
+
+.tp-section-title-pre::before,
+.tp-section-title-pre4::before,
+.tp-section-title-pre-4::before,
+.tp-section-title-pre-5::before {
+  display: none;
+}
+
+.tp-section-title,
+.tp-section-title-insu {
+  font-weight: 800;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Buttons - keep the existing radial-sweep hover mechanic, just refine it */
+/* ---------------------------------------------------------------------- */
+.tp-btn,
+.tp-btn-insu,
+.tp-btn-transparent,
+.tp-btn-transparent-bus,
+.tp-btn-transparent-white {
+  text-transform: none;
+  letter-spacing: .01em;
+  border-radius: 999px;
+  box-shadow: var(--pk-shadow-sm);
+  transition: transform .25s var(--pk-ease), box-shadow .25s var(--pk-ease), background-color .25s var(--pk-ease), color .25s var(--pk-ease);
+}
+
+.tp-btn:hover,
+.tp-btn-insu:hover {
+  box-shadow: 0 16px 32px rgba(249, 44, 36, .28);
+  transform: translateY(-2px);
+}
+
+.tp-btn-transparent {
+  border-radius: 999px;
+}
+
+.tp-btn-transparent:hover,
+.tp-btn-transparent-bus:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--pk-shadow);
+}
+
+.tp-btn i,
+.tp-btn-insu i,
+.tp-btn-transparent i {
+  transition: transform .25s var(--pk-ease);
+}
+
+.tp-btn:hover i,
+.tp-btn-insu:hover i,
+.tp-btn-transparent:hover i {
+  transform: translateX(4px);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Header / navigation                                                    */
+/* ---------------------------------------------------------------------- */
+.tp-header-area {
+  padding: 18px 40px;
+  transition: all .3s var(--pk-ease);
+}
+
+.tp-header-sticky {
+  background: rgba(255, 255, 255, .92) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  backdrop-filter: saturate(180%) blur(14px);
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.tp-logo img { max-height: 46px; width: auto; }
+
+.tp-main-menu-content > ul > li > a {
+  font-weight: 600;
+  color: var(--pk-ink);
+  padding: 10px 4px;
+  position: relative;
+}
+
+.tp-main-menu-content > ul > li > a.active,
+.tp-main-menu-content > ul > li > a:hover {
+  color: var(--pk-primary);
+}
+
+.tp-main-menu-content > ul > li > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 0;
+  height: 2px;
+  background: var(--pk-primary);
+  transition: width .25s var(--pk-ease);
+}
+
+.tp-main-menu-content > ul > li > a:hover::after,
+.tp-main-menu-content > ul > li > a.active::after {
+  width: 100%;
+}
+
+.tp-submenu.submenu {
+  border-radius: var(--pk-radius-sm);
+  box-shadow: var(--pk-shadow-lg);
+  border: 1px solid var(--pk-line);
+  padding: 10px 0;
+  overflow: hidden;
+}
+
+.tp-submenu.submenu li a {
+  padding: 10px 22px;
+  color: var(--pk-body);
+  font-weight: 500;
+  transition: background-color .2s var(--pk-ease), color .2s var(--pk-ease), padding-left .2s var(--pk-ease);
+}
+
+.tp-submenu.submenu li a:hover {
+  background: var(--pk-primary-tint);
+  color: var(--pk-primary);
+  padding-left: 26px;
+}
+
+.tp-header-search-insu button {
+  color: var(--pk-ink);
+  transition: color .2s var(--pk-ease);
+}
+
+.tp-header-search-insu button:hover { color: var(--pk-primary); }
+
+.tp-menu-bar span {
+  background: var(--pk-ink);
+}
+
+.tpoffcanvas__close-btn button:hover,
+.tpoffcanvas__close-btn button:focus {
+  background: var(--pk-primary) !important;
+  border-color: var(--pk-primary) !important;
+  color: #fff !important;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Hero                                                                    */
+/* ---------------------------------------------------------------------- */
+.tp-hero-area.tp-grey-insu {
+  background: linear-gradient(135deg, #fff 0%, var(--pk-bg) 55%, var(--pk-primary-tint) 100%);
+  padding: 70px 0;
+}
+
+.tp-hero-title-insu {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--pk-ink);
+}
+
+.tp-hero-title-insu b,
+.tp-hero-title-insu span {
+  color: var(--pk-primary);
+  font-style: normal;
+}
+
+.tp-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--pk-primary);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 999px;
+  box-shadow: var(--pk-shadow-sm);
+  margin-bottom: 18px;
+}
+
+.tp-hero-desc {
+  color: var(--pk-muted);
+  font-size: 16px;
+  max-width: 480px;
+  margin: 18px 0 28px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Breadcrumb / inner-page header                                         */
+/* ---------------------------------------------------------------------- */
+.tp-breadcrumb-area-7 {
+  position: relative;
+}
+
+.tp-breadcrumb-area-7::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(20, 23, 43, .82), rgba(249, 44, 36, .55));
+}
+
+.tp-breadcrumb-area-7 .tp-breadcrumb-list-5 { position: relative; z-index: 1; }
+
+.tp-breadcrumb-title-2 {
+  color: #fff;
+  font-weight: 800;
+  font-size: 34px;
+}
+
+.tp-breadcrumb-list-inner-2 span,
+.tp-breadcrumb-list-inner-2 a {
+  color: rgba(255, 255, 255, .85);
+  font-weight: 500;
+}
+
+.tp-breadcrumb-list-inner-2 a:hover { color: #fff; }
+
+/* ---------------------------------------------------------------------- */
+/* Stat counters                                                          */
+/* ---------------------------------------------------------------------- */
+.tp-testimonial-counter {
+  background: var(--pk-surface);
+  border: 1px solid var(--pk-line);
+  border-radius: var(--pk-radius);
+  padding: 34px 20px;
+  text-align: center;
+  box-shadow: var(--pk-shadow-sm);
+  transition: transform .3s var(--pk-ease), box-shadow .3s var(--pk-ease);
+}
+
+.tp-testimonial-counter:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--pk-shadow);
+}
+
+.tp-testimonial-counter-title {
+  color: var(--pk-primary);
+  font-weight: 800;
+  font-size: 42px;
+}
+
+.tp-testimonial-counter-title-pre {
+  color: var(--pk-muted);
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.tp-testimonial-counter-icon {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--pk-primary-tint);
+  color: var(--pk-primary);
+  font-size: 20px;
+  margin-top: 14px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Cards - services / blog / related / info                               */
+/* ---------------------------------------------------------------------- */
+.tp-service-bus-wrap {
+  background: var(--pk-surface);
+  border: 1px solid var(--pk-line);
+  border-radius: var(--pk-radius);
+  padding: 30px 20px;
+  box-shadow: var(--pk-shadow-sm);
+  transition: transform .3s var(--pk-ease), box-shadow .3s var(--pk-ease);
+  height: 100%;
+}
+
+.tp-service-bus-wrap:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--pk-shadow);
+}
+
+.tp-service-bus img { border-radius: 0; }
+
+.tp-service-bus-tit a {
+  color: var(--pk-ink);
+  font-weight: 700;
+  transition: color .2s var(--pk-ease);
+}
+
+.tp-service-bus-wrap:hover .tp-service-bus-tit a { color: var(--pk-primary); }
+
+.tp-blog-insu-wrapper,
+.tp-blog-wrapper {
+  background: var(--pk-surface);
+  border-radius: var(--pk-radius);
+  box-shadow: var(--pk-shadow-sm);
+  transition: transform .3s var(--pk-ease), box-shadow .3s var(--pk-ease);
+  overflow: hidden;
+}
+
+.tp-blog-insu-wrapper:hover,
+.tp-blog-wrapper:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--pk-shadow);
+}
+
+.tp-blog-insu-img,
+.tp-blog-main-img {
+  overflow: hidden;
+  border-radius: var(--pk-radius) var(--pk-radius) 0 0;
+}
+
+.tp-blog-insu-img img,
+.tp-blog-main-img img {
+  transition: transform .5s var(--pk-ease);
+}
+
+.tp-blog-insu-wrapper:hover .tp-blog-insu-img img,
+.tp-blog-wrapper:hover .tp-blog-main-img img {
+  transform: scale(1.06);
+}
+
+.tp-blog-insu-content { padding: 22px 22px 26px; }
+
+.tp-blog-insu-name a {
+  background: var(--pk-primary-tint);
+  color: var(--pk-primary);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.tp-blog-insu-date { color: var(--pk-muted); font-size: 13px; margin-left: 10px; }
+
+.tp-blog-insu-title a,
+.tp-blog-title a {
+  color: var(--pk-ink);
+  font-weight: 700;
+  transition: color .2s var(--pk-ease);
+}
+
+.tp-blog-insu-title a:hover,
+.tp-blog-title a:hover { color: var(--pk-primary); }
+
+.tp-blog-insu-link,
+.tp-blog-btn-2 {
+  color: var(--pk-primary);
+  font-weight: 700;
+}
+
+.tp-about-thumb img {
+  border-radius: var(--pk-radius-lg);
+}
+
+.tp-about-list-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  background: var(--pk-primary-tint) !important;
+  color: var(--pk-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Forms / accordion / tables / misc components                          */
+/* ---------------------------------------------------------------------- */
+.form-control,
+.form-select {
+  border-radius: var(--pk-radius-sm);
+  border-color: var(--pk-line);
+  padding: 12px 16px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--pk-primary);
+  box-shadow: 0 0 0 .2rem rgba(249, 44, 36, .12);
+}
+
+.accordion-button:focus {
+  box-shadow: 0 0 0 .2rem rgba(249, 44, 36, .12);
+}
+
+.accordion-item {
+  border-radius: var(--pk-radius-sm) !important;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border-color: var(--pk-line) !important;
+}
+
+.table thead th {
+  color: var(--pk-ink);
+  font-weight: 700;
+  border-bottom-width: 2px;
+}
+
+.badge { font-weight: 600; }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--pk-primary);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Footer                                                                  */
+/* ---------------------------------------------------------------------- */
+.tp-footer-modern {
+  background: var(--pk-ink);
+  color: rgba(255, 255, 255, .72);
+  padding: 70px 0 0;
+}
+
+.tp-footer-modern h5 {
+  color: #fff;
+  font-weight: 800;
+  font-size: 17px;
+  margin-bottom: 18px;
+}
+
+.tp-footer-modern p { color: rgba(255, 255, 255, .68); }
+
+.tp-footer-modern ul li { margin-bottom: 10px; }
+
+.tp-footer-modern ul li a {
+  color: rgba(255, 255, 255, .68);
+  transition: color .2s var(--pk-ease), padding-left .2s var(--pk-ease);
+}
+
+.tp-footer-modern ul li a:hover {
+  color: #fff;
+  padding-left: 4px;
+}
+
+.tp-footer-modern .tp-footer-logo img { max-height: 46px; margin-bottom: 18px; }
+
+.tp-footer-modern .tp-footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+  margin-right: 8px;
+  transition: background-color .2s var(--pk-ease), transform .2s var(--pk-ease);
+}
+
+.tp-footer-modern .tp-footer-social a:hover {
+  background: var(--pk-primary);
+  transform: translateY(-3px);
+}
+
+.tp-footer-modern .tp-footer-info-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.tp-footer-modern .tp-footer-info-item i {
+  color: var(--pk-primary);
+  margin-top: 3px;
+}
+
+.tp-footer-modern .tp-footer-bottom-bar {
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  margin-top: 40px;
+  padding: 22px 0;
+  text-align: center;
+  color: rgba(255, 255, 255, .55);
+  font-size: 13.5px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Responsive polish                                                      */
+/* ---------------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+  .tp-header-area { padding: 14px 16px; }
+  .tp-hero-title-insu { font-size: 30px; }
+  .tp-breadcrumb-title-2 { font-size: 26px; }
+  .tp-testimonial-counter-title { font-size: 32px; }
+}

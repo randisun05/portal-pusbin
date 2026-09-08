@@ -17,14 +17,6 @@ use App\Http\Controllers\Controller;
 class PublicController extends Controller
 {
 
-    public function portal()
-    {
-       $layanans = Layanan::latest()->where('status','1')->get();
-       return view('portal.welcome',[
-        'layanans' => $layanans,
-       ]);
-    }
-
     public function web()
     {
         $posts = Post::with('category')->latest()->paginate(3);

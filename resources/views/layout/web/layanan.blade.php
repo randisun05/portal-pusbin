@@ -1,5 +1,5 @@
  <div class="testimonial-area p-relative pb-35">
-    <img class="tp-testimonial-shape tree-move d-none d-lg-block p-absolute" src="assets/img/testimonial/07.png" alt="07">
+    <img class="tp-testimonial-shape tree-move d-none d-lg-block p-absolute" src="{{ asset('assets/img/testimonial/07.png') }}" alt="07">
     <div class="container">
        <div class="row">
           <div class="col-12">

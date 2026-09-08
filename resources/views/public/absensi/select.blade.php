@@ -12,8 +12,8 @@
             <div class="col-lg-4 col-md-6">
                 <div class="tp-blog-wrapper mb-50 wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1s">
                     <div class="tp-blog-main-img mb-15 p-relative">
-                        <img class="w-img" src="assets/img/blog/blog.jpg" alt="blog">
-                        <img class="w-img" src="assets/img/blog/blog.jpg" alt="blog">
+                        <img class="w-img" src="{{ asset('assets/img/blog/blog.jpg') }}" alt="blog">
+                        <img class="w-img" src="{{ asset('assets/img/blog/blog.jpg') }}" alt="blog">
                     </div>
                     <div class="tp-blog-content">
                         <div class="tp-blog-meta mb-15">

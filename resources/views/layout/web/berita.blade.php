@@ -25,7 +25,7 @@
                 <div class="tp-blog-insu-wrapper p-relative mb-50 wow fadeInLeft" data-wow-delay=".3s" data-wow-duration="1s">
                     <div class="tp-blog-insu-img tp-thumb">
                         <div class="tp-thumb-overlay wow"></div>
-                        <img src="assets/img/berita3.png" alt="blog">
+                        <img src="{{ asset('assets/img/berita3.png') }}" alt="blog">
                     </div>
                     <div class="tp-blog-insu-content p-absolute">
                         <div class="tp-blog-insu-top d-flex align-items-center">
