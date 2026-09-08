@@ -50,45 +50,61 @@ Route::prefix('admin')->group(function() {
         Route::get('/publikasi/checkSlug', [AdminPostController::class, 'checkSlug']);
         Route::get('/', [AdminDashboardController::class, 'home'] )->Middleware(['prevent-back-history']);
 
-        // Modul konten - bisa diakses Super Admin, Admin, dan Editor
-        Route::resource('/publikasi', \App\Http\Controllers\Admin\AdminPostController::class)->parameters(['publikasi' => 'post'])->Middleware(['prevent-back-history']);
-        Route::resource('/layanan', \App\Http\Controllers\Admin\AdminLayananController::class)->Middleware(['auth','prevent-back-history']);
-        Route::resource('/kegiatan', AdminKegiatanController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/highlight', HighlightController::class)->Middleware(['prevent-back-history']);
-        Route::get('/comment', [AdminCommentController::class, 'index'])->Middleware(['prevent-back-history']);
-        Route::post('/comment/{comment}/approve', [AdminCommentController::class, 'approve']);
-        Route::delete('/comment/{comment}', [AdminCommentController::class, 'destroy']);
-        Route::resource('/faq', AdminFaqController::class)->Middleware(['prevent-back-history']);
+        // Modul konten
+        Route::resource('/publikasi', \App\Http\Controllers\Admin\AdminPostController::class)->parameters(['publikasi' => 'post'])->Middleware(['prevent-back-history', 'permission:manage-publikasi']);
+        Route::resource('/layanan', \App\Http\Controllers\Admin\AdminLayananController::class)->Middleware(['prevent-back-history', 'permission:manage-layanan']);
+        Route::resource('/kegiatan', AdminKegiatanController::class)->Middleware(['prevent-back-history', 'permission:manage-kegiatan']);
+        Route::resource('/highlight', HighlightController::class)->Middleware(['prevent-back-history', 'permission:manage-highlight']);
+        Route::group(['middleware' => ['permission:manage-comment']], function () {
+            Route::get('/comment', [AdminCommentController::class, 'index'])->Middleware(['prevent-back-history']);
+            Route::post('/comment/{comment}/approve', [AdminCommentController::class, 'approve']);
+            Route::delete('/comment/{comment}', [AdminCommentController::class, 'destroy']);
+        });
+        Route::resource('/faq', AdminFaqController::class)->Middleware(['prevent-back-history', 'permission:manage-faq']);
 
-        // Modul operasional/pengaturan - hanya Super Admin & Admin
-        Route::group(['middleware' => ['role:super-admin,admin']], function () {
-            Route::resource('/register', RegisterController::class)->parameters(['register' => 'user'])->Middleware(['prevent-back-history', 'role:super-admin']);
-            Route::resource('/konsultasi', AdminKonsultasiController::class)->Middleware(['prevent-back-history']);
-            Route::resource('/jdihjfk', AdminJdifjfkController::class)->Middleware(['prevent-back-history']);
+        // Manajemen admin & role - hanya yang memiliki permission manage-users (Super Admin selalu punya)
+        Route::group(['middleware' => ['permission:manage-users']], function () {
+            Route::resource('/register', RegisterController::class)->parameters(['register' => 'user'])->Middleware(['prevent-back-history']);
+            Route::get('/role', [\App\Http\Controllers\Admin\AdminRoleController::class, 'index'])->Middleware(['prevent-back-history']);
+            Route::get('/role/{role}/edit', [\App\Http\Controllers\Admin\AdminRoleController::class, 'edit'])->Middleware(['prevent-back-history']);
+            Route::put('/role/{role}', [\App\Http\Controllers\Admin\AdminRoleController::class, 'update']);
+        });
+
+        // Modul operasional
+        Route::resource('/konsultasi', AdminKonsultasiController::class)->Middleware(['prevent-back-history', 'permission:manage-konsultasi']);
+        Route::resource('/jdihjfk', AdminJdifjfkController::class)->Middleware(['prevent-back-history', 'permission:manage-jdihjfk']);
+        Route::group(['middleware' => ['permission:manage-survei']], function () {
             Route::resource('/survei', AdminSurveiController::class)->Middleware(['prevent-back-history']);
             Route::resource('/surveiindikator', AdminSurveiIndikatorController::class)->Middleware(['prevent-back-history']);
-            Route::resource('/dashboard', AdminDashboardController::class)->Middleware(['prevent-back-history']);
-            Route::resource('/jadwalukom', AdminJadwalController::class)->Middleware(['prevent-back-history']);
-            Route::resource('/absensi', AdminAbsensiController::class)->Middleware(['prevent-back-history']);
-            Route::resource('/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['prevent-back-history']);
-            Route::resource('/organisasi', AdminOrganisasiController::class)->Middleware(['prevent-back-history']);
-            Route::get('/profil', [AdminProfilController::class, 'edit'])->Middleware(['prevent-back-history']);
-            Route::put('/profil', [AdminProfilController::class, 'update']);
-            Route::resource('/misi', AdminMisiController::class)->Middleware(['prevent-back-history']);
-            Route::resource('/pesankontak', AdminPesanKontakController::class)->only(['index', 'show', 'destroy'])->Middleware(['prevent-back-history']);
-            Route::get('/sertifikat', [AdminSertifikatController::class, 'index'])->Middleware(['prevent-back-history']);
-            Route::post('/sertifikat/{absensi}/issue', [AdminSertifikatController::class, 'issue']);
-            Route::post('/sertifikat/{sertifikat}/send', [AdminSertifikatController::class, 'send']);
-            Route::get('/sertifikat/{sertifikat}/cetak', [AdminSertifikatController::class, 'cetak']);
-            Route::get('/auditlog', [AdminAuditLogController::class, 'index'])->Middleware(['prevent-back-history']);
-            Route::get('/pengunjung', [AdminPengunjungController::class, 'index'])->Middleware(['prevent-back-history']);
-            Route::get('/absensi-statistik', [AdminAbsensiStatController::class, 'index'])->Middleware(['prevent-back-history']);
-            Route::get('/survei-statistik', [AdminSurveiStatController::class, 'index'])->Middleware(['prevent-back-history']);
             //custom route for enrolle create
             Route::get('/survei/{survei}/create', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'TambahIndikator']);
             Route::post('/survei/{survei}/store', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'StoreIndikator']);
             Route::delete('/survei/{indikator}/delete', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'DeleteIndikator']);
         });
+        Route::resource('/dashboard', AdminDashboardController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/jadwalukom', AdminJadwalController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/absensi', AdminAbsensiController::class)->Middleware(['prevent-back-history', 'permission:manage-absensi']);
+        Route::resource('/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['prevent-back-history', 'permission:manage-kodekonsultasi']);
+        Route::resource('/organisasi', AdminOrganisasiController::class)->Middleware(['prevent-back-history', 'permission:manage-organisasi']);
+        Route::group(['middleware' => ['permission:manage-profil']], function () {
+            Route::get('/profil', [AdminProfilController::class, 'edit'])->Middleware(['prevent-back-history']);
+            Route::put('/profil', [AdminProfilController::class, 'update']);
+        });
+        Route::resource('/misi', AdminMisiController::class)->Middleware(['prevent-back-history', 'permission:manage-misi']);
+        Route::resource('/pesankontak', AdminPesanKontakController::class)->only(['index', 'show', 'destroy'])->Middleware(['prevent-back-history', 'permission:manage-pesankontak']);
+        Route::group(['middleware' => ['permission:manage-sertifikat']], function () {
+            Route::get('/sertifikat', [AdminSertifikatController::class, 'index'])->Middleware(['prevent-back-history']);
+            Route::post('/sertifikat/{absensi}/issue', [AdminSertifikatController::class, 'issue']);
+            Route::post('/sertifikat/{sertifikat}/send', [AdminSertifikatController::class, 'send']);
+            Route::get('/sertifikat/{sertifikat}/cetak', [AdminSertifikatController::class, 'cetak']);
+            Route::get('/sertifikat/{sertifikat}/download', [AdminSertifikatController::class, 'download']);
+        });
+
+        // Laporan & monitoring
+        Route::get('/auditlog', [AdminAuditLogController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-auditlog']);
+        Route::get('/pengunjung', [AdminPengunjungController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-pengunjung']);
+        Route::get('/absensi-statistik', [AdminAbsensiStatController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
+        Route::get('/survei-statistik', [AdminSurveiStatController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
     });
 });
 
@@ -155,6 +171,7 @@ Route::get('/jdihjfk', [\App\Http\Controllers\Public\JdihController::class, 'ind
 
 //ROUTE FAQ
 Route::get('/faq', [\App\Http\Controllers\Public\FaqController::class, 'index']);
+Route::post('/chat/ask', [\App\Http\Controllers\Public\FaqController::class, 'ask']);
 
 //ROUTE SURVEI
 Route::get('/survei', [\App\Http\Controllers\Public\SurveiPublicController::class, 'index'])->name('public.survei.index');

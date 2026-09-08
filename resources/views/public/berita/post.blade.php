@@ -15,6 +15,8 @@
     .pk-comment-item { border-bottom: 1px solid #eceff3; padding: 14px 0; }
     .pk-related-card { border: 1px solid #eceff3; border-radius: 12px; overflow: hidden; height: 100%; }
     .pk-related-card img { width: 100%; height: 140px; object-fit: cover; }
+    .pk-post-image { max-width: 50%; }
+    @media (max-width: 767.98px) { .pk-post-image { max-width: 100%; } }
 </style>
 
 <!-- Main Content -->
@@ -28,7 +30,7 @@
                 <span><i class="far fa-eye me-2"></i>{{ number_format($post->views) }} dilihat</span>
             </div>
             <div class="text-center">
-                <img src="{{asset('storage/' . $post->image)}}" class="mg-fluid" style="width: 50%">
+                <img src="{{asset('storage/' . $post->image)}}" class="img-fluid pk-post-image">
             </div>
             <br>
             <div class="text-black" style="text-align:justify;text-justify: ">

@@ -6,6 +6,8 @@ use App\Models\Survei;
 use App\Models\SurveiGroup;
 use App\Models\SurveiPublic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Public\SurveiPublicController;
 use App\Http\Controllers\Controller;
 
 class AdminSurveiStatController extends Controller
@@ -58,11 +60,22 @@ class AdminSurveiStatController extends Controller
             }
         }
 
+        $leaderboard = SurveiPublic::select('nip', DB::raw('count(distinct survei_id) as jumlah'))
+            ->groupBy('nip')
+            ->orderByDesc('jumlah')
+            ->limit(10)
+            ->get()
+            ->map(function ($row) {
+                $row->badge = SurveiPublicController::badgeFor((int) $row->jumlah);
+                return $row;
+            });
+
         return view('admin.survei.statistik', [
             'title' => 'Statistik Survei',
             'surveis' => $surveis,
             'selected' => $selected,
             'indikatorStats' => $indikatorStats,
+            'leaderboard' => $leaderboard,
         ]);
     }
 }

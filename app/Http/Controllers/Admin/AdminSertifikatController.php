@@ -8,6 +8,7 @@ use App\Models\Sertifikat;
 use Illuminate\Http\Request;
 use App\Services\JfManagementService;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminSertifikatController extends Controller
 {
@@ -87,5 +88,22 @@ class AdminSertifikatController extends Controller
         return view('admin.sertifikat.cetak', [
             'sertifikat' => $sertifikat->load('absensi.kegiatan'),
         ]);
+    }
+
+    /**
+     * Unduh sertifikat sebagai file PDF.
+     *
+     * @param  \App\Models\Sertifikat  $sertifikat
+     * @return \Illuminate\Http\Response
+     */
+    public function download(Sertifikat $sertifikat)
+    {
+        $sertifikat->load('absensi.kegiatan');
+
+        $pdf = Pdf::loadView('admin.sertifikat.pdf', [
+            'sertifikat' => $sertifikat,
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->download('Sertifikat-' . str_replace('/', '-', $sertifikat->nomor_sertifikat) . '.pdf');
     }
 }

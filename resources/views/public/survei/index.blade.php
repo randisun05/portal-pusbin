@@ -12,9 +12,14 @@
 
             @if (session()->has('success'))
                 <div class="text-center mb-4 p-4" style="background: linear-gradient(135deg, #fdeceb, #f7f8fb); border-radius: 16px;">
-                    <div style="font-size: 3rem;">🏆</div>
+                    <div style="font-size: 3rem;">{{ session('badgeIcon', '🏆') }}</div>
                     <h4 class="mt-2 mb-1">Terima kasih atas kontribusi Anda!</h4>
-                    <p class="text-muted mb-0">{{ session('success') }}</p>
+                    <p class="text-muted mb-2">{{ session('success') }}</p>
+                    @if (session()->has('badgeLabel'))
+                        <span class="badge rounded-pill" style="background:#f92c24; padding: 8px 18px; font-size: .85rem;">
+                            {{ session('badgeLabel') }} &middot; {{ session('jumlahSurveiSelesai') }} survei diisi
+                        </span>
+                    @endif
                 </div>
             @endif
 

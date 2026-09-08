@@ -36,4 +36,8 @@ return [
         'key' => env('JF_MANAGEMENT_API_KEY'),
     ],
 
+    'anthropic' => [
+        'api_key' => env('ANTHROPIC_API_KEY'),
+    ],
+
 ];

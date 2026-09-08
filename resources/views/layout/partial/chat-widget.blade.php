@@ -84,6 +84,11 @@
         panel.classList.add('d-none');
     });
 
+    function fallbackAnswer(question) {
+        var match = findAnswer(question);
+        addBubble(match ? match.jawaban : 'Maaf, kami belum menemukan jawaban yang cocok. Silakan hubungi kami melalui halaman Kontak, atau lihat daftar FAQ lengkap.', 'bot');
+    }
+
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         var question = input.value.trim();
@@ -91,14 +96,24 @@
         addBubble(question, 'user');
         input.value = '';
 
-        setTimeout(function () {
-            var match = findAnswer(question);
-            if (match) {
-                addBubble(match.jawaban, 'bot');
+        fetch('/chat/ask', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : ''
+            },
+            body: JSON.stringify({ question: question })
+        }).then(function (res) {
+            return res.ok ? res.json() : { answer: null };
+        }).then(function (data) {
+            if (data && data.answer) {
+                addBubble(data.answer, 'bot');
             } else {
-                addBubble('Maaf, kami belum menemukan jawaban yang cocok. Silakan hubungi kami melalui halaman Kontak, atau lihat daftar FAQ lengkap.', 'bot');
+                fallbackAnswer(question);
             }
-        }, 300);
+        }).catch(function () {
+            fallbackAnswer(question);
+        });
     });
 })();
 </script>

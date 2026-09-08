@@ -11,6 +11,30 @@ use App\Http\Controllers\Controller;
 class SurveiPublicController extends Controller
 {
     /**
+     * Tingkat "badge" kontributor survei berdasarkan jumlah survei berbeda
+     * yang sudah pernah diisi oleh satu NIP.
+     */
+    const BADGE_TIERS = [
+        1 => ['label' => 'Kontributor Baru', 'icon' => '🌱'],
+        3 => ['label' => 'Kontributor Aktif', 'icon' => '⭐'],
+        6 => ['label' => 'Kontributor Istimewa', 'icon' => '🏆'],
+        10 => ['label' => 'Kontributor Legenda', 'icon' => '👑'],
+    ];
+
+    public static function badgeFor(int $count): array
+    {
+        $badge = ['label' => 'Peserta', 'icon' => '📝'];
+
+        foreach (self::BADGE_TIERS as $threshold => $tier) {
+            if ($count >= $threshold) {
+                $badge = $tier;
+            }
+        }
+
+        return $badge;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -63,6 +87,13 @@ class SurveiPublicController extends Controller
             ]);
         }
 
-        return redirect('/survei')->with('success', 'Terima kasih, survei Anda berhasil dikirim.');
+        $jumlahSurveiSelesai = SurveiPublic::where('nip', $validatedData['nip'])->distinct('survei_id')->count('survei_id');
+        $badge = self::badgeFor($jumlahSurveiSelesai);
+
+        return redirect('/survei')
+            ->with('success', 'Terima kasih, survei Anda berhasil dikirim.')
+            ->with('badgeLabel', $badge['label'])
+            ->with('badgeIcon', $badge['icon'])
+            ->with('jumlahSurveiSelesai', $jumlahSurveiSelesai);
     }
 }

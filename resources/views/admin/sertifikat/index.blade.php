@@ -83,7 +83,8 @@
                                         <button class="badge bg-primary border-0">Terbitkan</button>
                                     </form>
                                 @else
-                                    <a href="/admin/sertifikat/{{ $absensi->sertifikat->id }}/cetak" class="badge bg-info" target="_blank">Cetak</a>
+                                    <a href="/admin/sertifikat/{{ $absensi->sertifikat->id }}/cetak" class="badge bg-info" target="_blank">Pratinjau</a>
+                                    <a href="/admin/sertifikat/{{ $absensi->sertifikat->id }}/download" class="badge bg-primary">Unduh PDF</a>
                                     <form action="/admin/sertifikat/{{ $absensi->sertifikat->id }}/send" method="POST" class="d-inline">
                                         @csrf
                                         <button class="badge bg-dark border-0">Kirim ke Manajemen JF</button>

@@ -66,4 +66,15 @@ class User extends Authenticatable
         return $this->hasRole(Role::SUPER_ADMIN);
     }
 
+    public function hasPermission(string $slug): bool
+    {
+        // Pengguna tanpa role (mis. dibuat sebelum fitur role ada) tetap
+        // diperlakukan tidak dibatasi, konsisten dengan EnsureRole.
+        if (! $this->role_id) {
+            return true;
+        }
+
+        return $this->role->hasPermission($slug);
+    }
+
 }

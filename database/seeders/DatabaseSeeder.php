@@ -15,6 +15,7 @@ use App\Models\Konsultasi;
 use App\Models\Layanan;
 use App\Models\MisiItem;
 use App\Models\OrganisasiUnit;
+use App\Models\Permission;
 use App\Models\Post;
 use App\Models\Profil;
 use App\Models\Role;
@@ -45,17 +46,36 @@ class DatabaseSeeder extends Seeder
             'deskripsi' => 'Akses penuh ke seluruh modul, termasuk manajemen admin & role.',
         ]);
 
-        Role::create([
+        $adminRole = Role::create([
             'name' => Role::ADMIN,
             'label' => 'Admin',
             'deskripsi' => 'Akses ke seluruh modul operasional & konten, tanpa manajemen admin.',
         ]);
 
-        Role::create([
+        $editorRole = Role::create([
             'name' => Role::EDITOR,
             'label' => 'Editor',
             'deskripsi' => 'Akses terbatas pada modul Publikasi, Layanan, Kegiatan, dan Highlight.',
         ]);
+
+        $permissionIds = [];
+        foreach (Permission::definitions() as $grup => $items) {
+            foreach ($items as $slug => $label) {
+                $permissionIds[$slug] = Permission::create([
+                    'slug' => $slug,
+                    'label' => $label,
+                    'grup' => $grup,
+                ])->id;
+            }
+        }
+
+        // Admin: semua permission kecuali manajemen admin/role.
+        $adminRole->permissions()->sync(collect($permissionIds)->except('manage-users')->values());
+
+        // Editor: hanya modul konten.
+        $editorRole->permissions()->sync(collect($permissionIds)->only([
+            'manage-publikasi', 'manage-layanan', 'manage-kegiatan', 'manage-highlight', 'manage-comment', 'manage-faq',
+        ])->values());
 
         User::create([
             'name' => 'Administrator',

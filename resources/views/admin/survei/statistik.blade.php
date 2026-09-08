@@ -45,6 +45,34 @@
         </div>
     </div>
 
+    <div class="card shadow-sm mb-4">
+        <div class="card-header py-3">🏆 Leaderboard Kontributor Survei Teraktif</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Peringkat</th>
+                            <th>NIP</th>
+                            <th class="text-center">Jumlah Survei Diisi</th>
+                            <th class="text-center">Badge</th>
+                        </tr>
+                    </thead>
+                    @forelse ($leaderboard as $row)
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td>{{ $row->nip }}</td>
+                            <td class="text-center">{{ $row->jumlah }}</td>
+                            <td class="text-center">{{ $row->badge['icon'] }} {{ $row->badge['label'] }}</td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="4" class="text-center">Belum ada kontributor.</td></tr>
+                    @endforelse
+                </table>
+            </div>
+        </div>
+    </div>
+
     @if($selected)
         <h4 class="mb-3">Hasil: {{ $selected->title }}</h4>
         <div class="row g-4">
