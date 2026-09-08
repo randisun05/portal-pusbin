@@ -13,6 +13,7 @@ use App\Models\Kegiatan;
 use App\Models\KodeKonsultasi;
 use App\Models\Konsultasi;
 use App\Models\Layanan;
+use App\Models\OrganisasiUnit;
 use App\Models\Post;
 use App\Models\Survei;
 use App\Models\SurveiIndikator;
@@ -309,7 +310,26 @@ class DatabaseSeeder extends Seeder
             'image' => 'post-image/uu_20.png',
         ]);
 
+        $kapus = OrganisasiUnit::create([
+            'nama' => 'Dr. Achmad Slamet Hidayat, S.Pd., M.Si.',
+            'jabatan' => 'Kepala Pusbin JFK',
+            'unit' => 'Pimpinan',
+            'urutan' => 0,
+        ]);
 
+        $pokja = [
+            ['nama' => 'Sarni, S.E.', 'jabatan' => 'Analis SDM Aparatur Ahli Madya', 'unit' => 'Pokja 1'],
+            ['nama' => 'Agung Sugiarto, S.H., M.H.', 'jabatan' => 'Analis SDM Aparatur Ahli Madya', 'unit' => 'Pokja 2'],
+            ['nama' => 'Tauchid Djatmiko, S.H., M.Si.', 'jabatan' => 'Analis SDM Aparatur Ahli Utama', 'unit' => 'Pokja 3'],
+            ['nama' => 'Dr. Elin Cahyaningsih, S.Kom., MMSI.', 'jabatan' => 'Analis SDM Aparatur Ahli Madya', 'unit' => 'Pokja 4'],
+        ];
+
+        foreach ($pokja as $i => $data) {
+            OrganisasiUnit::create(array_merge($data, [
+                'parent_id' => $kapus->id,
+                'urutan' => $i + 1,
+            ]));
+        }
     }
 
 }

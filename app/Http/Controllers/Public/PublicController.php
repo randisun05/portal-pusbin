@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Layanan;
 use App\Models\Kegiatan;
 use App\Models\highlight;
+use App\Models\OrganisasiUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
@@ -71,10 +72,19 @@ class PublicController extends Controller
 
     public function struktur()
     {
+        $tree = OrganisasiUnit::with('children.children.children')
+            ->whereNull('parent_id')
+            ->orderBy('urutan')
+            ->get();
 
-       return view('public.about.struktur',[
-        'title' => "Struktur Organisasi",
-       ]);
+        $units = OrganisasiUnit::orderBy('unit')->orderBy('urutan')->get();
+
+        return view('public.about.struktur',[
+            'title' => "Struktur Organisasi",
+            'tree' => $tree,
+            'units' => $units,
+            'daftarUnit' => $units->pluck('unit')->filter()->unique()->values(),
+        ]);
     }
 
     public function visimisi()

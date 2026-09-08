@@ -18,6 +18,7 @@ use App\Http\Controllers\AdminKonsultasiController;
 use App\Http\Controllers\Admin\AdminSurveiController;
 use App\Http\Controllers\Admin\AdminJdifjfkController;
 use App\Http\Controllers\Admin\KodeKonsultasiController;
+use App\Http\Controllers\Admin\AdminOrganisasiController;
 use App\Http\Controllers\Admin\AdminSurveiIndikatorController;
 
 /*
@@ -54,6 +55,7 @@ Route::prefix('admin')->group(function() {
         Route::resource('/kegiatan', AdminKegiatanController::class)->Middleware(['prevent-back-history']);
         Route::resource('/absensi', AdminAbsensiController::class)->Middleware(['prevent-back-history']);
         Route::resource('/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/organisasi', AdminOrganisasiController::class)->Middleware(['prevent-back-history']);
         //custom route for enrolle create
         Route::get('/survei/{survei}/create', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'TambahIndikator']);
         Route::post('/survei/{survei}/store', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'StoreIndikator']);

@@ -37,6 +37,12 @@
                   <div data-i18n="Analytics">Layanan</div>
                 </a>
               </li>
+              <li class="menu-item {{ Request::is('admin/organisasi*') ? 'active' : '' }}">
+                <a href="/admin/organisasi" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Struktur Organisasi</div>
+                </a>
+              </li>
               {{-- <li class="menu-item {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
                 <a href="/admin/dashboard" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
