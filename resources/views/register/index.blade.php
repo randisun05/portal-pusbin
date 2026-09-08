@@ -51,13 +51,28 @@
                             @enderror
                           </div>
                           <div class="form-floating">
-                            <input type="password" name="password" class="form-control rounded-bottom @error('password') is-invalid @enderror" id="password" placeholder="Password" required>
+                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password" required>
                             <label for="password">Password</label>
                             @error('password')
                             <div class="invalid-feedback">
                                 Masukan Password
                             </div>
                             @enderror
+                          </div>
+                          <div class="form-floating">
+                            <select name="role_id" class="form-select rounded-bottom @error('role_id') is-invalid @enderror" id="role_id">
+                                <option value="">-- Tanpa Role --</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>{{ $role->label }}</option>
+                                @endforeach
+                            </select>
+                            <label for="role_id">Role</label>
+                            @error('role_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                          </div>
                           <div class="text-center">
                           <button class="btn btn-lg btn-primary mt-3" type="submit">Simpan</button>
                           </div>

@@ -6,12 +6,12 @@
 @include('layout.web.header-detail')
 
     <style>
-        .vm-visi-card { background: linear-gradient(135deg, #3b4ba0, #5865c7); color: #fff; border-radius: 18px; padding: 40px 32px; }
+        .vm-visi-card { background: linear-gradient(135deg, #f92c24, #fd346e); color: #fff; border-radius: 18px; padding: 40px 32px; }
         .vm-visi-card h4 { text-transform: uppercase; letter-spacing: 2px; font-size: .85rem; opacity: .8; margin-bottom: 14px; }
         .vm-visi-card p { font-size: 1.15rem; line-height: 1.7; margin: 0; }
         .vm-misi-item { display: flex; gap: 16px; align-items: flex-start; background: #fff; border: 1px solid #eceff3; border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; transition: box-shadow .2s, transform .2s; }
         .vm-misi-item:hover { transform: translateX(4px); box-shadow: 0 8px 20px rgba(20,20,43,.08); }
-        .vm-misi-num { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: #eef2ff; color: #3b4ba0; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+        .vm-misi-num { flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: #fdeceb; color: #f92c24; font-weight: 700; display: flex; align-items: center; justify-content: center; }
     </style>
 
     <div class="container-fluid py-5">

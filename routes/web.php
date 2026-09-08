@@ -21,6 +21,13 @@ use App\Http\Controllers\Admin\AdminOrganisasiController;
 use App\Http\Controllers\Admin\AdminProfilController;
 use App\Http\Controllers\Admin\AdminMisiController;
 use App\Http\Controllers\Admin\AdminPesanKontakController;
+use App\Http\Controllers\Admin\AdminAuditLogController;
+use App\Http\Controllers\Admin\AdminPengunjungController;
+use App\Http\Controllers\Admin\AdminAbsensiStatController;
+use App\Http\Controllers\Admin\AdminSurveiStatController;
+use App\Http\Controllers\Admin\AdminCommentController;
+use App\Http\Controllers\Admin\AdminFaqController;
+use App\Http\Controllers\Admin\AdminSertifikatController;
 use App\Http\Controllers\Admin\AdminSurveiIndikatorController;
 
 /*
@@ -42,31 +49,46 @@ Route::prefix('admin')->group(function() {
 
         Route::get('/publikasi/checkSlug', [AdminPostController::class, 'checkSlug']);
         Route::get('/', [AdminDashboardController::class, 'home'] )->Middleware(['prevent-back-history']);
+
+        // Modul konten - bisa diakses Super Admin, Admin, dan Editor
         Route::resource('/publikasi', \App\Http\Controllers\Admin\AdminPostController::class)->parameters(['publikasi' => 'post'])->Middleware(['prevent-back-history']);
         Route::resource('/layanan', \App\Http\Controllers\Admin\AdminLayananController::class)->Middleware(['auth','prevent-back-history']);
-        Route::resource('/register', RegisterController::class)->parameters(['register' => 'user'])->Middleware(['prevent-back-history']);
-        Route::resource('/konsultasi', AdminKonsultasiController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/highlight', HighlightController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/jdihjfk', AdminJdifjfkController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/konsultasi', AdminKonsultasiController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/survei', AdminSurveiController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/surveiindikator', AdminSurveiIndikatorController::class)->Middleware(['prevent-back-history']);
-        // Route::resource('/konsultasi', AdminKonsultasiController::class);
-        Route::resource('/dashboard', AdminDashboardController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/jadwalukom', AdminJadwalController::class)->Middleware(['prevent-back-history']);
         Route::resource('/kegiatan', AdminKegiatanController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/absensi', AdminAbsensiController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/organisasi', AdminOrganisasiController::class)->Middleware(['prevent-back-history']);
-        Route::get('/profil', [AdminProfilController::class, 'edit'])->Middleware(['prevent-back-history']);
-        Route::put('/profil', [AdminProfilController::class, 'update']);
-        Route::resource('/misi', AdminMisiController::class)->Middleware(['prevent-back-history']);
-        Route::resource('/pesankontak', AdminPesanKontakController::class)->only(['index', 'show', 'destroy'])->Middleware(['prevent-back-history']);
-        //custom route for enrolle create
-        Route::get('/survei/{survei}/create', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'TambahIndikator']);
-        Route::post('/survei/{survei}/store', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'StoreIndikator']);
-        Route::delete('/survei/{indikator}/delete', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'DeleteIndikator']);
-        Route::resource('/highlight', HighlightController::class);
+        Route::resource('/highlight', HighlightController::class)->Middleware(['prevent-back-history']);
+        Route::get('/comment', [AdminCommentController::class, 'index'])->Middleware(['prevent-back-history']);
+        Route::post('/comment/{comment}/approve', [AdminCommentController::class, 'approve']);
+        Route::delete('/comment/{comment}', [AdminCommentController::class, 'destroy']);
+        Route::resource('/faq', AdminFaqController::class)->Middleware(['prevent-back-history']);
+
+        // Modul operasional/pengaturan - hanya Super Admin & Admin
+        Route::group(['middleware' => ['role:super-admin,admin']], function () {
+            Route::resource('/register', RegisterController::class)->parameters(['register' => 'user'])->Middleware(['prevent-back-history', 'role:super-admin']);
+            Route::resource('/konsultasi', AdminKonsultasiController::class)->Middleware(['prevent-back-history']);
+            Route::resource('/jdihjfk', AdminJdifjfkController::class)->Middleware(['prevent-back-history']);
+            Route::resource('/survei', AdminSurveiController::class)->Middleware(['prevent-back-history']);
+            Route::resource('/surveiindikator', AdminSurveiIndikatorController::class)->Middleware(['prevent-back-history']);
+            Route::resource('/dashboard', AdminDashboardController::class)->Middleware(['prevent-back-history']);
+            Route::resource('/jadwalukom', AdminJadwalController::class)->Middleware(['prevent-back-history']);
+            Route::resource('/absensi', AdminAbsensiController::class)->Middleware(['prevent-back-history']);
+            Route::resource('/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['prevent-back-history']);
+            Route::resource('/organisasi', AdminOrganisasiController::class)->Middleware(['prevent-back-history']);
+            Route::get('/profil', [AdminProfilController::class, 'edit'])->Middleware(['prevent-back-history']);
+            Route::put('/profil', [AdminProfilController::class, 'update']);
+            Route::resource('/misi', AdminMisiController::class)->Middleware(['prevent-back-history']);
+            Route::resource('/pesankontak', AdminPesanKontakController::class)->only(['index', 'show', 'destroy'])->Middleware(['prevent-back-history']);
+            Route::get('/sertifikat', [AdminSertifikatController::class, 'index'])->Middleware(['prevent-back-history']);
+            Route::post('/sertifikat/{absensi}/issue', [AdminSertifikatController::class, 'issue']);
+            Route::post('/sertifikat/{sertifikat}/send', [AdminSertifikatController::class, 'send']);
+            Route::get('/sertifikat/{sertifikat}/cetak', [AdminSertifikatController::class, 'cetak']);
+            Route::get('/auditlog', [AdminAuditLogController::class, 'index'])->Middleware(['prevent-back-history']);
+            Route::get('/pengunjung', [AdminPengunjungController::class, 'index'])->Middleware(['prevent-back-history']);
+            Route::get('/absensi-statistik', [AdminAbsensiStatController::class, 'index'])->Middleware(['prevent-back-history']);
+            Route::get('/survei-statistik', [AdminSurveiStatController::class, 'index'])->Middleware(['prevent-back-history']);
+            //custom route for enrolle create
+            Route::get('/survei/{survei}/create', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'TambahIndikator']);
+            Route::post('/survei/{survei}/store', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'StoreIndikator']);
+            Route::delete('/survei/{indikator}/delete', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'DeleteIndikator']);
+        });
     });
 });
 
@@ -85,6 +107,8 @@ Route::get('/webpusbin', [\App\Http\Controllers\Public\PublicController::class, 
 //route publikasi
 Route::get('/publikasi', [\App\Http\Controllers\Public\PostController::class, 'index']);       //daftar publikasi
 Route::get('/publikasi/{post:slug}', [\App\Http\Controllers\Public\PostController::class, 'show'] );    //halaman single post
+Route::post('/publikasi/{post:slug}/komentar', [\App\Http\Controllers\Public\PostController::class, 'storeComment']);
+Route::post('/publikasi/{post:slug}/react', [\App\Http\Controllers\Public\PostController::class, 'react']);
 Route::get('/categories/{category:slug}', function(Category $category ) {
     return view('public.berita.category', [
         'title' => $category -> name,
@@ -128,6 +152,9 @@ Route::post('/kegiatan/{kegiatan:slug}/store', [\App\Http\Controllers\Public\Pub
 
 //RIOUTE JDIH
 Route::get('/jdihjfk', [\App\Http\Controllers\Public\JdihController::class, 'index']);
+
+//ROUTE FAQ
+Route::get('/faq', [\App\Http\Controllers\Public\FaqController::class, 'index']);
 
 //ROUTE SURVEI
 Route::get('/survei', [\App\Http\Controllers\Public\SurveiPublicController::class, 'index'])->name('public.survei.index');

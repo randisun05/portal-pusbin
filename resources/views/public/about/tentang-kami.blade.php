@@ -10,7 +10,7 @@
     <style>
         .tk-stat { border: 1px solid #eceff3; border-radius: 14px; padding: 22px 16px; text-align: center; background: #fff; transition: transform .2s, box-shadow .2s; }
         .tk-stat:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(20,20,43,.08); }
-        .tk-stat h3 { font-size: 2rem; font-weight: 800; margin-bottom: 4px; color: #3b4ba0; }
+        .tk-stat h3 { font-size: 2rem; font-weight: 800; margin-bottom: 4px; color: #f92c24; }
         .tk-stat span { color: #6c7382; font-size: .85rem; }
         .tk-content { white-space: pre-line; line-height: 1.9; }
     </style>

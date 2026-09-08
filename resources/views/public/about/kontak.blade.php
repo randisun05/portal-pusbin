@@ -7,12 +7,12 @@
 
     <style>
         .kk-info-card { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1px solid #eceff3; border-radius: 14px; padding: 20px; margin-bottom: 16px; }
-        .kk-info-icon { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; background: #eef2ff; color: #3b4ba0; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+        .kk-info-icon { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; background: #fdeceb; color: #f92c24; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
         .kk-info-card h6 { margin-bottom: 4px; }
         .kk-info-card p { margin: 0; color: #6c7382; font-size: .92rem; }
         .kk-map iframe { width: 100%; height: 260px; border: 0; border-radius: 14px; }
         .kk-form .form-control { border-radius: 8px; }
-        .kk-social a { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; background: #eef2ff; color: #3b4ba0; align-items: center; justify-content: center; margin-right: 8px; }
+        .kk-social a { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; background: #fdeceb; color: #f92c24; align-items: center; justify-content: center; margin-right: 8px; }
     </style>
 
     <div class="container-fluid py-5">

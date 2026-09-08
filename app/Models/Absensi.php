@@ -18,4 +18,9 @@ class Absensi extends Model
         return $this ->belongsTo(Kegiatan::class);
     }
 
+    public function sertifikat()
+    {
+        return $this->hasOne(Sertifikat::class);
+    }
+
 }

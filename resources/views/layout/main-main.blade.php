@@ -58,6 +58,8 @@
     <script src="{{asset ('assets/js/ajax-form.js') }}"></script>
     <script src="{{asset ('assets/js/main.js') }}"></script>
 
+    @include('layout.partial.chat-widget')
+
 </body>
 
 </html>

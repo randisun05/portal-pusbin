@@ -10,6 +10,14 @@
     <div class="row">
         <div class="col-md-6 offset-md-3 py-5">
 
+            @if (session()->has('success'))
+                <div class="text-center mb-4 p-4" style="background: linear-gradient(135deg, #fdeceb, #f7f8fb); border-radius: 16px;">
+                    <div style="font-size: 3rem;">🏆</div>
+                    <h4 class="mt-2 mb-1">Terima kasih atas kontribusi Anda!</h4>
+                    <p class="text-muted mb-0">{{ session('success') }}</p>
+                </div>
+            @endif
+
             @if($surveis->isEmpty())
                 <p class="text-center text-muted">Survei belum tersedia saat ini.</p>
             @else

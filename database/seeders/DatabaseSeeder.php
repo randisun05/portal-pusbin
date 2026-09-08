@@ -17,6 +17,7 @@ use App\Models\MisiItem;
 use App\Models\OrganisasiUnit;
 use App\Models\Post;
 use App\Models\Profil;
+use App\Models\Role;
 use App\Models\Survei;
 use App\Models\SurveiIndikator;
 use App\Models\User;
@@ -38,11 +39,30 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        $superAdminRole = Role::create([
+            'name' => Role::SUPER_ADMIN,
+            'label' => 'Super Admin',
+            'deskripsi' => 'Akses penuh ke seluruh modul, termasuk manajemen admin & role.',
+        ]);
+
+        Role::create([
+            'name' => Role::ADMIN,
+            'label' => 'Admin',
+            'deskripsi' => 'Akses ke seluruh modul operasional & konten, tanpa manajemen admin.',
+        ]);
+
+        Role::create([
+            'name' => Role::EDITOR,
+            'label' => 'Editor',
+            'deskripsi' => 'Akses terbatas pada modul Publikasi, Layanan, Kegiatan, dan Highlight.',
+        ]);
+
         User::create([
             'name' => 'Administrator',
             'username' => 'administrator',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt('password')
+            'password' => bcrypt('password'),
+            'role_id' => $superAdminRole->id,
 
         ]);
 

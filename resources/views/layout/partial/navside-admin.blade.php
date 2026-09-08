@@ -1,3 +1,6 @@
+@php
+    $canManageOps = !auth()->user()->role_id || auth()->user()->hasRole(\App\Models\Role::SUPER_ADMIN, \App\Models\Role::ADMIN);
+@endphp
 <!-- Menu -->
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
@@ -31,12 +34,25 @@
                   <div data-i18n="Analytics">Publikasi</div>
                 </a>
               </li>
+              <li class="menu-item {{ Request::is('admin/comment*') ? 'active' : '' }}">
+                <a href="/admin/comment" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Komentar Publikasi</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('admin/faq*') ? 'active' : '' }}">
+                <a href="/admin/faq" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">FAQ</div>
+                </a>
+              </li>
               <li class="menu-item {{ Request::is('admin/layanan*') ? 'active' : '' }}">
                 <a href="/admin/layanan" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Layanan</div>
                 </a>
               </li>
+              @if($canManageOps)
               <li class="menu-item {{ Request::is('admin/organisasi*') ? 'active' : '' }}">
                 <a href="/admin/organisasi" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -61,34 +77,28 @@
                   <div data-i18n="Analytics">Pesan Kontak</div>
                 </a>
               </li>
-              {{-- <li class="menu-item {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
-                <a href="/admin/dashboard" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                  <div data-i18n="Analytics">Dashboard</div>
-                </a>
-              </li> --}}
               <li class="menu-item {{ Request::is('admin/konsultasi*') ? 'active' : '' }}">
                 <a href="/admin/konsultasi" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Jadwal Konsultasi</div>
                 </a>
               </li>
-              {{-- <li class="menu-item {{ Request::is('admin/jadwalukom*') ? 'active' : '' }}">
-                <a href="/admin/jadwalukom" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                  <div data-i18n="Analytics">Jadwal UKom</div>
-                </a>
-              </li> --}}
-              <li class="menu-item {{ Request::is('admin/kegiatan*') ? 'active' : '' }}">
-                <a href="/admin/kegiatan" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                  <div data-i18n="Analytics">Kegiatan</div>
-                </a>
-              </li>
-              <li class="menu-item {{ Request::is('admin/absensi*') ? 'active' : '' }}">
+              <li class="menu-item {{ Request::is('admin/absensi') || Request::is('admin/absensi/*') ? 'active' : '' }}">
                 <a href="/admin/absensi" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Absensi</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('admin/absensi-statistik*') ? 'active' : '' }}">
+                <a href="/admin/absensi-statistik" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Statistik Absensi</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('admin/sertifikat*') ? 'active' : '' }}">
+                <a href="/admin/sertifikat" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Sertifikat</div>
                 </a>
               </li>
               <li class="menu-item {{ Request::is('admin/jdihjfk*') ? 'active' : '' }}">
@@ -97,18 +107,45 @@
                   <div data-i18n="Analytics">JDIH JFK</div>
                 </a>
               </li>
-              <li class="menu-item {{ Request::is('admin/survei*') ? 'active' : '' }}">
+              <li class="menu-item {{ Request::is('admin/survei') || Request::is('admin/survei/*') ? 'active' : '' }}">
                 <a href="/admin/survei" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Survei</div>
                 </a>
               </li>
+              <li class="menu-item {{ Request::is('admin/survei-statistik*') ? 'active' : '' }}">
+                <a href="/admin/survei-statistik" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Statistik Survei</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('admin/auditlog*') ? 'active' : '' }}">
+                <a href="/admin/auditlog" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Audit Trail</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('admin/pengunjung*') ? 'active' : '' }}">
+                <a href="/admin/pengunjung" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Monitoring Pengunjung</div>
+                </a>
+              </li>
+              @endif
+              <li class="menu-item {{ Request::is('admin/kegiatan*') ? 'active' : '' }}">
+                <a href="/admin/kegiatan" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Kegiatan</div>
+                </a>
+              </li>
+              @if(!auth()->user()->role_id || auth()->user()->isSuperAdmin())
               <li class="menu-item {{ Request::is('admin/register*') ? 'active' : '' }}">
                 <a href="/admin/register" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Registrasi Admin</div>
                 </a>
               </li>
+              @endif
           </ul>
 </aside>
     <!-- / Menu -->

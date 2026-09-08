@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Models\Absensi;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use App\Mail\SendEmailAbsensi;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 
 class PublicAbsensiController extends Controller
@@ -88,7 +90,15 @@ class PublicAbsensiController extends Controller
             'instansi' => $request->instansi,
         ]);
 
-        return redirect()->route('public.absensi.index')->withSuccess('Absensi berhasil!');
+        $data = Absensi::where('nip', $request->nip)->where('kegiatan_id', $request->kegiatan_id)->with('kegiatan')->latest()->first();
+
+        try {
+            Mail::to($data->email)->send(new SendEmailAbsensi($data));
+        } catch (\Throwable $e) {
+            // Absensi tetap berhasil walau email konfirmasi gagal terkirim
+        }
+
+        return redirect()->route('public.absensi.index')->withSuccess('Absensi berhasil! Cek email Anda untuk konfirmasi.');
     }
 
     /**

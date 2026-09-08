@@ -115,10 +115,10 @@
                                         <a href="#">HelpDesk <i class="fa-solid fa-caret-down"></i></a>
                                         <ul class="tp-submenu submenu">
                                             <li><a href="/faq">FAQ</a></li>
-                                            <li><a href="/ajukan-pertanyaan">Ajukan Pertanyaan</a></li>
+                                            <li><a href="/about/kontak-kami">Ajukan Pertanyaan</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/kontak-kami">Kontak Kami</a></li>
+                                    <li><a href="/about/kontak-kami">Kontak Kami</a></li>
                                 </ul>
                         </div>
                         <div class="tp-header-search-insu">

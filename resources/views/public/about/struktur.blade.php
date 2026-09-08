@@ -32,7 +32,7 @@
         .org-photo-fallback { font-weight: 700; font-size: 1.1rem; color: #6c7382; }
         .org-nama { font-size: .92rem; margin: 0; font-weight: 700; }
         .org-jabatan { display: block; font-size: .78rem; color: #6c7382; margin-top: 2px; }
-        .org-unit { display: inline-block; margin-top: 6px; font-size: .68rem; background: #eef2ff; color: #3b4ba0; padding: 2px 8px; border-radius: 20px; }
+        .org-unit { display: inline-block; margin-top: 6px; font-size: .68rem; background: #fdeceb; color: #f92c24; padding: 2px 8px; border-radius: 20px; }
         .org-toggle {
             position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
             width: 20px; height: 20px; border-radius: 50%; border: 1px solid #d7dbe3; background: #fff;
@@ -43,7 +43,7 @@
 
         .org-search-bar { max-width: 420px; }
         .org-filter-chip { cursor: pointer; border: 1px solid #d7dbe3; background: #fff; border-radius: 20px; padding: 6px 16px; font-size: .82rem; margin: 4px; display: inline-block; transition: all .15s; }
-        .org-filter-chip.active, .org-filter-chip:hover { background: #3b4ba0; color: #fff; border-color: #3b4ba0; }
+        .org-filter-chip.active, .org-filter-chip:hover { background: #f92c24; color: #fff; border-color: #f92c24; }
         .org-empty-state { display: none; text-align: center; padding: 2rem; color: #6c7382; }
     </style>
 

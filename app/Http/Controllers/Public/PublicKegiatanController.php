@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Models\Absensi;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use App\Mail\SendEmailKegiatan;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 
 class PublicKegiatanController extends Controller
@@ -95,7 +97,13 @@ class PublicKegiatanController extends Controller
 
         $data = Absensi::where('nip', $request->nip)->with('kegiatan')->latest()->first();
 
-        return redirect()->route('public.kegiatan.index')->withSuccess('Pendaftaran berhasil!');
+        try {
+            Mail::to($data->email)->send(new SendEmailKegiatan($data));
+        } catch (\Throwable $e) {
+            // Pendaftaran tetap berhasil walau email konfirmasi gagal terkirim
+        }
+
+        return redirect()->route('public.kegiatan.index')->withSuccess('Pendaftaran berhasil! Cek email Anda untuk konfirmasi.');
     }
 
     /**
