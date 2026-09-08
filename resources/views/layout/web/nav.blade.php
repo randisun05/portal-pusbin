@@ -86,6 +86,9 @@
                                             <li><a href="/layanan/pengembangan-kompetensi">Pengembangan Kompetensi JFK</a></li>
                                             <li><a href="/layanan/uji-kompetensi">Uji Kompetensi JFK</a></li>
                                             <li><a href="/layanan/perpindahan-audiwan">Perpindahan JF Audiwan</a></li>
+                                            <li><a href="/layanan/konversi-angka-kredit">Konversi Angka Kredit</a></li>
+                                            <li><a href="/layanan/pengusulan-pak">Pengusulan PAK</a></li>
+                                            <li><a href="/layanan/perubahan-nomenklatur">Perubahan Nomenklatur</a></li>
                                         </ul>
                                     </li>
                                     <li class="has-dropdown">

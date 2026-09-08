@@ -88,10 +88,7 @@ class PublicAbsensiController extends Controller
             'instansi' => $request->instansi,
         ]);
 
-        $data = Absensi::where('nip', $request->nip)->with('kegiatan')->latest()->first();
-
-
-        return redirect()->route('public.konsultasi.index')->withSuccess('Absensi berhasil!');
+        return redirect()->route('public.absensi.index')->withSuccess('Absensi berhasil!');
     }
 
     /**

@@ -16,12 +16,14 @@
         <p class="mb-0">Asesor Sumber Daya Manusia Aparatur</p>
         <p><a href="{{asset('dokumen/perbknno4thn2022.pdf')}}">Peraturan BKN No. 3 Tahun 2022</a></p>
 
-        <p>Adapun tujuan dari rekomendasi kebutuhan JFK diantaranya : </p>
-        <p class="mb-0">-	Sebagai syarat pengusulan Uji Kompetensi</p>
-        <p class="mb-0">-	Sebagai syarat perubahan nomenklatur</p>
-        <p class="mb-0">-	Sabagai bagian pengangkatan dan pengembangan karier</p>
-        <p class="mb-0">-	Pengisian volume beban kerja berdasarkan indicator yang sudah ditetapkan</p>
-        <p class="mb-0">-	Rekomendasi yang diberikan sebanding dengan jumlah kebutuhan per jenjang, unit kerja penempatan, dan peta jabatan</p>
+        <p>Adapun tujuan dari rekomendasi kebutuhan JFK diantaranya:</p>
+        <ul>
+            <li>Sebagai syarat pengusulan Uji Kompetensi</li>
+            <li>Sebagai syarat perubahan nomenklatur</li>
+            <li>Sebagai bagian pengangkatan dan pengembangan karier</li>
+            <li>Pengisian volume beban kerja berdasarkan indikator yang sudah ditetapkan</li>
+            <li>Rekomendasi yang diberikan sebanding dengan jumlah kebutuhan per jenjang, unit kerja penempatan, dan peta jabatan</li>
+        </ul>
     </div>
 
 

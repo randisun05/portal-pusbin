@@ -1,28 +1,18 @@
 @extends('layout.main-main')
 @section('container')
-@include('layout.partial.header-componen')
-@include('sweetalert::alert')
+@include('layout.web.nav')
+@include('layout.partial.notif')
 
-@if (session()->has('success'))
-                            <div class="alert alert-success col-lg-8" role="alert">
-                            {{session('success')}}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                            @endif
-
-@include('sweetalert::alert')
-
-
-
+<main>
+@include('layout.web.header-detail')
 
 <div class="text-center mt-5 py-5">
-<p>No Tiket Konsultasi Anda </p>
-<p> <h1>{{$tiket}}</h1></p>
-<p>Tiket Dijawab kurang lebih 2 hari, Cek Jawaban Konsultasi <a href="/konsultasi/cari">di sini</a></p>
-<p><a href="/konsultasi">Kembali</a></p>
+    <p>No Tiket Konsultasi Anda</p>
+    <h1>{{$tiket}}</h1>
+    <p>Tiket dijawab kurang lebih 2 hari, cek jawaban konsultasi <a href="/konsultasi/cari">di sini</a></p>
+    <p><a href="/konsultasi">Kembali</a></p>
+</div>
+</main>
 
-</div>
-<div class="padingfooter mt-3">
-@include('layout.partial.footer')
-</div>
+@include('layout.web.footer')
 @endsection

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Public;
 
 use App\Models\Survei;
 use App\Models\SurveiGroup;
+use App\Models\SurveiPublic;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SurveiPublicController extends Controller
 {
@@ -15,87 +17,52 @@ class SurveiPublicController extends Controller
      */
     public function index()
     {
-
         return view('public.survei.index', [
             'title' => "Daftar Survei Pusat Pembinaan Jabatan Fungsional Kepegawaian",
-            'surveis' => Survei::get(),
+            'surveis' => Survei::orderBy('title')->get(),
         ]);
-
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \App\Models\Survei  $survei
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Survei $survei)
     {
-
-        $title = Survei::where('id',$id)->value('title');
-        $type = Survei::where('id',$id)->value('type');
-        $survei = SurveiGroup::with('indikator')->where('survei_id',$id)->get();
+        $groups = SurveiGroup::with('indikator')->where('survei_id', $survei->id)->get();
 
         return view('public.survei.create', [
-            'title' => $title,
-            'type' => $type,
-            'surveis' => $survei,
+            'title' => $survei->title,
+            'survei' => $survei,
+            'groups' => $groups,
         ]);
-
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Survei  $survei
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Survei $survei)
     {
-        //
-    }
+        $validatedData = $request->validate([
+            'nip' => 'required',
+            'jawaban' => 'required|array',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        foreach ($validatedData['jawaban'] as $indikatorId => $nilai) {
+            SurveiPublic::create([
+                'nip' => $validatedData['nip'],
+                'survei_id' => $survei->id,
+                'indikator_id' => $indikatorId,
+                'velue' => $nilai,
+            ]);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect('/survei')->with('success', 'Terima kasih, survei Anda berhasil dikirim.');
     }
 }

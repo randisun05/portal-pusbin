@@ -128,10 +128,6 @@ class AdminKegiatanController extends Controller
         ]);
 
 
-        if ($request->file('image')) {
-            $image = $request->file('image')->store('post-image');
-        }
-
         $slug = strtolower(str_replace(' ', '-', $request->nama));
         $original_slug = $slug;
         $count = 1;

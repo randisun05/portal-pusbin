@@ -139,6 +139,27 @@ class PublicController extends Controller
         ]);
     }
 
+    public function konversiAk()
+    {
+        return view('public.layanan.konversi-ak',[
+            'title' => "Konversi Angka Kredit Jabatan Fungsional Kepegawaian",
+        ]);
+    }
+
+    public function pengusulanPak()
+    {
+        return view('public.layanan.pengusulan-pak',[
+            'title' => "Pengusulan Penetapan Angka Kredit (PAK)",
+        ]);
+    }
+
+    public function perubahanNomenklatur()
+    {
+        return view('public.layanan.perubahan-nomenklatur',[
+            'title' => "Perubahan Nomenklatur Jabatan Fungsional Kepegawaian",
+        ]);
+    }
+
     public function kontak()
     {
         return view('public.about.kontak',[

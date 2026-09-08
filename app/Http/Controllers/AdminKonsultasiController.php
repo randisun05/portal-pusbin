@@ -108,14 +108,11 @@ class AdminKonsultasiController extends Controller
         ];
 
         Mail::to($data['email'])->send(new SendEmail($data));
-        dd("Email Berhasil dikirim.");
-        return view('konsultasi.tiket',[
+
+        return view('public.konsultasi.tiket',[
             "tiket" => $tiket,
             "title" => "Nomor Tiket",
         ]);
-
-        Alert::success('Success Title', 'Success Message');
-
     }
 
     /**
@@ -135,12 +132,21 @@ class AdminKonsultasiController extends Controller
 
     public function search(Request $request)
     {
+        $konsultasi = null;
 
         if ($request->has('search')) {
             $konsultasi = Konsultasi::where('tiket','LIKE','%'.$request->search)->first();
         }
 
-        return view('konsultasi.show',['konsultasi'=>$konsultasi,  'title' => "Cari Konsultasi",]);
+        return view('public.konsultasi.show',['konsultasi'=>$konsultasi,  'title' => "Cari Konsultasi",]);
+    }
+
+    public function tiket(Request $request)
+    {
+        return view('public.konsultasi.tiket', [
+            'tiket' => $request->query('tiket'),
+            'title' => "Nomor Tiket",
+        ]);
     }
 
     /**

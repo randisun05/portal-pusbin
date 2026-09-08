@@ -4,7 +4,6 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LayananController;
 use App\Http\Middleware\PreventBackHistory;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminHomeController;
@@ -87,7 +86,7 @@ Route::get('/webpusbin', [\App\Http\Controllers\Public\PublicController::class, 
 Route::get('/publikasi', [\App\Http\Controllers\Public\PostController::class, 'index']);       //daftar publikasi
 Route::get('/publikasi/{post:slug}', [\App\Http\Controllers\Public\PostController::class, 'show'] );    //halaman single post
 Route::get('/categories/{category:slug}', function(Category $category ) {
-    return view('berita.category', [
+    return view('public.berita.category', [
         'title' => $category -> name,
         'posts' => $category -> posts,
         'category' => $category -> name,
@@ -95,7 +94,7 @@ Route::get('/categories/{category:slug}', function(Category $category ) {
 });                                                                 //halaman categori post
 
 Route::get('/categories', function( ) {
-return view('berita.categories', [
+return view('public.berita.categories', [
     'title' => 'Kategori Publikasi',
     'categories' => Category::all()
 
@@ -105,48 +104,44 @@ return view('berita.categories', [
 
 //ROUTE KONSULTASI
 Route::get('/konsultasi', [\App\Http\Controllers\Public\KonsultasiController::class, 'index'])->name('public.konsultasi.index');
-Route::get('/konsultasi/{kegiatan:slug}', [\App\Http\Controllers\Public\KonsultasiController::class, 'create']);
-Route::post('/konsultasi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\KonsultasiController::class, 'store']);
 Route::get('/konsultasi/cari', function () {
-    return view('konsultasi.cari',[
+    return view('public.konsultasi.cari',[
         'title' => "Cari Konsultasi"
     ]);
 });
 Route::get('/konsultasi/jadwal', [AdminKonsultasiController::class, 'search']);
 Route::get('/konsultasi/tiket', [AdminKonsultasiController::class, 'tiket']);
+Route::get('/konsultasi/{kegiatan:slug}', [\App\Http\Controllers\Public\KonsultasiController::class, 'create']);
+Route::post('/konsultasi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\KonsultasiController::class, 'store']);
 
 //ROUTE ABSENSI
-Route::get('/absensi', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'index']);
+Route::get('/absensi', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'index'])->name('public.absensi.index');
 Route::get('/absensi/{kegiatan:slug}', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'create']);
 Route::post('/absensi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'store']);
 
 //ROUTE KEGIATAN
-Route::get('/kegiatan', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'index']);
+Route::get('/kegiatan', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'index'])->name('public.kegiatan.index');
 Route::get('/kegiatan/{kegiatan:slug}', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'show']);
 Route::get('/kegiatan/{kegiatan:slug}/create', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'create']);
 Route::post('/kegiatan/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'store']);
 
 
-//DATA JFK
-Route::get('/data-jfk', function () {
-    return view('portal.dashboard',[
-        'title' => "Daftar Dashboard"
-    ]);
-});
-
 //RIOUTE JDIH
 Route::get('/jdihjfk', [\App\Http\Controllers\Public\JdihController::class, 'index']);
 
 //ROUTE SURVEI
-// Route::get('/survei/', [\App\Http\Controllers\Public\SurveiPublicController::class, 'index']);
-// Route::get('/survei/{survei}/create', [\App\Http\Controllers\Public\SurveiPublicController::class, 'create']);
-// Route::get('/survei/{survei}/create/store', [\App\Http\Controllers\Public\SurveiPublicController::class, 'store']);
+Route::get('/survei', [\App\Http\Controllers\Public\SurveiPublicController::class, 'index'])->name('public.survei.index');
+Route::get('/survei/{survei}/create', [\App\Http\Controllers\Public\SurveiPublicController::class, 'create']);
+Route::post('/survei/{survei}', [\App\Http\Controllers\Public\SurveiPublicController::class, 'store']);
 
 //ROUTE ABOUT
 Route::get('/layanan/pengajuan-rekomendasi', [\App\Http\Controllers\Public\PublicController::class, 'kebutuhan']);
 Route::get('/layanan/pengembangan-kompetensi', [\App\Http\Controllers\Public\PublicController::class, 'pengembangan']);
 Route::get('/layanan/uji-kompetensi', [\App\Http\Controllers\Public\PublicController::class, 'ujikom']);
 Route::get('/layanan/perpindahan-audiwan', [\App\Http\Controllers\Public\PublicController::class, 'audiwan']);
+Route::get('/layanan/konversi-angka-kredit', [\App\Http\Controllers\Public\PublicController::class, 'konversiAk']);
+Route::get('/layanan/pengusulan-pak', [\App\Http\Controllers\Public\PublicController::class, 'pengusulanPak']);
+Route::get('/layanan/perubahan-nomenklatur', [\App\Http\Controllers\Public\PublicController::class, 'perubahanNomenklatur']);
 Route::get('/about/tentang-kami', [\App\Http\Controllers\Public\PublicController::class, 'about']);
 Route::get('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontak']);
 Route::post('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontakStore']);

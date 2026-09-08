@@ -1,6 +1,9 @@
 @extends('layout.main-main')
 @section('container')
-@include('layout.partial.header-componen')
+@include('layout.web.nav')
+
+<main>
+@include('layout.web.header-detail')
 
 <!-- Form Usulan Konsultasi -->
                 <div class="container-fluid">
@@ -43,7 +46,7 @@
 
                             {{-- PERIHAL KONSULTASI --}}
                             <label for="perihal" class="form-label">PERIHAL KONSULTASI</label>
-                            <select class="form-select @error('kode_id') is-invalid @enderror" name="kode_id">
+                            <select class="form-select @error('kode_id') is-invalid @enderror" name="kode_id" id="kode_id">
                                 @foreach ($kode as $kode )
                                     @if (old('kode_id') == $kode->id)
                                         <option value="{{$kode->id}}" selected>{{$kode->jenis}}</option>
@@ -82,7 +85,7 @@
 
                             {{-- Button --}}
                             <div class="col text-center m-3">
-                             <button type="submit" class="btn btn-primary mb-3" class="" id="kirim">KIRIM USULAN</button>
+                             <button type="submit" class="btn btn-primary mb-3" id="kirim">KIRIM USULAN</button>
                             </div>
                         </form>
 
@@ -92,19 +95,7 @@
                         </div>
                     </div>
                 </div>
+</main>
 
-
-@include('layout.partial.footer')
-
-
-<script>
-    // Add a change event listener to the dropdown list
-    const kodeDropdown = document.getElementById('kode_id');
-    kodeDropdown.addEventListener('change', function() {
-        // Get the selected option from the dropdown list
-        const selectedOption = this.options[this.selectedIndex];
-        // Set the value of the input field to the selected option's value
-        document.getElementById('jenis').value = selectedOption.dataset.kode;
-    });
-</script>
+@include('layout.web.footer')
 @endsection
