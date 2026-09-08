@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Public;
 
 use App\Models\Post;
+use App\Models\Profil;
 use App\Models\Layanan;
 use App\Models\Kegiatan;
+use App\Models\MisiItem;
 use App\Models\highlight;
+use App\Models\PesanKontak;
 use App\Models\OrganisasiUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -41,6 +44,11 @@ class PublicController extends Controller
             "posts" => $posts,
             "layanans" => $layanans,
             'kegiatans' => $kegiatans,
+            'profil' => Profil::current(),
+            'jumlahOrganisasi' => OrganisasiUnit::count(),
+            'jumlahLayanan' => Layanan::where('status', 1)->count(),
+            'jumlahKegiatan' => Kegiatan::count(),
+            'jumlahPublikasi' => Post::count(),
         ]);
     }
 
@@ -55,19 +63,24 @@ class PublicController extends Controller
 
     public function about()
     {
-
-       return view('public.about.tentang-kami',[
-        'title' => "Tentang Kami",
-       ]);
+        return view('public.about.tentang-kami',[
+            'title' => "Tentang Kami",
+            'profil' => Profil::current(),
+            'jumlahLayanan' => Layanan::where('status', 1)->count(),
+            'jumlahKegiatan' => Kegiatan::count(),
+            'jumlahPublikasi' => Post::count(),
+            'jumlahOrganisasi' => OrganisasiUnit::count(),
+        ]);
     }
 
     public function kapus()
     {
+        $kapus = OrganisasiUnit::whereNull('parent_id')->orderBy('urutan')->first();
 
-
-       return view('public.about.kepala',[
-        'title' => "Kepala Pusat Pembinaan Jabatan Fungsional Kepegawaian",
-       ]);
+        return view('public.about.kepala',[
+            'title' => "Kepala Pusat Pembinaan Jabatan Fungsional Kepegawaian",
+            'kapus' => $kapus,
+        ]);
     }
 
     public function struktur()
@@ -89,10 +102,11 @@ class PublicController extends Controller
 
     public function visimisi()
     {
-
-       return view('public.about.visi-misi',[
-        'title' => "Visi Misi",
-       ]);
+        return view('public.about.visi-misi',[
+            'title' => "Visi Misi",
+            'profil' => Profil::current(),
+            'misis' => MisiItem::orderBy('urutan')->get(),
+        ]);
     }
     public function kebutuhan()
     {
@@ -129,7 +143,23 @@ class PublicController extends Controller
     {
         return view('public.about.kontak',[
             'title' => "Kontak Kami",
+            'profil' => Profil::current(),
         ]);
+    }
+
+    public function kontakStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email',
+            'telepon' => 'nullable',
+            'subjek' => 'nullable',
+            'pesan' => 'required',
+        ]);
+
+        PesanKontak::create($validatedData);
+
+        return redirect('/about/kontak-kami')->with('success', 'Terima kasih, pesan Anda berhasil terkirim. Kami akan segera merespon.');
     }
 
 

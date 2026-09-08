@@ -6,6 +6,22 @@
 <!-- Main Content -->
 <main>
     <div class="container mt-50">
+        <form action="/publikasi" method="GET" class="row g-2 align-items-center mb-4">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control" value="{{ $search }}" placeholder="Cari judul atau isi publikasi...">
+            </div>
+            <div class="col-md-4">
+                <select name="category" class="form-select" onchange="this.form.submit()">
+                    <option value="">Semua Kategori</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->slug }}" {{ $categorySlug === $category->slug ? 'selected' : '' }}>{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="tp-btn tp-btn-insu">Cari</button>
+            </div>
+        </form>
         @if ($posts->count())
         <div class="row">
             @foreach ($posts as $post)

@@ -19,6 +19,9 @@ use App\Http\Controllers\Admin\AdminSurveiController;
 use App\Http\Controllers\Admin\AdminJdifjfkController;
 use App\Http\Controllers\Admin\KodeKonsultasiController;
 use App\Http\Controllers\Admin\AdminOrganisasiController;
+use App\Http\Controllers\Admin\AdminProfilController;
+use App\Http\Controllers\Admin\AdminMisiController;
+use App\Http\Controllers\Admin\AdminPesanKontakController;
 use App\Http\Controllers\Admin\AdminSurveiIndikatorController;
 
 /*
@@ -56,6 +59,10 @@ Route::prefix('admin')->group(function() {
         Route::resource('/absensi', AdminAbsensiController::class)->Middleware(['prevent-back-history']);
         Route::resource('/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['prevent-back-history']);
         Route::resource('/organisasi', AdminOrganisasiController::class)->Middleware(['prevent-back-history']);
+        Route::get('/profil', [AdminProfilController::class, 'edit'])->Middleware(['prevent-back-history']);
+        Route::put('/profil', [AdminProfilController::class, 'update']);
+        Route::resource('/misi', AdminMisiController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/pesankontak', AdminPesanKontakController::class)->only(['index', 'show', 'destroy'])->Middleware(['prevent-back-history']);
         //custom route for enrolle create
         Route::get('/survei/{survei}/create', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'TambahIndikator']);
         Route::post('/survei/{survei}/store', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'StoreIndikator']);
@@ -142,6 +149,7 @@ Route::get('/layanan/uji-kompetensi', [\App\Http\Controllers\Public\PublicContro
 Route::get('/layanan/perpindahan-audiwan', [\App\Http\Controllers\Public\PublicController::class, 'audiwan']);
 Route::get('/about/tentang-kami', [\App\Http\Controllers\Public\PublicController::class, 'about']);
 Route::get('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontak']);
+Route::post('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontakStore']);
 Route::get('/about/kepala-pusat', [\App\Http\Controllers\Public\PublicController::class, 'kapus']);
 Route::get('/about/visi-misi', [\App\Http\Controllers\Public\PublicController::class, 'visimisi']);
 Route::get('/about/struktur-organisasi', [\App\Http\Controllers\Public\PublicController::class, 'struktur']);

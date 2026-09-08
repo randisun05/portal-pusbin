@@ -43,6 +43,24 @@
                   <div data-i18n="Analytics">Struktur Organisasi</div>
                 </a>
               </li>
+              <li class="menu-item {{ Request::is('admin/profil*') ? 'active' : '' }}">
+                <a href="/admin/profil" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Profil Organisasi</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('admin/misi*') ? 'active' : '' }}">
+                <a href="/admin/misi" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Misi</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('admin/pesankontak*') ? 'active' : '' }}">
+                <a href="/admin/pesankontak" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Pesan Kontak</div>
+                </a>
+              </li>
               {{-- <li class="menu-item {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
                 <a href="/admin/dashboard" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>

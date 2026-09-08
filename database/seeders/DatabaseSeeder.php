@@ -13,8 +13,10 @@ use App\Models\Kegiatan;
 use App\Models\KodeKonsultasi;
 use App\Models\Konsultasi;
 use App\Models\Layanan;
+use App\Models\MisiItem;
 use App\Models\OrganisasiUnit;
 use App\Models\Post;
+use App\Models\Profil;
 use App\Models\Survei;
 use App\Models\SurveiIndikator;
 use App\Models\User;
@@ -329,6 +331,30 @@ class DatabaseSeeder extends Seeder
                 'parent_id' => $kapus->id,
                 'urutan' => $i + 1,
             ]));
+        }
+
+        Profil::create([
+            'tentang' => "Pusat Pembinaan Jabatan Fungsional Kepegawaian (Pusbin JFK) adalah unit kerja Badan Kepegawaian Negara (BKN) yang bertugas melaksanakan pembinaan jabatan fungsional di bidang kepegawaian, meliputi penyusunan kebutuhan formasi, uji kompetensi, penilaian angka kredit, serta pengembangan kompetensi bagi para pejabat fungsional kepegawaian di seluruh Indonesia.\n\nKami berkomitmen memberikan layanan yang profesional, transparan, dan mudah diakses, baik secara daring maupun luring, guna mendukung peningkatan profesionalisme Aparatur Sipil Negara (ASN) khususnya pada rumpun jabatan fungsional kepegawaian.",
+            'visi' => 'Menjadi pusat pembinaan jabatan fungsional kepegawaian yang profesional, kredibel, dan berbasis teknologi dalam mendukung terwujudnya ASN yang kompeten dan berkinerja tinggi.',
+            'alamat' => 'Jl. Mayjen Sutoyo No. 12, Jakarta Timur, 13640 – Indonesia',
+            'telepon' => '021-8093008',
+            'email' => 'pusbinjfk@gmail.com',
+            'jam_operasional' => 'Senin - Jumat, 08.00 - 16.00 WIB',
+        ]);
+
+        $misis = [
+            'Menyusun kebutuhan dan formasi jabatan fungsional kepegawaian secara akurat dan berkelanjutan.',
+            'Menyelenggarakan uji kompetensi jabatan fungsional kepegawaian yang objektif dan transparan.',
+            'Melaksanakan penilaian dan penetapan angka kredit secara tepat waktu.',
+            'Mengembangkan kompetensi pejabat fungsional kepegawaian melalui pelatihan dan bimbingan teknis.',
+            'Memberikan layanan konsultasi dan informasi jabatan fungsional kepegawaian yang responsif.',
+        ];
+
+        foreach ($misis as $i => $isi) {
+            MisiItem::create([
+                'isi' => $isi,
+                'urutan' => $i,
+            ]);
         }
     }
 

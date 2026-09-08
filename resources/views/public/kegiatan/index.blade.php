@@ -6,6 +6,14 @@
 
 <main>
     <div class="container mt-50">
+        @if($daftarJenis->count())
+        <div class="d-flex flex-wrap gap-2 mb-4">
+            <a href="/kegiatan" class="tp-btn {{ $jenisAktif ? 'tp-btn-transparent' : 'tp-btn-insu' }} tp-btn-sm">Semua</a>
+            @foreach($daftarJenis as $jenis)
+                <a href="/kegiatan?jenis={{ urlencode($jenis) }}" class="tp-btn {{ $jenisAktif === $jenis ? 'tp-btn-insu' : 'tp-btn-transparent' }} tp-btn-sm">{{ $jenis }}</a>
+            @endforeach
+        </div>
+        @endif
         @if ($kegiatans->count())
         <div class="row">
             @foreach ($kegiatans as $kegiatan)

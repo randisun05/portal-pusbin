@@ -15,9 +15,16 @@ class PublicKegiatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kegiatans = Kegiatan::where('jenis','!=', 'Konsultasi')->where('jenis','!=', 'Uji Kompetensi')->latest()->paginate(6);
+        $base = Kegiatan::where('jenis', '!=', 'Konsultasi')->where('jenis', '!=', 'Uji Kompetensi');
+
+        $daftarJenis = (clone $base)->select('jenis')->distinct()->pluck('jenis')->filter()->values();
+
+        $kegiatans = (clone $base)->when($request->jenis, function ($query, $jenis) {
+                $query->where('jenis', $jenis);
+            })->latest()->paginate(6)->withQueryString();
+
         foreach ($kegiatans as $kegiatan) {
             $waktu = Carbon::parse($kegiatan->waktu);
             // Set timezone ke Asia/Jakarta agar sesuai dengan waktu Indonesia Barat
@@ -30,6 +37,8 @@ class PublicKegiatanController extends Controller
 
         return view('public.kegiatan.index', [
             'kegiatans' => $kegiatans,
+            'daftarJenis' => $daftarJenis,
+            'jenisAktif' => $request->jenis,
             'title' => "Kegiatan Selanjutnya"
         ]);
 

@@ -27,8 +27,10 @@ class PostController extends Controller
 
         return view('public.berita.posts', [
             "title" => "Daftar Publikasi" . $title,
-            "posts" => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(6)
-
+            "posts" => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(6)->withQueryString(),
+            "categories" => Category::all(),
+            "search" => request('search'),
+            "categorySlug" => request('category'),
         ]);
     }
 
