@@ -42,8 +42,8 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{asset('assets-admin/js/config.js')}}"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
-  <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets-admin/vendor/trix/trix.css') }}">
+  <script type="text/javascript" src="{{ asset('assets-admin/vendor/trix/trix.umd.min.js') }}"></script>
 
 
 
