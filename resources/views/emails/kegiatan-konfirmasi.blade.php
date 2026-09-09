@@ -25,7 +25,7 @@
             </ul>
             <p>Mohon simpan email ini sebagai bukti pendaftaran Anda.</p>
             <p>Terima kasih,</p>
-            <p>Pusat Pembinaan Jabatan Fungsional Kepegawaian</p>
+            <p>Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara</p>
         </div>
     </div>
 </body>

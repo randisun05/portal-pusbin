@@ -142,6 +142,60 @@ img { border-radius: 2px; }
 
 .tp-logo img { max-height: 46px; width: auto; }
 
+/* ---------------------------------------------------------------------- */
+/* Logotype (text-based, until an official logo file is supplied)         */
+/* ---------------------------------------------------------------------- */
+.pk-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.pk-logo-badge {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--pk-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -.02em;
+  box-shadow: 0 6px 16px rgba(249, 44, 36, .3);
+}
+
+.pk-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.pk-logo-text .pk-logo-line1 {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--pk-ink);
+  white-space: nowrap;
+}
+
+.pk-logo-text .pk-logo-line2 {
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .06em;
+  color: var(--pk-primary);
+  text-transform: uppercase;
+}
+
+.pk-logo--light .pk-logo-text .pk-logo-line1 { color: #fff; }
+.pk-logo--light .pk-logo-text .pk-logo-line2 { color: #ff8a83; }
+
+@media (max-width: 575.98px) {
+  .pk-logo-text .pk-logo-line1 { font-size: 13px; }
+}
+
 .tp-main-menu-content > ul > li > a {
   font-weight: 600;
   color: var(--pk-ink);
@@ -420,6 +474,11 @@ img { border-radius: 2px; }
 
 .tp-about-thumb img {
   border-radius: var(--pk-radius-lg);
+}
+
+.tp-team-details-subtitle {
+  color: var(--pk-primary) !important;
+  font-weight: 700;
 }
 
 .tp-about-list-icon {

@@ -26,7 +26,7 @@ class AiChatService
             return "Q: {$faq->pertanyaan}\nA: {$faq->jawaban}";
         })->implode("\n\n");
 
-        $systemPrompt = "Anda adalah asisten virtual Pusbin JFK (Pusat Pembinaan Jabatan Fungsional Kepegawaian). "
+        $systemPrompt = "Anda adalah asisten virtual Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara (Direktorat JF MASN), Badan Kepegawaian Negara. "
             . "Jawab pertanyaan pengunjung website secara singkat, sopan, dan dalam Bahasa Indonesia, "
             . "berdasarkan daftar FAQ berikut. Jika pertanyaan tidak tercakup dalam FAQ, arahkan pengunjung "
             . "untuk menghubungi kami melalui halaman Kontak.\n\nDaftar FAQ:\n{$context}";

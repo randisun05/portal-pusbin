@@ -291,7 +291,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Survei::create([
-            'title' => 'Survei Kepuasan Layanan Pusbin',
+            'title' => 'Survei Kepuasan Layanan Direktorat JF MASN',
             'type' => '4'
         ]);
         Survei::create([
@@ -354,7 +354,7 @@ class DatabaseSeeder extends Seeder
 
         $kapus = OrganisasiUnit::create([
             'nama' => 'Dr. Achmad Slamet Hidayat, S.Pd., M.Si.',
-            'jabatan' => 'Kepala Pusbin JFK',
+            'jabatan' => 'Direktur Jabatan Fungsional MASN',
             'unit' => 'Pimpinan',
             'urutan' => 0,
         ]);
@@ -374,8 +374,8 @@ class DatabaseSeeder extends Seeder
         }
 
         Profil::create([
-            'tentang' => "Pusat Pembinaan Jabatan Fungsional Kepegawaian (Pusbin JFK) adalah unit kerja Badan Kepegawaian Negara (BKN) yang bertugas melaksanakan pembinaan jabatan fungsional di bidang kepegawaian, meliputi penyusunan kebutuhan formasi, uji kompetensi, penilaian angka kredit, serta pengembangan kompetensi bagi para pejabat fungsional kepegawaian di seluruh Indonesia.\n\nKami berkomitmen memberikan layanan yang profesional, transparan, dan mudah diakses, baik secara daring maupun luring, guna mendukung peningkatan profesionalisme Aparatur Sipil Negara (ASN) khususnya pada rumpun jabatan fungsional kepegawaian.",
-            'visi' => 'Menjadi pusat pembinaan jabatan fungsional kepegawaian yang profesional, kredibel, dan berbasis teknologi dalam mendukung terwujudnya ASN yang kompeten dan berkinerja tinggi.',
+            'tentang' => "Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara (Direktorat JF MASN) adalah unit kerja Badan Kepegawaian Negara (BKN) yang bertugas melaksanakan pembinaan jabatan fungsional di bidang kepegawaian, meliputi penyusunan kebutuhan formasi, uji kompetensi, penilaian angka kredit, serta pengembangan kompetensi bagi para pejabat fungsional kepegawaian di seluruh Indonesia.\n\nKami berkomitmen memberikan layanan yang profesional, transparan, dan mudah diakses, baik secara daring maupun luring, guna mendukung peningkatan profesionalisme Aparatur Sipil Negara (ASN) khususnya pada rumpun jabatan fungsional kepegawaian.",
+            'visi' => 'Menjadi direktorat pembinaan jabatan fungsional manajemen ASN yang profesional, kredibel, dan berbasis teknologi dalam mendukung terwujudnya ASN yang kompeten dan berkinerja tinggi.',
             'alamat' => 'Jl. Mayjen Sutoyo No. 12, Jakarta Timur, 13640 – Indonesia',
             'telepon' => '021-8093008',
             'email' => 'pusbinjfk@gmail.com',

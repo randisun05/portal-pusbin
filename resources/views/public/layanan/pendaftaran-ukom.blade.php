@@ -7,7 +7,7 @@
 
  <div class="team-details-area pt-120 mb-55" >
     <div class="container"  style="text-align:justify;text-justify: ">
-    <p>Badan Kepegawaian Negara (BKN) selaku instansi Pembina Jabatan Fungsional Kepegawaian (JFK) DAN Pusat Pembinaan Jabatan Fungsional Kepegawaian (Pusbin JFK) selaku unit Pembina Jabatan Fungsional bidang Kepegawaian di BKN, menyelenggarakan uji kompetensi bagi PNS yang akan diangkat menjadi Pejabat Fungsional bidang Kepegawaian semua jenjang, melalui mekanisme perpindahan jabatan dari jabatan lain atau kenaikan jenjang jabatan.</p>
+    <p>Badan Kepegawaian Negara (BKN) selaku instansi Pembina Jabatan Fungsional Kepegawaian (JFK) DAN Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara (Direktorat JF MASN) selaku unit Pembina Jabatan Fungsional bidang Kepegawaian di BKN, menyelenggarakan uji kompetensi bagi PNS yang akan diangkat menjadi Pejabat Fungsional bidang Kepegawaian semua jenjang, melalui mekanisme perpindahan jabatan dari jabatan lain atau kenaikan jenjang jabatan.</p>
     <p>Pelaksanaan Uji Kompetensi diselenggarakan oleh Badan Kepegawaian Negara 4 (empat) periode dalam 1 (satu) tahun :</p>
     <p class="mb-0">1.	Periode I pada bulan Februari tahun berjalan, surat usulan dari instansi paling lambat diterima akhir Desember tahun sebelumnya; </p>
     <p class="mb-0">2.	Periode II pada bulan April tahun berjalan, surat usulan dari instansi paling lambat diterima akhir Februari tahun berjalan;</p>

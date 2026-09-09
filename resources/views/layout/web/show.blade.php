@@ -21,7 +21,7 @@
                    <div class="col-lg-7 col-md-7">
                       <div class="tp-about-content">
                          <div class="tp-about-paragraph mb-35">
-                            <p>{{ \Illuminate\Support\Str::limit($profil->tentang ?? 'Pusat Pembinaan Jabatan Fungsional Kepegawaian (Pusbin JFK) BKN menyelenggarakan uji kompetensi bagi pejabat fungsional kepegawaian secara profesional, transparan, dan mudah diakses di seluruh Indonesia.', 220) }}</p>
+                            <p>{{ \Illuminate\Support\Str::limit($profil->tentang ?? 'Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara (Direktorat JF MASN) BKN menyelenggarakan uji kompetensi bagi pejabat fungsional kepegawaian secara profesional, transparan, dan mudah diakses di seluruh Indonesia.', 220) }}</p>
                          </div>
                          <div class="tp-about-list-wrapper p-overflow mb-25">
                             <div class="tp-about-list d-flex align-items-center mb-25">

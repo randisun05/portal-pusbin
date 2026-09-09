@@ -17,7 +17,7 @@
 <body>
     <div class="cert">
         <h1>SERTIFIKAT</h1>
-        <div class="sub">Pusat Pembinaan Jabatan Fungsional Kepegawaian - Badan Kepegawaian Negara</div>
+        <div class="sub">Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara - Badan Kepegawaian Negara</div>
         <p>Diberikan kepada:</p>
         <div class="nama">{{ $sertifikat->absensi->nama }}</div>
         <p class="keterangan">

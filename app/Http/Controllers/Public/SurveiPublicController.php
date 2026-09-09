@@ -42,7 +42,7 @@ class SurveiPublicController extends Controller
     public function index()
     {
         return view('public.survei.index', [
-            'title' => "Daftar Survei Pusat Pembinaan Jabatan Fungsional Kepegawaian",
+            'title' => "Daftar Survei Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara",
             'surveis' => Survei::orderBy('title')->get(),
         ]);
     }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Pusat Pembinaan Jabatan Fungsional | Badan Kepegawaian Negara </title>
+    <title>Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara | Badan Kepegawaian Negara</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Place favicon.ico in the root directory -->

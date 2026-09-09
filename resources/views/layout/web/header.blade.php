@@ -5,7 +5,7 @@
           <div class="col-lg-6">
              <div class="tp-hero-wrapper-insu tp-hero-insu-spa">
                 <span class="tp-hero-eyebrow wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1s">Badan Kepegawaian Negara</span>
-                <h2 class="tp-hero-title-insu animetion wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1s">Pusat Pembinaan <b>Jabatan Fungsional Kepegawaian</b></h2>
+                <h2 class="tp-hero-title-insu animetion wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1s">Direktorat <b>Jabatan Fungsional MASN</b></h2>
                 <p class="tp-hero-desc wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1s">Membina, mengembangkan, dan memfasilitasi jabatan fungsional kepegawaian di seluruh Indonesia secara profesional, transparan, dan mudah diakses.</p>
                 <div class="tp-about-author wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1s">
                    <div class="tp-about-btn d-flex flex-wrap gap-3">

@@ -24,7 +24,7 @@ class SendEmailKegiatan extends Mailable implements ShouldQueue
 
     public function build()
     {
-        return $this->subject('Konfirmasi Pendaftaran Kegiatan - Pusbin JFK')
+        return $this->subject('Konfirmasi Pendaftaran Kegiatan - Direktorat JF MASN')
                     ->view('emails.kegiatan-konfirmasi');
     }
 }

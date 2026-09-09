@@ -42,7 +42,7 @@
                     </div>
                 </div>
             @else
-                <p class="text-center text-muted">Data Kepala Pusat belum tersedia. Silakan tambahkan melalui menu admin &raquo; Struktur Organisasi.</p>
+                <p class="text-center text-muted">Data Direktur belum tersedia. Silakan tambahkan melalui menu admin &raquo; Struktur Organisasi.</p>
             @endif
         </div>
     </div>

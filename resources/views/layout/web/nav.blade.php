@@ -5,9 +5,7 @@
             <button class="close-btn"><i class="fal fa-times"></i></button>
         </div>
         <div class="tpoffcanvas__logo">
-            <a href="/webpusbin">
-                <img src="{{ asset('assets/img/logo/logo5.png') }}" alt="logo">
-            </a>
+            @include('layout.partial.logo')
         </div>
         <div class="tp-main-menu-mobile d-xl-none"></div>
         <div class="tpoffcanvas__social">
@@ -57,7 +55,7 @@
                 <div class="col-xl-7 col-6">
                     <div class="tp-header-left tp-header-left-insu d-flex align-items-center">
                         <div class="tp-logo">
-                            <a href="/webpusbin"><img src="{{ asset('assets/img/logo/logo5.png') }}" alt="contact"></a>
+                            @include('layout.partial.logo')
                         </div>
                         <div class="tp-main-menu tp-main-menu-insu d-none d-xl-block">
                             <nav class="tp-main-menu-content">
@@ -71,7 +69,7 @@
                                             <li class="has-dropdown">
                                                 <ul>
                                                     <li><a href="/about/tentang-kami">Tentang Kami</a></li>
-                                                    <li><a href="/about/kepala-pusat">Kepala Pusat</a></li>
+                                                    <li><a href="/about/kepala-pusat">Direktur</a></li>
                                                     <li><a href="/about/struktur-organisasi">Struktur Organisasi</a></li>
                                                     <li><a href="/about/visi-misi">Visi Misi</a></li>
                                                 </ul>

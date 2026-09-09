@@ -70,7 +70,7 @@ class PublicController extends Controller
         $kapus = OrganisasiUnit::whereNull('parent_id')->orderBy('urutan')->first();
 
         return view('public.about.kepala',[
-            'title' => "Kepala Pusat Pembinaan Jabatan Fungsional Kepegawaian",
+            'title' => "Direktur Jabatan Fungsional Manajemen Aparatur Sipil Negara",
             'kapus' => $kapus,
         ]);
     }

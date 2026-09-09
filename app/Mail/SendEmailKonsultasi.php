@@ -25,7 +25,7 @@ class SendEmailKonsultasi extends Mailable implements ShouldQueue
 
     public function build()
     {
-        return $this->subject('Informasi Konsultasi Pusbin JFK')
+        return $this->subject('Informasi Konsultasi Direktorat JF MASN')
                     ->view('emails.emailkonsultasi');
     }
 }

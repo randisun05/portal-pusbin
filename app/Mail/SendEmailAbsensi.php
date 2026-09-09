@@ -24,7 +24,7 @@ class SendEmailAbsensi extends Mailable implements ShouldQueue
 
     public function build()
     {
-        return $this->subject('Konfirmasi Absensi Kegiatan - Pusbin JFK')
+        return $this->subject('Konfirmasi Absensi Kegiatan - Direktorat JF MASN')
                     ->view('emails.absensi-konfirmasi');
     }
 }

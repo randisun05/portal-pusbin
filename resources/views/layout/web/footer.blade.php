@@ -3,16 +3,16 @@
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
                 <div class="tp-footer-logo">
-                    <img src="{{ asset('assets/img/logo/logo5.png') }}" alt="Pusbin JFK">
+                    @include('layout.partial.logo', ['light' => true])
                 </div>
-                <p class="mb-0">Pusat Pembinaan Jabatan Fungsional Kepegawaian (Pusbin JFK) - Badan Kepegawaian Negara Republik Indonesia.</p>
+                <p class="mb-0 mt-3">Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara (Direktorat JF MASN) - Badan Kepegawaian Negara Republik Indonesia.</p>
             </div>
 
             <div class="col-lg-2 col-md-6">
                 <h5>Profil</h5>
                 <ul>
                     <li><a href="/about/tentang-kami">Tentang Kami</a></li>
-                    <li><a href="/about/kepala-pusat">Kepala Pusat</a></li>
+                    <li><a href="/about/kepala-pusat">Direktur</a></li>
                     <li><a href="/about/struktur-organisasi">Struktur Organisasi</a></li>
                     <li><a href="/about/visi-misi">Visi Misi</a></li>
                 </ul>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="tp-footer-bottom-bar">
-            &copy; {{ date('Y') }} Pusat Pembinaan Jabatan Fungsional Kepegawaian | Badan Kepegawaian Negara. Seluruh hak cipta dilindungi.
+            &copy; {{ date('Y') }} Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara | Badan Kepegawaian Negara. Seluruh hak cipta dilindungi.
         </div>
     </div>
 </footer>

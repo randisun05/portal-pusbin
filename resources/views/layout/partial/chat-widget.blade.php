@@ -26,7 +26,7 @@
 
 <div id="pkChatPanel" class="d-none">
     <div id="pkChatHeader">
-        <span>Bantuan Pusbin JFK</span>
+        <span>Bantuan Direktorat JF MASN</span>
         <button type="button" id="pkChatClose" aria-label="Tutup">&times;</button>
     </div>
     <div id="pkChatBody">

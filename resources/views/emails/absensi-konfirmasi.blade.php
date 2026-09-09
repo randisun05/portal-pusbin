@@ -23,7 +23,7 @@
             </ul>
             <p>Terima kasih atas kehadiran Anda.</p>
             <p>Hormat kami,</p>
-            <p>Pusat Pembinaan Jabatan Fungsional Kepegawaian</p>
+            <p>Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara</p>
         </div>
     </div>
 </body>
