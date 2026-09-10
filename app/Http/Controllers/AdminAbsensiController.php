@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AbsensiExport;
 use App\Models\Absensi;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class AdminAbsensiController extends Controller
@@ -34,6 +37,44 @@ class AdminAbsensiController extends Controller
 
     }
 
+
+    /**
+     * Ekspor data absensi (mengikuti filter kegiatan yang sedang aktif) ke Excel.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function export()
+    {
+        $nama = request('search') ? optional(Kegiatan::find(request('search')))->nama : 'Semua-Kegiatan';
+        $filename = 'Absensi-' . str_replace(' ', '-', $nama) . '-' . now()->format('Ymd-His') . '.xlsx';
+
+        return Excel::download(new AbsensiExport(request('search')), $filename);
+    }
+
+    /**
+     * Cetak daftar hadir (PDF) untuk kegiatan yang sedang difilter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function cetakDaftarHadir()
+    {
+        $kegiatan = request('search') ? Kegiatan::find(request('search')) : null;
+
+        $absensis = Absensi::with('kegiatan')->latest();
+        $ids = Kegiatan::where('jenis', 'Konsultasi')->pluck('id');
+        $absensis->whereNotIn('kegiatan_id', $ids);
+
+        if (request('search')) {
+            $absensis->where('kegiatan_id', request('search'));
+        }
+
+        $pdf = Pdf::loadView('admin.absensi.daftar-hadir', [
+            'kegiatan' => $kegiatan,
+            'absensis' => $absensis->get(),
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->download('Daftar-Hadir-' . now()->format('Ymd-His') . '.pdf');
+    }
 
     /**
      * Show the form for creating a new resource.

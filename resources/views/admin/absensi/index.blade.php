@@ -41,6 +41,14 @@
                 <div class="col-auto">
                   <button type="submit" class="btn btn-primary">Cari</button>
                 </div>
+                <div class="col-auto ms-auto">
+                  <a href="/admin/absensi/export{{ request('search') ? '?search='.request('search') : '' }}" class="btn btn-success">
+                    <i class="fas fa-file-excel"></i> Export Excel
+                  </a>
+                  <a href="/admin/absensi/daftar-hadir{{ request('search') ? '?search='.request('search') : '' }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-print"></i> Cetak Daftar Hadir
+                  </a>
+                </div>
             </form>
         </div>
 

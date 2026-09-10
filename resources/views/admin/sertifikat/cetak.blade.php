@@ -32,6 +32,8 @@
             yang diselenggarakan pada {{ optional($sertifikat->absensi->kegiatan)->waktu }}.
         </p>
         <div class="nomor">Nomor Sertifikat: {{ $sertifikat->nomor_sertifikat }}</div>
+        <img src="{{ $qrCode }}" alt="QR Verifikasi" style="width: 90px; height: 90px; margin-top: 10px;">
+        <div class="nomor">Pindai untuk verifikasi keaslian sertifikat</div>
     </div>
 </body>
 </html>

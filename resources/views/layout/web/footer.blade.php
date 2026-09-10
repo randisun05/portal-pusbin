@@ -25,6 +25,7 @@
                     <li><a href="/kegiatan">Kegiatan</a></li>
                     <li><a href="/survei">Survei</a></li>
                     <li><a href="/faq">FAQ</a></li>
+                    <li><a href="/verifikasi-sertifikat">Verifikasi Sertifikat</a></li>
                 </ul>
             </div>
 

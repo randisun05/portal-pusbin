@@ -32,8 +32,8 @@
             <div class="col-lg-6">
                 <div class="tp-search-form">
                     <h4>WHAT ARE YOU LOOKING FOR?</h4>
-                    <form action="#">
-                        <input type="text" placeholder="Search Here.." required>
+                    <form action="/cari" method="GET">
+                        <input type="text" name="q" placeholder="Search Here.." required>
                         <div class="tp-search-form-icon">
                             <button type="submit">
                                 <i class="fa-solid fa-magnifying-glass"></i>

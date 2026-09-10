@@ -84,6 +84,8 @@ Route::prefix('admin')->group(function() {
         });
         Route::resource('/dashboard', AdminDashboardController::class)->Middleware(['prevent-back-history']);
         Route::resource('/jadwalukom', AdminJadwalController::class)->Middleware(['prevent-back-history', 'permission:manage-jadwalukom']);
+        Route::get('/absensi/export', [AdminAbsensiController::class, 'export'])->Middleware(['prevent-back-history', 'permission:manage-absensi']);
+        Route::get('/absensi/daftar-hadir', [AdminAbsensiController::class, 'cetakDaftarHadir'])->Middleware(['prevent-back-history', 'permission:manage-absensi']);
         Route::resource('/absensi', AdminAbsensiController::class)->Middleware(['prevent-back-history', 'permission:manage-absensi']);
         Route::resource('/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['prevent-back-history', 'permission:manage-kodekonsultasi']);
         Route::resource('/organisasi', AdminOrganisasiController::class)->Middleware(['prevent-back-history', 'permission:manage-organisasi']);
@@ -106,6 +108,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/pengunjung', [AdminPengunjungController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-pengunjung']);
         Route::get('/absensi-statistik', [AdminAbsensiStatController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
         Route::get('/survei-statistik', [AdminSurveiStatController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
+        Route::get('/survei-statistik/{survei}/export', [AdminSurveiStatController::class, 'export'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
     });
 });
 
@@ -169,6 +172,14 @@ Route::post('/kegiatan/{kegiatan:slug}/store', [\App\Http\Controllers\Public\Pub
 
 //ROUTE REPOSITORY
 Route::get('/repository', [\App\Http\Controllers\Public\JdihController::class, 'index']);
+
+//ROUTE VERIFIKASI SERTIFIKAT
+Route::get('/verifikasi-sertifikat', [\App\Http\Controllers\Public\SertifikatVerifikasiController::class, 'index'])
+    ->name('public.sertifikat.verifikasi')
+    ->middleware('throttle:10,1');
+
+//ROUTE PENCARIAN
+Route::get('/cari', [\App\Http\Controllers\Public\SearchController::class, 'index'])->name('public.search.index');
 
 //ROUTE FAQ
 Route::get('/faq', [\App\Http\Controllers\Public\FaqController::class, 'index']);

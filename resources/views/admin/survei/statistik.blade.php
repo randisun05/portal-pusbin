@@ -74,7 +74,12 @@
     </div>
 
     @if($selected)
-        <h4 class="mb-3">Hasil: {{ $selected->title }}</h4>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Hasil: {{ $selected->title }}</h4>
+            <a href="/admin/survei-statistik/{{ $selected->id }}/export" class="btn btn-success btn-sm">
+                <i class="fas fa-file-excel"></i> Export Excel
+            </a>
+        </div>
         <div class="row g-4">
             @forelse ($indikatorStats as $i => $stat)
                 <div class="col-lg-6">

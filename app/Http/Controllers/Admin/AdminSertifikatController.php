@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Services\JfManagementService;
 use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Endroid\QrCode\QrCode;
 
 class AdminSertifikatController extends Controller
 {
@@ -87,6 +88,7 @@ class AdminSertifikatController extends Controller
     {
         return view('admin.sertifikat.cetak', [
             'sertifikat' => $sertifikat->load('absensi.kegiatan'),
+            'qrCode' => $this->qrCodeDataUri($sertifikat),
         ]);
     }
 
@@ -102,8 +104,26 @@ class AdminSertifikatController extends Controller
 
         $pdf = Pdf::loadView('admin.sertifikat.pdf', [
             'sertifikat' => $sertifikat,
+            'qrCode' => $this->qrCodeDataUri($sertifikat),
         ])->setPaper('a4', 'landscape');
 
         return $pdf->download('Sertifikat-' . str_replace('/', '-', $sertifikat->nomor_sertifikat) . '.pdf');
+    }
+
+    /**
+     * Buat data URI kode QR yang mengarah ke halaman verifikasi sertifikat.
+     *
+     * @param  \App\Models\Sertifikat  $sertifikat
+     * @return string
+     */
+    protected function qrCodeDataUri(Sertifikat $sertifikat): string
+    {
+        $url = url('/verifikasi-sertifikat') . '?nomor=' . urlencode($sertifikat->nomor_sertifikat);
+
+        $qrCode = new QrCode($url);
+        $qrCode->setSize(180);
+        $qrCode->setMargin(6);
+
+        return $qrCode->writeDataUri();
     }
 }

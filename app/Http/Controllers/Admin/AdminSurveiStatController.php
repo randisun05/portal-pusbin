@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\SurveiResponseExport;
 use App\Models\Survei;
 use App\Models\SurveiGroup;
 use App\Models\SurveiPublic;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Public\SurveiPublicController;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminSurveiStatController extends Controller
 {
@@ -77,5 +79,18 @@ class AdminSurveiStatController extends Controller
             'indikatorStats' => $indikatorStats,
             'leaderboard' => $leaderboard,
         ]);
+    }
+
+    /**
+     * Ekspor seluruh jawaban responden untuk satu survei ke Excel.
+     *
+     * @param  \App\Models\Survei  $survei
+     * @return \Illuminate\Http\Response
+     */
+    public function export(Survei $survei)
+    {
+        $filename = 'Survei-' . str_replace(' ', '-', $survei->title) . '-' . now()->format('Ymd-His') . '.xlsx';
+
+        return Excel::download(new SurveiResponseExport($survei->id), $filename);
     }
 }
