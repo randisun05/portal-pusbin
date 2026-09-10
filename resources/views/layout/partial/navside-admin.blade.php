@@ -180,6 +180,14 @@
                 </a>
               </li>
               @endif
+              @if($me->hasPermission('view-statistik'))
+              <li class="menu-item {{ Request::is('admin/survei-kepuasan*') ? 'active' : '' }}">
+                <a href="/admin/survei-kepuasan" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Dashboard Kepuasan</div>
+                </a>
+              </li>
+              @endif
               @if($me->hasPermission('view-auditlog'))
               <li class="menu-item {{ Request::is('admin/auditlog*') ? 'active' : '' }}">
                 <a href="/admin/auditlog" class="menu-link">

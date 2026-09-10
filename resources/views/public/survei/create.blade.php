@@ -12,6 +12,22 @@
     .sv-progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #f92c24, #fd346e); transition: width .3s ease; }
     .sv-progress-label { font-size: .82rem; color: #6c7382; margin-top: 4px; display: flex; justify-content: space-between; }
     .sv-progress-label .sv-pct { font-weight: 700; color: #f92c24; }
+
+    .sv-emoji-card { border: 1px solid #eceff3; border-radius: 16px; padding: 20px 22px; margin-bottom: 18px; background: #fff; box-shadow: 0 2px 12px rgba(20,23,43,.05); }
+    .sv-emoji-question { font-weight: 700; margin-bottom: 16px; font-size: 1rem; }
+    .sv-emoji-options { display: flex; flex-wrap: wrap; gap: 10px; }
+    .sv-emoji-option { position: relative; flex: 1 1 0; min-width: 92px; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px; border-radius: 14px; border: 2px solid #eceff3; background: #f7f8fa; cursor: pointer; text-align: center; transition: transform .15s ease, border-color .15s ease, background-color .15s ease; }
+    .sv-emoji-option input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+    .sv-emoji-option .sv-emoji { font-size: 2rem; line-height: 1; filter: grayscale(60%); opacity: .65; transition: filter .15s ease, opacity .15s ease; }
+    .sv-emoji-option .sv-emoji-text { font-size: .72rem; color: #6c7382; font-weight: 700; }
+    .sv-emoji-option:hover { transform: translateY(-2px); background: #eef0f4; }
+    .sv-emoji-option.is-selected { border-color: var(--sv-color); background: var(--sv-bg); }
+    .sv-emoji-option.is-selected .sv-emoji { filter: grayscale(0%); opacity: 1; transform: scale(1.15); }
+    .sv-emoji-option.is-selected .sv-emoji-text { color: var(--sv-color); }
+    @media (max-width: 576px) {
+        .sv-emoji-option { min-width: 30%; }
+        .sv-emoji-option .sv-emoji { font-size: 1.6rem; }
+    }
 </style>
 
 <div class="container-fluid">
@@ -47,8 +63,8 @@
                         @error('nip')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
-                    <table class="table mt-4 align-middle">
-                        @if($survei->type === 1)
+                    @if($survei->type === 1)
+                        <table class="table mt-4 align-middle">
                             <thead>
                                 <tr>
                                     <th scope="col">Indikator</th>
@@ -61,8 +77,10 @@
                                     <td><input type="text" class="form-control" name="jawaban[{{ $group->indikator_id }}]" required></td>
                                 </tr>
                             @endforeach
+                        </table>
 
-                        @elseif ($survei->type === 2)
+                    @elseif ($survei->type === 2)
+                        <table class="table mt-4 align-middle">
                             <thead>
                                 <tr>
                                     <th scope="col">Indikator</th>
@@ -77,53 +95,45 @@
                                     <td class="text-center"><input class="form-check-input" type="radio" value="Tidak" name="jawaban[{{ $group->indikator_id }}]"></td>
                                 </tr>
                             @endforeach
+                        </table>
 
-                        @elseif ($survei->type === 3)
-                            <thead>
-                                <tr>
-                                    <th scope="col">Indikator</th>
-                                    <th scope="col" class="text-center">Tidak Memuaskan</th>
-                                    <th scope="col" class="text-center">1</th>
-                                    <th scope="col" class="text-center">2</th>
-                                    <th scope="col" class="text-center">3</th>
-                                    <th scope="col" class="text-center">Sangat Memuaskan</th>
-                                </tr>
-                            </thead>
+                    @elseif ($survei->type === 3 || $survei->type === 4)
+                        @php
+                            // Skala kepuasan interaktif berbasis emoji: tipe 3 = 3 titik,
+                            // tipe 4 = 4 titik. Nilai yang dikirim tetap numerik (1..N)
+                            // agar kompatibel dengan dashboard statistik & badge yang sudah ada.
+                            $scale = $survei->type === 4
+                                ? [
+                                    1 => ['emoji' => '😠', 'label' => 'Tidak Memuaskan', 'color' => '#ff3e1d'],
+                                    2 => ['emoji' => '😕', 'label' => 'Kurang Memuaskan', 'color' => '#ffab00'],
+                                    3 => ['emoji' => '🙂', 'label' => 'Memuaskan', 'color' => '#03c3ec'],
+                                    4 => ['emoji' => '😄', 'label' => 'Sangat Memuaskan', 'color' => '#71dd37'],
+                                ]
+                                : [
+                                    1 => ['emoji' => '😞', 'label' => 'Tidak Memuaskan', 'color' => '#ff3e1d'],
+                                    2 => ['emoji' => '😐', 'label' => 'Cukup Memuaskan', 'color' => '#ffab00'],
+                                    3 => ['emoji' => '😄', 'label' => 'Sangat Memuaskan', 'color' => '#71dd37'],
+                                ];
+                        @endphp
+                        <div class="mt-4">
                             @foreach ($groups as $group)
-                                <tr>
-                                    <th scope="row">{{ $group->indikator->title }}</th>
-                                    <td class="text-center"></td>
-                                    <td class="text-center"><input class="form-check-input" type="radio" value="1" name="jawaban[{{ $group->indikator_id }}]" required></td>
-                                    <td class="text-center"><input class="form-check-input" type="radio" value="2" name="jawaban[{{ $group->indikator_id }}]"></td>
-                                    <td class="text-center"><input class="form-check-input" type="radio" value="3" name="jawaban[{{ $group->indikator_id }}]"></td>
-                                    <td class="text-center"></td>
-                                </tr>
+                                <div class="sv-emoji-card">
+                                    <div class="sv-emoji-question">{{ $group->indikator->title }}</div>
+                                    <div class="sv-emoji-options">
+                                        @foreach ($scale as $nilai => $opt)
+                                            <label class="sv-emoji-option" style="--sv-color: {{ $opt['color'] }}; --sv-bg: {{ $opt['color'] }}1a;">
+                                                <input type="radio" value="{{ $nilai }}" name="jawaban[{{ $group->indikator_id }}]" {{ $loop->first ? 'required' : '' }}>
+                                                <span class="sv-emoji">{{ $opt['emoji'] }}</span>
+                                                <span class="sv-emoji-text">{{ $opt['label'] }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @endforeach
+                        </div>
 
-                        @elseif ($survei->type === 4)
-                            <thead>
-                                <tr>
-                                    <th scope="col">Indikator</th>
-                                    <th scope="col" class="text-center">Tidak Memuaskan</th>
-                                    <th scope="col" class="text-center">1</th>
-                                    <th scope="col" class="text-center">2</th>
-                                    <th scope="col" class="text-center">3</th>
-                                    <th scope="col" class="text-center">4</th>
-                                    <th scope="col" class="text-center">Sangat Memuaskan</th>
-                                </tr>
-                            </thead>
-                            @foreach ($groups as $group)
-                                <tr>
-                                    <th scope="row">{{ $group->indikator->title }}</th>
-                                    <td class="text-center"></td>
-                                    <td class="text-center"><input class="form-check-input" type="radio" value="1" name="jawaban[{{ $group->indikator_id }}]" required></td>
-                                    <td class="text-center"><input class="form-check-input" type="radio" value="2" name="jawaban[{{ $group->indikator_id }}]"></td>
-                                    <td class="text-center"><input class="form-check-input" type="radio" value="3" name="jawaban[{{ $group->indikator_id }}]"></td>
-                                    <td class="text-center"><input class="form-check-input" type="radio" value="4" name="jawaban[{{ $group->indikator_id }}]"></td>
-                                    <td class="text-center"></td>
-                                </tr>
-                            @endforeach
-                        @else
+                    @else
+                        <table class="table mt-4 align-middle">
                             <thead>
                                 <tr>
                                     <th scope="col">Indikator</th>
@@ -136,8 +146,8 @@
                                     <td><input type="text" class="form-control" name="jawaban[{{ $group->indikator_id }}]" required></td>
                                 </tr>
                             @endforeach
-                        @endif
-                    </table>
+                        </table>
+                    @endif
 
                     <div class="col text-center m-3">
                         <button type="submit" class="btn btn-primary mb-3">Kirim Survei</button>
@@ -194,8 +204,22 @@
         textLabel.textContent = messages[idx];
     }
 
+    function updateEmojiSelection(changedInput) {
+        var group = form.querySelectorAll('input[name="' + changedInput.name + '"]');
+        group.forEach(function (input) {
+            var option = input.closest('.sv-emoji-option');
+            if (!option) return;
+            option.classList.toggle('is-selected', input.checked);
+        });
+    }
+
     form.addEventListener('input', updateProgress);
-    form.addEventListener('change', updateProgress);
+    form.addEventListener('change', function (e) {
+        updateProgress();
+        if (e.target && e.target.type === 'radio') {
+            updateEmojiSelection(e.target);
+        }
+    });
     updateProgress();
 })();
 </script>
