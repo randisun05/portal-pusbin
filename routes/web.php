@@ -109,6 +109,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/absensi-statistik', [AdminAbsensiStatController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
         Route::get('/survei-statistik', [AdminSurveiStatController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
         Route::get('/survei-statistik/{survei}/export', [AdminSurveiStatController::class, 'export'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
+        Route::get('/konsultasi-statistik', [\App\Http\Controllers\Admin\AdminKonsultasiStatController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
     });
 });
 

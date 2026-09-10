@@ -172,6 +172,14 @@
                 </a>
               </li>
               @endif
+              @if($me->hasPermission('view-statistik'))
+              <li class="menu-item {{ Request::is('admin/konsultasi-statistik*') ? 'active' : '' }}">
+                <a href="/admin/konsultasi-statistik" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Statistik Konsultasi</div>
+                </a>
+              </li>
+              @endif
               @if($me->hasPermission('view-auditlog'))
               <li class="menu-item {{ Request::is('admin/auditlog*') ? 'active' : '' }}">
                 <a href="/admin/auditlog" class="menu-link">
