@@ -31,7 +31,7 @@ class Permission extends Model
             ],
             'Operasional' => [
                 'manage-konsultasi' => 'Kelola Konsultasi',
-                'manage-jdihjfk' => 'Kelola JDIH JFK',
+                'manage-repository' => 'Kelola Repository',
                 'manage-survei' => 'Kelola Survei',
                 'manage-absensi' => 'Kelola Absensi',
                 'manage-kodekonsultasi' => 'Kelola Kode Konsultasi',

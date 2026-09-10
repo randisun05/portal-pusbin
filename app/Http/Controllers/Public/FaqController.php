@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Models\Faq;
+use App\Models\Jdihjfk;
 use App\Services\AiChatService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,11 @@ class FaqController extends Controller
     {
         $request->validate(['question' => 'required|string|max:500']);
 
-        $answer = $aiChat->answer($request->input('question'), Faq::select('pertanyaan', 'jawaban')->get());
+        $answer = $aiChat->answer(
+            $request->input('question'),
+            Faq::select('pertanyaan', 'jawaban')->get(),
+            Jdihjfk::select('title', 'deskripsi')->get()
+        );
 
         return response()->json(['answer' => $answer]);
     }

@@ -72,7 +72,7 @@ Route::prefix('admin')->group(function() {
 
         // Modul operasional
         Route::resource('/konsultasi', AdminKonsultasiController::class)->Middleware(['prevent-back-history', 'permission:manage-konsultasi']);
-        Route::resource('/jdihjfk', AdminJdifjfkController::class)->Middleware(['prevent-back-history', 'permission:manage-jdihjfk']);
+        Route::resource('/repository', AdminJdifjfkController::class)->Middleware(['prevent-back-history', 'permission:manage-repository']);
         Route::group(['middleware' => ['permission:manage-survei']], function () {
             Route::resource('/survei', AdminSurveiController::class)->Middleware(['prevent-back-history']);
             Route::resource('/surveiindikator', AdminSurveiIndikatorController::class)->Middleware(['prevent-back-history']);
@@ -166,8 +166,8 @@ Route::get('/kegiatan/{kegiatan:slug}/create', [\App\Http\Controllers\Public\Pub
 Route::post('/kegiatan/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'store']);
 
 
-//RIOUTE JDIH
-Route::get('/jdihjfk', [\App\Http\Controllers\Public\JdihController::class, 'index']);
+//ROUTE REPOSITORY
+Route::get('/repository', [\App\Http\Controllers\Public\JdihController::class, 'index']);
 
 //ROUTE FAQ
 Route::get('/faq', [\App\Http\Controllers\Public\FaqController::class, 'index']);

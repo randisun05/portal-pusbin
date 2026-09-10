@@ -6,7 +6,7 @@
 @include('layout.web.header-detail')
 
 <div class="container py-5 px-lg-5">
-    <form action="/jdihjfk" method="GET" class="row g-2 justify-content-center mb-4">
+    <form action="/repository" method="GET" class="row g-2 justify-content-center mb-4">
         <div class="col-md-6">
             <input type="text" name="search" class="form-control" value="{{ request('search') }}" placeholder="Cari judul atau deskripsi peraturan...">
         </div>
@@ -21,17 +21,29 @@
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="rounded overflow-hidden">
                     <div class="position-relative overflow-hidden">
-                        <img class="img-fluid" src="{{asset('storage/' . $jdih->image)}}" alt="{{ $jdih->title }}">
-                        <div class="portfolio-overlay">
-                            <a class="btn btn-square btn-outline-light mx-1" href="{{ $jdih->link }}" target="_blank">
-                                <i class="fa fa-link"></i>
-                            </a>
-                        </div>
+                        @if($jdih->image)
+                            <img class="img-fluid" src="{{asset('storage/' . $jdih->image)}}" alt="{{ $jdih->title }}">
+                        @else
+                            <div class="d-flex align-items-center justify-content-center bg-light" style="height: 180px;">
+                                <i class="fa-solid fa-file-lines fa-2x text-muted"></i>
+                            </div>
+                        @endif
+                        @if($jdih->link)
+                            <div class="portfolio-overlay">
+                                <a class="btn btn-square btn-outline-light mx-1" href="{{ $jdih->link }}" target="_blank">
+                                    <i class="fa fa-link"></i>
+                                </a>
+                            </div>
+                        @endif
                     </div>
                     <div class="bg-light p-4">
-                        <a href="{{ $jdih->link }}" target="_blank">
+                        @if($jdih->link)
+                            <a href="{{ $jdih->link }}" target="_blank">
+                                <p class="text-primary fs-6 fw-medium mb-2 text-justify">{{ $jdih->title }}</p>
+                            </a>
+                        @else
                             <p class="text-primary fs-6 fw-medium mb-2 text-justify">{{ $jdih->title }}</p>
-                        </a>
+                        @endif
                         <div style="text-align:justify;text-justify: "><h5 class="fs-6 lh-base mb-0">{{$jdih->deskripsi}}</h5></div>
                     </div>
                 </div>

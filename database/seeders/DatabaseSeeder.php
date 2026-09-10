@@ -143,9 +143,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Layanan::create([
-            'nama' => "Peraturan Terkait JFK",
-            'deskripsi' => "Dashboard JFK",
-            'link' => "/jdihjfk",
+            'nama' => "Repository JF MASN",
+            'deskripsi' => "Kumpulan peraturan & dokumen terkait JF MASN",
+            'link' => "/repository",
             'image' => "post-image\jdih.png",
         ]);
 
@@ -343,6 +343,7 @@ class DatabaseSeeder extends Seeder
             'deskripsi' => 'Peraturan BKN Nomor 3 Tahun 2023 tentang Angka Kredit, Kenaikan Pangkat dan Jenjang Jabatan Fungsional',
             'link' => 'https://www.bkn.go.id/regulasi/peraturan-bkn-nomor-3-tahun-2023/',
             'image' => 'post-image/perbkn_3.png',
+            'status' => Jdihjfk::STATUS_PUBLISHED,
         ]);
 
         Jdihjfk::create([
@@ -350,6 +351,15 @@ class DatabaseSeeder extends Seeder
             'deskripsi' => 'UU ini mengatur tentang Aparatur Sipil Negara dengan menetapkan batasan istilah yang digunakan dalam pengaturannya. Pokok-pokok pengaturan yang terdapat di dalam Undang-Undang ini',
             'link' => 'https://peraturan.bpk.go.id/Details/269470/uu-no-20-tahun-2023',
             'image' => 'post-image/uu_20.png',
+            'status' => Jdihjfk::STATUS_PUBLISHED,
+        ]);
+
+        Jdihjfk::create([
+            'title' => 'Prosedur Internal Penanganan Usul Angka Kredit',
+            'deskripsi' => "Alur internal (tidak dipublikasikan) untuk penanganan usul angka kredit: (1) Berkas usul diterima melalui sistem, (2) Verifikasi kelengkapan oleh tim Pokja terkait, (3) Penilaian oleh tim penilai angka kredit, (4) Penetapan PAK oleh Direktur, (5) Notifikasi hasil ke pemohon. Informasi ini digunakan sebagai pengetahuan internal untuk menjawab pertanyaan pengunjung melalui chat.",
+            'link' => null,
+            'image' => null,
+            'status' => Jdihjfk::STATUS_INTERNAL,
         ]);
 
         $kapus = OrganisasiUnit::create([

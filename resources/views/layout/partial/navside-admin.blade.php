@@ -134,11 +134,11 @@
                 </a>
               </li>
               @endif
-              @if($me->hasPermission('manage-jdihjfk'))
-              <li class="menu-item {{ Request::is('admin/jdihjfk*') ? 'active' : '' }}">
-                <a href="/admin/jdihjfk" class="menu-link">
+              @if($me->hasPermission('manage-repository'))
+              <li class="menu-item {{ Request::is('admin/repository*') ? 'active' : '' }}">
+                <a href="/admin/repository" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                  <div data-i18n="Analytics">JDIH JFK</div>
+                  <div data-i18n="Analytics">Repository</div>
                 </a>
               </li>
               @endif

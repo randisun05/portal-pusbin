@@ -9,6 +9,7 @@
         "anthropic-ai/sdk": "^0.47.0",
         "barryvdh/laravel-dompdf": "^3.1",
         "cviebrock/eloquent-sluggable": "^9.0",
+        "doctrine/dbal": "^3.1.4",
         "guzzlehttp/guzzle": "^7.5",
         "intervention/image": "^3.5",
         "intervention/image-laravel": "^1.2",
