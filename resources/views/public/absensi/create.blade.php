@@ -11,6 +11,7 @@
             <form class="Konsultasi" id="form-konsultasi" action="/absensi/{{ $kegiatan->slug }}/store"
                 method="POST">
                 @csrf
+                @include('layout.partial.honeypot')
                 {{-- ID KEGIATAN --}}
                 <input type="hidden" id="kegiatan_id" name="kegiatan_id" value="{{ $kegiatan->id }}">
 

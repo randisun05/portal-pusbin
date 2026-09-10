@@ -9,9 +9,12 @@ use Illuminate\Http\Request;
 use App\Mail\SendEmailAbsensi;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
 
 class PublicAbsensiController extends Controller
 {
+    use GuardsAgainstSpam;
+
     /**
      * Display a listing of the resource.
      *
@@ -70,6 +73,10 @@ class PublicAbsensiController extends Controller
         'jabatan' => 'required|',
         'instansi' => 'required|',
     ]);
+
+    if ($this->isSpamSubmission($request)) {
+        return redirect()->route('public.absensi.index')->withSuccess('Absensi berhasil! Cek email Anda untuk konfirmasi.');
+    }
 
     // Memeriksa apakah ada entri dengan kegiatan yang sama dan ID kegiatan yang sama
         $existingEntry = Absensi::where('kegiatan_id', $request->kegiatan_id)

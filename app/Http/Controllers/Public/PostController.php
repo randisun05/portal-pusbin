@@ -11,9 +11,12 @@ use Illuminate\Routing\Controller;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\highlight;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
 
 class PostController extends Controller
 {
+    use GuardsAgainstSpam;
+
     public function index()
     {
         $title='';
@@ -65,6 +68,10 @@ class PostController extends Controller
             'email' => 'nullable|email',
             'body' => 'required|max:2000',
         ]);
+
+        if ($this->isSpamSubmission($request)) {
+            return redirect('/publikasi/' . $post->slug . '#komentar')->with('success', 'Komentar Anda berhasil dikirim dan menunggu persetujuan admin.');
+        }
 
         $validated['post_id'] = $post->id;
 

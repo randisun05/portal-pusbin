@@ -9,9 +9,12 @@ use Illuminate\Http\Request;
 use App\Mail\SendEmailKegiatan;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
 
 class PublicKegiatanController extends Controller
 {
+    use GuardsAgainstSpam;
+
     /**
      * Display a listing of the resource.
      *
@@ -76,6 +79,10 @@ class PublicKegiatanController extends Controller
         'jabatan' => 'required|',
         'instansi' => 'required|',
     ]);
+
+    if ($this->isSpamSubmission($request)) {
+        return redirect()->route('public.kegiatan.index')->withSuccess('Pendaftaran berhasil! Cek email Anda untuk konfirmasi.');
+    }
 
     // Memeriksa apakah ada entri dengan kegiatan yang sama dan ID kegiatan yang sama
         $existingEntry = Absensi::where('kegiatan_id', $request->kegiatan_id)

@@ -45,6 +45,30 @@ class AdminKonsultasiController extends Controller
             ]);
     }
 
+    /**
+     * Display a listing of the individual Konsultasi Q&A tickets, with a
+     * link to answer each one.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function tiketIndex()
+    {
+        $tikets = Konsultasi::with('kode_konsultasi')->latest();
+
+        if (request('search')) {
+            $search = request('search');
+            $tikets->where(function ($query) use ($search) {
+                $query->where('tiket', 'like', '%' . $search . '%')
+                    ->orWhere('nama', 'like', '%' . $search . '%')
+                    ->orWhere('nip', 'like', '%' . $search . '%');
+            });
+        }
+
+        return view('admin.konsultasi.tiket', [
+            'tikets' => $tikets->paginate(10),
+        ]);
+    }
+
 
     /**
      * Store a newly created resource in storage.

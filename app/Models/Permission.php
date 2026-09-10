@@ -31,6 +31,7 @@ class Permission extends Model
             ],
             'Operasional' => [
                 'manage-konsultasi' => 'Kelola Konsultasi',
+                'manage-jadwalukom' => 'Kelola Jadwal Ujikom',
                 'manage-repository' => 'Kelola Repository',
                 'manage-survei' => 'Kelola Survei',
                 'manage-absensi' => 'Kelola Absensi',

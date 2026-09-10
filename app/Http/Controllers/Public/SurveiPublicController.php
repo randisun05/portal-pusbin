@@ -7,9 +7,12 @@ use App\Models\SurveiGroup;
 use App\Models\SurveiPublic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
 
 class SurveiPublicController extends Controller
 {
+    use GuardsAgainstSpam;
+
     /**
      * Tingkat "badge" kontributor survei berdasarkan jumlah survei berbeda
      * yang sudah pernah diisi oleh satu NIP.
@@ -77,6 +80,10 @@ class SurveiPublicController extends Controller
             'nip' => 'required',
             'jawaban' => 'required|array',
         ]);
+
+        if ($this->isSpamSubmission($request)) {
+            return redirect('/survei')->with('success', 'Terima kasih, survei Anda berhasil dikirim.');
+        }
 
         foreach ($validatedData['jawaban'] as $indikatorId => $nilai) {
             SurveiPublic::create([

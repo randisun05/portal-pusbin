@@ -13,9 +13,11 @@ use App\Models\OrganisasiUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
 
 class PublicController extends Controller
 {
+    use GuardsAgainstSpam;
 
     public function web()
     {
@@ -169,6 +171,10 @@ class PublicController extends Controller
             'subjek' => 'nullable',
             'pesan' => 'required',
         ]);
+
+        if ($this->isSpamSubmission($request)) {
+            return redirect('/about/kontak-kami')->with('success', 'Terima kasih, pesan Anda berhasil terkirim. Kami akan segera merespon.');
+        }
 
         PesanKontak::create($validatedData);
 

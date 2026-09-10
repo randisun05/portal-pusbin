@@ -103,10 +103,16 @@
               </li>
               @endif
               @if($me->hasPermission('manage-konsultasi'))
-              <li class="menu-item {{ Request::is('admin/konsultasi*') ? 'active' : '' }}">
+              <li class="menu-item {{ Request::is('admin/konsultasi') || Request::is('admin/konsultasi/*') ? 'active' : '' }}">
                 <a href="/admin/konsultasi" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Jadwal Konsultasi</div>
+                </a>
+              </li>
+              <li class="menu-item {{ Request::is('admin/konsultasi-tiket*') ? 'active' : '' }}">
+                <a href="/admin/konsultasi-tiket" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Tiket Konsultasi</div>
                 </a>
               </li>
               @endif
@@ -123,6 +129,14 @@
                 <a href="/admin/absensi-statistik" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Statistik Absensi</div>
+                </a>
+              </li>
+              @endif
+              @if($me->hasPermission('manage-jadwalukom'))
+              <li class="menu-item {{ Request::is('admin/jadwalukom*') ? 'active' : '' }}">
+                <a href="/admin/jadwalukom" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Jadwal Ujikom</div>
                 </a>
               </li>
               @endif

@@ -97,6 +97,7 @@
 
                 <form action="/publikasi/{{ $post->slug }}/komentar" method="POST" class="mt-4">
                     @csrf
+                    @include('layout.partial.honeypot')
                     <div class="row g-2">
                         <div class="col-md-6">
                             <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Anda" value="{{ old('nama') }}" required>

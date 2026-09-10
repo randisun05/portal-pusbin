@@ -10,9 +10,12 @@ use App\Mail\SendEmailKonsultasi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
 
 class KonsultasiController extends Controller
 {
+    use GuardsAgainstSpam;
+
     /**
      * Display a listing of the resource.
      *
@@ -74,6 +77,10 @@ class KonsultasiController extends Controller
         'jabatan' => 'required|',
         'instansi' => 'required|',
     ]);
+
+    if ($this->isSpamSubmission($request)) {
+        return redirect()->route('public.konsultasi.index')->withSuccess('Pendaftaran berhasil, cek email anda!');
+    }
 
      // Memeriksa apakah ada entri dengan kegiatan yang sama dan ID kegiatan yang sama
      $existingEntry = Absensi::where('kegiatan_id', $request->kegiatan_id)

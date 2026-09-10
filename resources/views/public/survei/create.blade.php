@@ -39,6 +39,7 @@
 
                 <form action="/survei/{{ $survei->id }}" method="POST" id="svForm">
                     @csrf
+                    @include('layout.partial.honeypot')
 
                     <div class="mb-3">
                         <label for="nip" class="form-label">NIP</label>

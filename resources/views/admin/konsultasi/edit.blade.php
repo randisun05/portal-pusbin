@@ -8,6 +8,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-2 mt-5 text-center">Jawab Usulan Konsultasi Online</h1>
+    <p class="text-center text-muted">Tiket: <strong>{{ $konsultasi->tiket }}</strong> &middot; Status: {{ $konsultasi->jawab ? 'Sudah Dijawab' : 'Belum Dijawab' }}</p>
     @if (session()->has('success'))
         <div class="alert alert-success col-lg-8" role="alert">
         {{session('success')}}
@@ -33,13 +34,13 @@
                 </div>
 
                 <div class="row row-cols-3 mb-4">
-                  <div class="col col-lg-2"><label for="desc">Perihal</label></div>
-                  <div class="col"> <input type="text" class="form-control" @error('perihal') is-invalid @enderror name="perihal" id="perihal" value="{{old('perihal', $konsultasi->perihal)}}" disabled></div>
-                  @error('perihal')
-                  <div class="invalid-feedback">
-                      Perihal Konsultasi Harus Diisi
-                  </div>
-                  @enderror
+                  <div class="col col-lg-2"><label for="nama">Nama</label></div>
+                  <div class="col"> <input type="text" class="form-control" name="nama" id="nama" value="{{ $konsultasi->nama }}" disabled></div>
+                </div>
+
+                <div class="row row-cols-3 mb-4">
+                  <div class="col col-lg-2"><label for="jenis">Jenis Konsultasi</label></div>
+                  <div class="col"> <input type="text" class="form-control" name="jenis" id="jenis" value="{{ optional($konsultasi->kode_konsultasi)->jenis }}" disabled></div>
                 </div>
 
                 <div class="row row-cols-3 mb-4">
@@ -94,7 +95,7 @@
 
               <div class='text-center'>
                 <button class="btn btn-lg btn-primary mt-3" type="submit">Kirim Jawaban</button>
-                <a href="/admin/konsultasi" class="btn btn-lg btn-primary mt-3  ms-3">Batal</a>
+                <a href="/admin/konsultasi-tiket" class="btn btn-lg btn-primary mt-3  ms-3">Batal</a>
               </div>
             </div>
             </form>
