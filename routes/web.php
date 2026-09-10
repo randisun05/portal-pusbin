@@ -71,7 +71,7 @@ Route::prefix('admin')->group(function() {
         });
 
         // Modul operasional
-        Route::resource('/konsultasi', AdminKonsultasiController::class)->Middleware(['prevent-back-history', 'permission:manage-konsultasi']);
+        Route::resource('/konsultasi', AdminKonsultasiController::class)->except(['create'])->Middleware(['prevent-back-history', 'permission:manage-konsultasi']);
         Route::resource('/repository', AdminJdifjfkController::class)->Middleware(['prevent-back-history', 'permission:manage-repository']);
         Route::group(['middleware' => ['permission:manage-survei']], function () {
             Route::resource('/survei', AdminSurveiController::class)->Middleware(['prevent-back-history']);
@@ -194,10 +194,6 @@ Route::get('/about/visi-misi', [\App\Http\Controllers\Public\PublicController::c
 Route::get('/about/struktur-organisasi', [\App\Http\Controllers\Public\PublicController::class, 'struktur']);
 
 
-Route::get('/getapi', [\App\Http\Controllers\Admin\AdminLayananController::class, 'getData']);
-Route::get('/get', [\App\Http\Controllers\Admin\AdminLayananController::class, 'inputData']);
-Route::get('/getpublic', [\App\Http\Controllers\Admin\AdminLayananController::class, 'getProdtoken']);
-Route::get('/getauth', [\App\Http\Controllers\Admin\AdminLayananController::class, 'getAuthtoken']);
 
 
 

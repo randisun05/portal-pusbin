@@ -47,22 +47,6 @@ class AdminKonsultasiController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create($id)
-    {
-        $konsultasi = Kegiatan::findOrFail($id);
-
-        return view('public.konsultasi.create', [
-            'title' => "Daftar Konsultasi Online",
-            'konsultasi' => $konsultasi,
-        ]);
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

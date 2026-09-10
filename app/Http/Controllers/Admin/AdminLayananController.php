@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use GuzzleHttp\Client;
 use App\Models\Layanan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -128,84 +127,4 @@ class AdminLayananController extends Controller
         return redirect('/admin/layanan')->with('success', 'Layanan Berhasil Dihapus');
     }
 
-    public function inputData(Request $request)
-    {
-
-        return view('admin.layanan.input', []);
-    }
-
-    public function getData(Request $request)
-    {
-        $ProdToken = $this->getProdtoken();
-        $AuthToken = $this->getAuthtoken();
-
-        // Inisialisasi Guzzle client
-        $client = new Client();
-
-        try {
-            // Lakukan HTTP GET request ke URL API dengan header yang diperlukan
-            $response = $client->request('GET', 'https://apimws.bkn.go.id:8243/pusbin/1/pns/data-utama/' . $request->nama, [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $ProdToken, // Gunakan $ProdToken untuk ProdToken
-                    'Auth' => 'Bearer ' . $AuthToken // Gunakan $AuthToken untuk AuthToken
-                ]
-            ]);
-
-            // Ambil data JSON dari response
-            $data = json_decode($response->getBody(), true);
-
-            // Lakukan operasi selanjutnya sesuai kebutuhan Anda, misalnya menampilkan data
-            dd($data);
-        } catch (\Exception $e) {
-            // Tangani jika terjadi error dalam melakukan request
-            dd($e->getMessage());
-        }
-    }
-
-    public function getProdtoken()
-    {
-        $client = new Client();
-
-        // Lakukan HTTP POST request ke URL API dengan header yang diperlukan
-        $response = $client->request('POST', 'https://apimws.bkn.go.id/oauth2/token', [
-            'headers' => [
-                'Authorization' => 'Basic ' . base64_encode('cTfJosEeHmdA2Xc7mh2a7R6aE18a:SOau2ggf0fFvv7ibJa7LRM27e88a')
-            ],
-            'form_params' => [
-                'grant_type' => 'client_credentials'
-            ]
-        ]);
-
-        // Ambil data JSON dari response
-        $data = json_decode($response->getBody(), true);
-
-        // Ambil nilai access_token dari respons
-        $access_token = $data['access_token'];
-
-        return $access_token;
-    }
-
-    public function getAuthtoken()
-    {
-        $client = new Client();
-
-        // Lakukan HTTP POST request ke URL API dengan header yang diperlukan
-        $response = $client->request('POST', 'https://sso-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token', [
-            'form_params' => [
-                'client_id' => 'internalpusbinjf',
-                'grant_type' => 'password',
-                'username' => '199501052022031003',
-                'password' => 'Jakarta123'
-            ]
-        ]);
-
-        // Ambil data JSON dari response
-        $data = json_decode($response->getBody(), true);
-
-        // Ambil nilai access_token dari respons
-        $access_token = $data['access_token'];
-
-        return $access_token;
-    }
 }
