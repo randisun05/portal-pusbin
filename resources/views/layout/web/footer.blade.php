@@ -26,6 +26,7 @@
                     <li><a href="/survei">Survei</a></li>
                     <li><a href="/faq">FAQ</a></li>
                     <li><a href="/verifikasi-sertifikat">Verifikasi Sertifikat</a></li>
+                    <li><a href="/sertifikat/unduh">Unduh Sertifikat</a></li>
                 </ul>
             </div>
 

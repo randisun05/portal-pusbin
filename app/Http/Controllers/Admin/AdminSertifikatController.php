@@ -9,11 +9,13 @@ use App\Models\SertifikatTemplate;
 use Illuminate\Http\Request;
 use App\Services\JfManagementService;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\GeneratesSertifikatQr;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Endroid\QrCode\QrCode;
 
 class AdminSertifikatController extends Controller
 {
+    use GeneratesSertifikatQr;
+
     /**
      * Display a listing of the resource.
      *
@@ -134,22 +136,5 @@ class AdminSertifikatController extends Controller
         ])->setPaper('a4', 'landscape');
 
         return $pdf->download('Sertifikat-' . str_replace('/', '-', $sertifikat->nomor_sertifikat) . '.pdf');
-    }
-
-    /**
-     * Buat data URI kode QR yang mengarah ke halaman verifikasi sertifikat.
-     *
-     * @param  \App\Models\Sertifikat  $sertifikat
-     * @return string
-     */
-    protected function qrCodeDataUri(Sertifikat $sertifikat): string
-    {
-        $url = url('/verifikasi-sertifikat') . '?nomor=' . urlencode($sertifikat->nomor_sertifikat);
-
-        $qrCode = new QrCode($url);
-        $qrCode->setSize(180);
-        $qrCode->setMargin(6);
-
-        return $qrCode->writeDataUri();
     }
 }

@@ -187,6 +187,10 @@ Route::get('/verifikasi-sertifikat', [\App\Http\Controllers\Public\SertifikatVer
     ->name('public.sertifikat.verifikasi')
     ->middleware('throttle:10,1');
 
+//ROUTE UNDUH SERTIFIKAT MANDIRI
+Route::get('/sertifikat/unduh', [\App\Http\Controllers\Public\SertifikatUnduhController::class, 'index'])->name('public.sertifikat.unduh');
+Route::post('/sertifikat/unduh', [\App\Http\Controllers\Public\SertifikatUnduhController::class, 'unduh'])->middleware('throttle:10,1');
+
 //ROUTE PENCARIAN
 Route::get('/cari', [\App\Http\Controllers\Public\SearchController::class, 'index'])->name('public.search.index');
 
