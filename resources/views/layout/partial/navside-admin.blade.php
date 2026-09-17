@@ -141,10 +141,18 @@
               </li>
               @endif
               @if($me->hasPermission('manage-sertifikat'))
-              <li class="menu-item {{ Request::is('admin/sertifikat*') ? 'active' : '' }}">
+              <li class="menu-item {{ Request::is('admin/sertifikat') || Request::is('admin/sertifikat/*') ? 'active' : '' }}">
                 <a href="/admin/sertifikat" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Sertifikat</div>
+                </a>
+              </li>
+              @endif
+              @if($me->hasPermission('manage-sertifikat-template'))
+              <li class="menu-item {{ Request::is('admin/sertifikat-template*') || Request::is('admin/pengaturan-sertifikat*') ? 'active' : '' }}">
+                <a href="/admin/sertifikat-template" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Template & Nomor Sertifikat</div>
                 </a>
               </li>
               @endif

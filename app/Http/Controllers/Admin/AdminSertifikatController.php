@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Kegiatan;
 use App\Models\Absensi;
 use App\Models\Sertifikat;
+use App\Models\SertifikatTemplate;
 use Illuminate\Http\Request;
 use App\Services\JfManagementService;
 use App\Http\Controllers\Controller;
@@ -37,27 +38,52 @@ class AdminSertifikatController extends Controller
             'absensis' => $absensis,
             'kegiatanId' => $request->kegiatan_id,
             'jfConfigured' => ! empty(config('services.jf_management.url')),
+            'templates' => SertifikatTemplate::orderByDesc('is_default')->orderBy('nama')->get(),
         ]);
     }
 
     /**
      * Terbitkan sertifikat untuk satu data absensi.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Absensi  $absensi
      * @return \Illuminate\Http\Response
      */
-    public function issue(Absensi $absensi)
+    public function issue(Request $request, Absensi $absensi)
     {
         if ($absensi->sertifikat) {
             return back()->with('error', 'Sertifikat untuk peserta ini sudah diterbitkan.');
         }
 
+        $template = $request->template_id
+            ? SertifikatTemplate::find($request->template_id)
+            : SertifikatTemplate::default();
+
         Sertifikat::create([
             'absensi_id' => $absensi->id,
+            'template_id' => optional($template)->id,
             'nomor_sertifikat' => Sertifikat::generateNomor(),
         ]);
 
         return back()->with('success', 'Sertifikat berhasil diterbitkan.');
+    }
+
+    /**
+     * Ganti template desain untuk sertifikat yang sudah diterbitkan.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Sertifikat  $sertifikat
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTemplate(Request $request, Sertifikat $sertifikat)
+    {
+        $request->validate([
+            'template_id' => 'nullable|exists:sertifikat_templates,id',
+        ]);
+
+        $sertifikat->update(['template_id' => $request->template_id]);
+
+        return back()->with('success', 'Template sertifikat berhasil diganti.');
     }
 
     /**
@@ -87,7 +113,7 @@ class AdminSertifikatController extends Controller
     public function cetak(Sertifikat $sertifikat)
     {
         return view('admin.sertifikat.cetak', [
-            'sertifikat' => $sertifikat->load('absensi.kegiatan'),
+            'sertifikat' => $sertifikat->load('absensi.kegiatan', 'template'),
             'qrCode' => $this->qrCodeDataUri($sertifikat),
         ]);
     }
@@ -100,7 +126,7 @@ class AdminSertifikatController extends Controller
      */
     public function download(Sertifikat $sertifikat)
     {
-        $sertifikat->load('absensi.kegiatan');
+        $sertifikat->load('absensi.kegiatan', 'template');
 
         $pdf = Pdf::loadView('admin.sertifikat.pdf', [
             'sertifikat' => $sertifikat,

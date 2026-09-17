@@ -30,6 +30,15 @@ class AdminRoleController extends Controller
      */
     public function edit(Role $role)
     {
+        // Sinkronkan definisi permission ke tabel permissions secara otomatis,
+        // supaya slug baru yang ditambahkan di Permission::definitions() bisa
+        // langsung diberikan ke role tanpa perlu menjalankan seeder ulang.
+        foreach (Permission::definitions() as $grup => $items) {
+            foreach ($items as $slug => $label) {
+                Permission::firstOrCreate(['slug' => $slug], ['label' => $label, 'grup' => $grup]);
+            }
+        }
+
         return view('admin.role.edit', [
             'title' => 'Role & Permission',
             'role' => $role,

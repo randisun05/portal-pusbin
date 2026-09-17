@@ -27,6 +27,13 @@
             </div>
         @endunless
 
+        @if($templates->isEmpty())
+            <div class="alert alert-warning">
+                Belum ada template sertifikat. Sertifikat akan memakai desain bawaan.
+                <a href="/admin/sertifikat-template/create">Buat template sertifikat</a> untuk kop, warna, dan tanda tangan yang bisa diatur sendiri.
+            </div>
+        @endif
+
     <!-- Main Content -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -76,19 +83,38 @@
                                     <span class="badge bg-light text-dark">Belum diterbitkan</span>
                                 @endif
                             </td>
-                            <td class="text-center text-nowrap">
+                            <td class="text-nowrap">
                                 @if(!$absensi->sertifikat)
-                                    <form action="/admin/sertifikat/{{ $absensi->id }}/issue" method="POST" class="d-inline">
+                                    <form action="/admin/sertifikat/{{ $absensi->id }}/issue" method="POST" class="d-flex gap-1 align-items-center justify-content-center">
                                         @csrf
+                                        @if($templates->isNotEmpty())
+                                            <select name="template_id" class="form-select form-select-sm" style="width: auto;">
+                                                @foreach($templates as $tpl)
+                                                    <option value="{{ $tpl->id }}" {{ $tpl->is_default ? 'selected' : '' }}>{{ $tpl->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
                                         <button class="badge bg-primary border-0">Terbitkan</button>
                                     </form>
                                 @else
-                                    <a href="/admin/sertifikat/{{ $absensi->sertifikat->id }}/cetak" class="badge bg-info" target="_blank">Pratinjau</a>
-                                    <a href="/admin/sertifikat/{{ $absensi->sertifikat->id }}/download" class="badge bg-primary">Unduh PDF</a>
-                                    <form action="/admin/sertifikat/{{ $absensi->sertifikat->id }}/send" method="POST" class="d-inline">
-                                        @csrf
-                                        <button class="badge bg-dark border-0">Kirim ke Manajemen JF</button>
-                                    </form>
+                                    <div class="d-flex flex-wrap gap-1 align-items-center justify-content-center">
+                                        <a href="/admin/sertifikat/{{ $absensi->sertifikat->id }}/cetak" class="badge bg-info" target="_blank">Pratinjau</a>
+                                        <a href="/admin/sertifikat/{{ $absensi->sertifikat->id }}/download" class="badge bg-primary">Unduh PDF</a>
+                                        <form action="/admin/sertifikat/{{ $absensi->sertifikat->id }}/send" method="POST" class="d-inline">
+                                            @csrf
+                                            <button class="badge bg-dark border-0">Kirim ke Manajemen JF</button>
+                                        </form>
+                                    </div>
+                                    @if($templates->isNotEmpty())
+                                        <form action="/admin/sertifikat/{{ $absensi->sertifikat->id }}/template" method="POST" class="d-flex gap-1 align-items-center justify-content-center mt-1">
+                                            @csrf
+                                            <select name="template_id" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
+                                                @foreach($templates as $tpl)
+                                                    <option value="{{ $tpl->id }}" {{ (int) $absensi->sertifikat->template_id === $tpl->id ? 'selected' : '' }}>{{ $tpl->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </form>
+                                    @endif
                                 @endif
                             </td>
                         </tr>

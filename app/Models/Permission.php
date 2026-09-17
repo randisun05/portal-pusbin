@@ -37,6 +37,7 @@ class Permission extends Model
                 'manage-absensi' => 'Kelola Absensi',
                 'manage-kodekonsultasi' => 'Kelola Kode Konsultasi',
                 'manage-sertifikat' => 'Kelola Sertifikat',
+                'manage-sertifikat-template' => 'Kelola Template & Penomoran Sertifikat',
             ],
             'Laporan & Monitoring' => [
                 'view-auditlog' => 'Lihat Audit Trail',

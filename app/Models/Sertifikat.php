@@ -18,8 +18,29 @@ class Sertifikat extends Model
         return $this->belongsTo(Absensi::class);
     }
 
+    public function template()
+    {
+        return $this->belongsTo(SertifikatTemplate::class, 'template_id');
+    }
+
+    /**
+     * Buat nomor sertifikat baru berdasarkan pengaturan penomoran aktif
+     * (prefix, jumlah digit urut, dan apakah urutan direset tiap tahun).
+     *
+     * @return string
+     */
     public static function generateNomor()
     {
-        return 'SERT/' . date('Y') . '/' . str_pad(static::count() + 1, 5, '0', STR_PAD_LEFT);
+        $pengaturan = PengaturanSertifikat::current();
+        $tahun = date('Y');
+
+        $query = static::query();
+        if ($pengaturan->reset_tahunan) {
+            $query->where('nomor_sertifikat', 'like', $pengaturan->prefix . '/' . $tahun . '/%');
+        }
+
+        $urutan = $query->count() + 1;
+
+        return $pengaturan->prefix . '/' . $tahun . '/' . str_pad($urutan, $pengaturan->digit_urut, '0', STR_PAD_LEFT);
     }
 }

@@ -101,6 +101,13 @@ Route::prefix('admin')->group(function() {
             Route::post('/sertifikat/{sertifikat}/send', [AdminSertifikatController::class, 'send']);
             Route::get('/sertifikat/{sertifikat}/cetak', [AdminSertifikatController::class, 'cetak']);
             Route::get('/sertifikat/{sertifikat}/download', [AdminSertifikatController::class, 'download']);
+            Route::post('/sertifikat/{sertifikat}/template', [AdminSertifikatController::class, 'updateTemplate']);
+        });
+        Route::resource('/sertifikat-template', \App\Http\Controllers\Admin\AdminSertifikatTemplateController::class)
+            ->except(['show'])->Middleware(['prevent-back-history', 'permission:manage-sertifikat-template']);
+        Route::group(['middleware' => ['permission:manage-sertifikat-template']], function () {
+            Route::get('/pengaturan-sertifikat', [\App\Http\Controllers\Admin\AdminPengaturanSertifikatController::class, 'edit'])->Middleware(['prevent-back-history']);
+            Route::put('/pengaturan-sertifikat', [\App\Http\Controllers\Admin\AdminPengaturanSertifikatController::class, 'update']);
         });
 
         // Laporan & monitoring
