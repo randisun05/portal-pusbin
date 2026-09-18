@@ -1,41 +1,40 @@
-<!-- blog-area-start -->
-<div class="blog-area p-relative pb-70">
-    <div class="tp-blog-border"></div>
+<!-- Kegiatan Section -->
+<section id="kegiatan" class="blog-posts section">
+
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <div class="tp-section-title-wrapper mb-60 p-relative wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1s">
-                    <span class="tp-section-title-pre tp-section-title-pre4">// Jangan Lewatkan</span>
-                    <h2 class="tp-section-title">Kegiatan Kami Selanjutnya</h2>
+        <div class="row align-items-center mb-4">
+            <div class="col-lg-8">
+                <div class="section-title text-start" data-aos="fade-up">
+                    <h2>Kegiatan Kami Selanjutnya</h2>
+                    <p>Jangan lewatkan kegiatan &amp; ujikom yang akan datang</p>
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="tp-blog-btn-fin tp-blog-btn-fin-02 wow fadeInUp" data-wow-delay=".5s" data-wow-duration="1s">
-                    <a href="/kegiatan" class="tp-btn tp-btn-transparent">Selengkapnya<i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="/kegiatan" class="more-btn"><span>Semua Kegiatan</span> <i class="bi bi-chevron-right"></i></a>
             </div>
         </div>
-        <div class="row">
-            @foreach ($kegiatans as $kegiatan)
-            <div class="col-lg-4 col-md-6">
-                <div class="tp-blog-wrapper mb-50 wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1s">
-                    <div class="tp-blog-main-img mb-15 p-relative">
-                        <img class="w-img" src="{{asset ('assets/img/konsul2.png') }}" alt="blog">
-                        <img class="w-img" src="{{asset ('assets/img/konsul2.png') }}" alt="blog">
-                    </div>
-                    <div class="tp-blog-content">
-                        <div class="tp-blog-meta mb-15">
-                            <span class="tp-blog-sub-meta tp-blog-sub-meta-fin p-relative"><a href="absensi/{{ $kegiatan->slug }}">{{$kegiatan->waktu}}</a></span>
-                            <span class="tp-blog-date p-relative">23 June, 2024</span>
+
+        <div class="row gy-4">
+            @forelse ($kegiatans as $kegiatan)
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ 100 * ($loop->index + 1) }}">
+                    <article>
+                        <div class="post-img">
+                            <img src="{{ asset('storage/' . $kegiatan->image) }}" alt="{{ $kegiatan->nama }}" class="img-fluid">
                         </div>
-                        <h3 class="tp-blog-title tp-blog-title-2 mb-25"><a href="absensi/{{ $kegiatan->slug }}">{{ $kegiatan->nama }}</a></h3>
-                        <a href="kegiatan/{{ $kegiatan->slug }}" class="tp-blog-btn-2">View<i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
+                        <p class="post-category">{{ $kegiatan->jenis }}</p>
+                        <h2 class="title"><a href="/kegiatan/{{ $kegiatan->slug }}">{{ $kegiatan->nama }}</a></h2>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-calendar-event flex-shrink-0 me-2"></i>
+                            <div class="post-meta">
+                                <p class="post-date mb-0">{{ $kegiatan->waktu }}</p>
+                            </div>
+                        </div>
+                    </article>
                 </div>
-            </div>
-            @endforeach
+            @empty
+                <div class="col-12 text-center text-muted">Belum ada kegiatan mendatang.</div>
+            @endforelse
         </div>
     </div>
-</div>
-<!-- blog-area-end -->
 
+</section><!-- /Kegiatan Section -->

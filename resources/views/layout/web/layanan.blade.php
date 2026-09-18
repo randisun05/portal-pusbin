@@ -1,34 +1,31 @@
- <div class="testimonial-area p-relative pb-35">
-    <img class="tp-testimonial-shape tree-move d-none d-lg-block p-absolute" src="{{ asset('assets/img/testimonial/07.png') }}" alt="07">
-    <div class="container">
-       <div class="row">
-          <div class="col-12">
-             <div class="tp-section-title-wrapper text-center p-relative mb-60 wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1s" >
-                <span class="tp-section-title-pre tp-section-title-pre4">Pendukung</span>
-                <h2 class="tp-section-title">Layanan Kami</h2>
-             </div>
-          </div>
-          <div class="service-area pb-90">
-            <div class="container">
-               <div class="row">
-                @foreach ($layanans as $layanan )
-                  <div class="col-lg-3 col-md-6 mb-25">
-                    <a href={{$layanan->link}}>
-                     <div class="tp-service-bus-wrap text-center wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1s">
-                        <div class="tp-service-bus">
-                           <i><img src="{{asset('storage/' . $layanan->image)}}" width="100 px"></i>
-                        </div>
-                        <div class="tp-service-bus-con">
-                           <h3 class="tp-service-bus-tit"><a href="service-details.html">{{$layanan->nama}}</a></h3>
-                        </div>
-                     </div>
-                    </a>
-                  </div>
-                @endforeach
+<!-- Services Section -->
+<section id="services" class="services section light-background">
 
-               </div>
-            </div>
-         </div>
-       </div>
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Layanan Kami</h2>
+        <p>Berbagai layanan Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara</p>
     </div>
- </div>
+
+    <div class="container">
+        <div class="row gy-4">
+            @foreach ($layanans as $layanan)
+                @php
+                    $hasImage = $layanan->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($layanan->image);
+                @endphp
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ 100 * ($loop->index + 1) }}">
+                    <div class="service-item-photo position-relative">
+                        @if($hasImage)
+                            <img src="{{ asset('storage/' . $layanan->image) }}" alt="{{ $layanan->nama }}">
+                        @else
+                            <i class="bi bi-diagram-3 fallback-icon"></i>
+                        @endif
+                        <a href="{{ $layanan->link }}" class="stretched-link">
+                            <h3>{{ $layanan->nama }}</h3>
+                        </a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+</section><!-- /Services Section -->

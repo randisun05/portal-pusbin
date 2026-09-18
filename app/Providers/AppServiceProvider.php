@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        View::composer('layout.web.footer', function ($view) {
+        View::composer(['layout.web.footer', 'layout.web.nav'], function ($view) {
             $view->with('profil', Profil::current());
         });
 

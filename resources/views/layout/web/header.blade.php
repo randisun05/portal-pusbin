@@ -1,33 +1,62 @@
-<!-- hero-area-start -->
-<div class="tp-hero-area tp-grey-insu p-relative z-index-1">
-    <div class="container">
-       <div class="row align-items-center">
-          <div class="col-lg-6">
-             <div class="tp-hero-wrapper-insu tp-hero-insu-spa">
-                <span class="tp-hero-eyebrow wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1s">Badan Kepegawaian Negara</span>
-                <h2 class="tp-hero-title-insu animetion wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1s">Direktorat <b>Jabatan Fungsional MASN</b></h2>
-                <p class="tp-hero-desc wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1s">Membina, mengembangkan, dan memfasilitasi jabatan fungsional kepegawaian di seluruh Indonesia secara profesional, transparan, dan mudah diakses.</p>
-                <div class="tp-about-author wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1s">
-                   <div class="tp-about-btn d-flex flex-wrap gap-3">
-                      <a class="tp-btn tp-btn-insu" href="/about/tentang-kami">Tentang Kami<i class="fa-solid fa-arrow-right"></i></a>
-                      <a class="tp-btn tp-btn-transparent" href="/layanan/pengajuan-rekomendasi">Lihat Layanan<i class="fa-solid fa-arrow-right"></i></a>
-                   </div>
+<!-- Hero Section -->
+<section id="hero" class="hero section dark-background">
+
+    <img src="{{ asset('assets-flexor/img/hero-bg.jpg') }}" alt="" data-aos="fade-in">
+
+    <div class="container position-relative">
+
+        <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
+            <h2>Direktorat Jabatan Fungsional MASN</h2>
+            <p>Membina, mengembangkan, dan memfasilitasi jabatan fungsional kepegawaian di seluruh Indonesia secara profesional, transparan, dan mudah diakses.</p>
+        </div><!-- End Welcome -->
+
+        <div class="content row gy-4">
+            <div class="col-lg-4 d-flex align-items-stretch">
+                <div class="why-box" data-aos="zoom-out" data-aos-delay="200">
+                    <h3>Kenapa Layanan Kami?</h3>
+                    <p>{{ \Illuminate\Support\Str::limit($profil->tentang ?? 'Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara (Direktorat JF MASN) BKN menyelenggarakan pembinaan jabatan fungsional kepegawaian secara profesional, transparan, dan mudah diakses di seluruh Indonesia.', 200) }}</p>
+                    <div class="text-center">
+                        <a href="/about/tentang-kami" class="more-btn"><span>Tentang Kami</span> <i class="bi bi-chevron-right"></i></a>
+                    </div>
                 </div>
-             </div>
-          </div>
-          <div class="col-lg-6">
-             <div class="tp-hero-insu-img-wrap h-100">
-                <div class="tp-hero-insu-img p-relative h-100">
-                   <img class="tp-hero-insu-img-3 tptranslateX2 p-absolute" src="{{ asset('assets/img/banner/insu/shape2.png') }}" alt="shape">
-                   <img class="tp-hero-insu-img-4 up-down animetion p-absolute" src="{{ asset('assets/img/banner/insu/bird.png') }}" alt="bird">
-                   <img class="tp-hero-insu-img-6 up-down p-absolute" src="{{ asset('assets/img/banner/insu/balun2.png') }}" alt="belun">
+            </div><!-- End Why Box -->
+
+            <div class="col-lg-8 d-flex align-items-stretch">
+                <div class="d-flex flex-column justify-content-center">
+                    <div class="row gy-4">
+
+                        <div class="col-xl-4 d-flex align-items-stretch">
+                            <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
+                                <i class="bi bi-clipboard-data"></i>
+                                <h4>Uji Kompetensi</h4>
+                                <p>Dilaksanakan 4 periode dalam setahun secara daring, tanpa dipungut biaya.</p>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 d-flex align-items-stretch">
+                            <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
+                                <i class="bi bi-headset"></i>
+                                <h4>Konsultasi Online</h4>
+                                <p>Ajukan pertanyaan seputar jabatan fungsional dan dapatkan nomor tiket jawaban.</p>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 d-flex align-items-stretch">
+                            <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
+                                <i class="bi bi-patch-check"></i>
+                                <h4>Sertifikat Digital</h4>
+                                <p>Unduh sertifikat kegiatan langsung, lengkap dengan QR verifikasi keaslian.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="d-flex flex-wrap gap-3 mt-4">
+                        <a class="btn btn-primary" href="/layanan/pengajuan-rekomendasi">Lihat Layanan <i class="bi bi-arrow-right"></i></a>
+                    </div>
                 </div>
-                <img class="tp-hero-insu-img-2 tptranslateX2 p-absolute" src="{{ asset('assets/img/banner/insu/shape1.png') }}" alt="shape">
-                <img class="tp-hero-insu-img-5 tree-move p-absolute" src="{{ asset('assets/img/banner/insu/dolar.png') }}" alt="dolar">
-                <img class="tp-hero-insu-img-7 up-down p-absolute" src="{{ asset('assets/img/banner/insu/balun.png') }}" alt="balun">
-             </div>
-          </div>
-       </div>
+            </div>
+        </div>
+
     </div>
- </div>
- <!-- hero-area-end -->
+
+</section><!-- /Hero Section -->

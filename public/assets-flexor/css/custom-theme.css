@@ -1,0 +1,105 @@
+/*
+ * Override warna aksen bawaan template Flexor (oranye) agar konsisten
+ * dengan identitas Direktorat JF MASN, tanpa mengubah struktur template.
+ */
+:root {
+  --accent-color: #b5261f;
+  --nav-hover-color: #b5261f;
+  --nav-dropdown-hover-color: #b5261f;
+  --pk-primary: #b5261f;
+  --pk-ink: #14172b;
+}
+
+/*
+ * Logotype teks (badge "JF" + nama direktorat) dipakai di header & footer.
+ * Dipertahankan dari tema sebelumnya agar identitas tetap konsisten.
+ */
+.pk-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.pk-logo-badge {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--pk-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -.02em;
+  box-shadow: 0 6px 16px rgba(181, 38, 31, .3);
+}
+.pk-logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+.pk-logo-text .pk-logo-line1 { font-weight: 800; font-size: 15px; color: var(--pk-ink); white-space: nowrap; }
+.pk-logo-text .pk-logo-line2 { font-weight: 700; font-size: 11px; letter-spacing: .06em; color: var(--pk-primary); text-transform: uppercase; }
+.pk-logo--light .pk-logo-text .pk-logo-line1 { color: #fff; }
+.pk-logo--light .pk-logo-text .pk-logo-line2 { color: #ff8a83; }
+@media (max-width: 575.98px) {
+  .pk-logo-text .pk-logo-line1 { font-size: 13px; }
+}
+
+/*
+ * Kredit lisensi template (wajib menurut lisensi gratis Flexor dari
+ * BootstrapMade) dibuat kecil & tidak mencolok, ditempatkan terpisah
+ * dari copyright utama. Tautannya tetap ada & berfungsi sesuai syarat
+ * lisensi -- lihat Flexor/Readme.txt dan https://bootstrapmade.com/license/.
+ */
+.footer .credits {
+  font-size: 11px;
+  opacity: .55;
+  margin-top: 6px;
+}
+.footer .credits a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* Blok statistik ringkas di beranda */
+.stats-item .counter2 {
+  display: block;
+  font-family: var(--heading-font);
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--accent-color);
+  line-height: 1;
+}
+.stats-item p {
+  margin: 8px 0 0;
+  color: var(--default-color);
+  font-weight: 500;
+}
+
+/* Kartu layanan dengan thumbnail (bukan ikon) di beranda & halaman layanan */
+.service-item-photo {
+  background: var(--surface-color);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  height: 100%;
+  transition: box-shadow .3s;
+  box-shadow: 0px 0 25px 0 rgba(0, 0, 0, 0.05);
+}
+.service-item-photo:hover { box-shadow: 0px 0 25px 0 rgba(0, 0, 0, 0.1); }
+.service-item-photo img {
+  height: 64px;
+  width: auto;
+  margin: 0 auto 16px;
+  object-fit: contain;
+}
+.service-item-photo .fallback-icon {
+  display: block;
+  font-size: 40px;
+  height: 64px;
+  line-height: 64px;
+  margin-bottom: 16px;
+  color: var(--accent-color);
+}
+.service-item-photo h3 { font-size: 16px; margin: 0; }
+.service-item-photo h3 a { color: var(--heading-color); }
+.service-item-photo h3 a:hover { color: var(--accent-color); }

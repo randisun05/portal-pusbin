@@ -1,44 +1,44 @@
-<!-- blog-area-start -->
-<div class="blog-area p-overflow pb-50">
+<!-- Publikasi Section -->
+<section id="publikasi" class="blog-posts section light-background">
+
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-3"></div>
-                    <div class="col-lg-6">
-                        <div class="tp-section-title-wrapper text-center mb-60 wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1s">
-                            <span class="tp-section-title-pre tp-section-title-pre-5 mb-10">Berita</span>
-                            <h2 class="tp-section-title tp-section-title-insu">Informasi Terkini</h2>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="tp-blog-btn-fin tp-blog-btn-fin-02 wow fadeInUp" data-wow-delay=".5s" data-wow-duration="1s">
-                            <a href="/publikasi" class="tp-btn tp-btn-transparent">Selengkapnya<i class="fa-solid fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+        <div class="row align-items-center mb-4">
+            <div class="col-lg-8">
+                <div class="section-title text-start" data-aos="fade-up">
+                    <h2>Informasi Terkini</h2>
+                    <p>Publikasi &amp; berita terbaru dari Direktorat JF MASN</p>
                 </div>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="/publikasi" class="more-btn"><span>Semua Publikasi</span> <i class="bi bi-chevron-right"></i></a>
             </div>
         </div>
-        <div class="row">
-            @foreach ($posts as $post )
-            <div class="col-lg-4 col-md-6">
-                <div class="tp-blog-insu-wrapper p-relative mb-50 wow fadeInLeft" data-wow-delay=".3s" data-wow-duration="1s">
-                    <div class="tp-blog-insu-img tp-thumb">
-                        <div class="tp-thumb-overlay wow"></div>
-                        <img src="{{ asset('assets/img/berita3.png') }}" alt="blog">
-                    </div>
-                    <div class="tp-blog-insu-content p-absolute">
-                        <div class="tp-blog-insu-top d-flex align-items-center">
-                            <h4 class="tp-blog-insu-name"><a href="{{ filter_var($post->link, FILTER_VALIDATE_URL) ? $post->link : '/publikasi/' . $post->slug }}">{{ $post->category->name }}</a></h4>
-                            <span class="tp-blog-insu-date">{{ $post->publish_at }}</span>
+
+        <div class="row gy-4">
+            @forelse ($posts as $post)
+                @php
+                    $postUrl = filter_var($post->link, FILTER_VALIDATE_URL) ? $post->link : '/publikasi/' . $post->slug;
+                    $postImg = $post->image ? asset('storage/' . $post->image) : asset('assets-flexor/img/blog/blog-' . ((($loop->index % 5)) + 1) . '.jpg');
+                @endphp
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ 100 * ($loop->index + 1) }}">
+                    <article>
+                        <div class="post-img">
+                            <img src="{{ $postImg }}" alt="{{ $post->title }}" class="img-fluid">
                         </div>
-                        <h3 class="tp-blog-insu-title"><a href="{{ filter_var($post->link, FILTER_VALIDATE_URL) ? $post->link : '/publikasi/' . $post->slug }}">{{ $post->title }}</a></h3>
-                        <a class="tp-blog-insu-link" href="{{ filter_var($post->link, FILTER_VALIDATE_URL) ? $post->link : '/publikasi/' . $post->slug }}">Baca <i class="fa-regular fa-arrow-right"></i></a>
-                    </div>
+                        <p class="post-category">{{ $post->category->name }}</p>
+                        <h2 class="title"><a href="{{ $postUrl }}">{{ $post->title }}</a></h2>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-person-circle flex-shrink-0 me-2"></i>
+                            <div class="post-meta">
+                                <p class="post-author mb-0">{{ optional($post->author)->name }}</p>
+                            </div>
+                        </div>
+                    </article>
                 </div>
-            </div>
-            @endforeach
+            @empty
+                <div class="col-12 text-center text-muted">Belum ada publikasi.</div>
+            @endforelse
         </div>
     </div>
-</div>
-<!-- blog-area-end -->
+
+</section><!-- /Publikasi Section -->
