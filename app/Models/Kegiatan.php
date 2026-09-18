@@ -19,4 +19,9 @@ class Kegiatan extends Model
         return $this->hasMany(Absensi::class);
     }
 
+    public function materis()
+    {
+        return $this->hasMany(MateriPaparan::class)->orderBy('urutan');
+    }
+
 }
