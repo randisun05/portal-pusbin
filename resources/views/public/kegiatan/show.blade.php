@@ -8,7 +8,13 @@
         <div class="container">
             <div class="row gy-4 align-items-center">
                 <div class="col-lg-6" data-aos="fade-up">
-                    <img class="img-fluid rounded" src="{{ asset('storage/' . $kegiatan->image) }}" alt="{{ $kegiatan->nama }}">
+                    @if($kegiatan->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($kegiatan->image))
+                        <img class="img-fluid rounded" src="{{ asset('storage/' . $kegiatan->image) }}" alt="{{ $kegiatan->nama }}">
+                    @else
+                        <div class="d-flex align-items-center justify-content-center bg-light rounded" style="height: 320px;">
+                            <i class="bi bi-calendar-event fs-1 text-muted"></i>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                     <p class="text-uppercase small fw-bold mb-2" style="color: var(--accent-color); letter-spacing: 1px;">{{ $kegiatan->jenis }}</p>

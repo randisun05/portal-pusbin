@@ -12,7 +12,13 @@
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ 100 * (($loop->index % 6) + 1) }}">
                 <article>
                     <div class="post-img">
-                        <img src="{{ asset('storage/' . $kegiatan->image) }}" alt="{{ $kegiatan->nama }}" class="img-fluid">
+                        @if($kegiatan->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($kegiatan->image))
+                            <img src="{{ asset('storage/' . $kegiatan->image) }}" alt="{{ $kegiatan->nama }}" class="img-fluid">
+                        @else
+                            <div class="d-flex align-items-center justify-content-center bg-light" style="height: 200px;">
+                                <i class="bi bi-calendar-event fs-1 text-muted"></i>
+                            </div>
+                        @endif
                     </div>
                     <h2 class="title"><a href="/konsultasi/{{ $kegiatan->slug }}">{{ $kegiatan->nama }}</a></h2>
                     <div class="d-flex align-items-center">

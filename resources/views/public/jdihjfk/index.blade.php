@@ -21,7 +21,7 @@
             @foreach ($jdihs as $jdih )
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ 100 * (($loop->index % 6) + 1) }}">
                 <div class="rounded overflow-hidden shadow-sm h-100">
-                    @if($jdih->image)
+                    @if($jdih->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($jdih->image))
                         <img class="img-fluid" src="{{asset('storage/' . $jdih->image)}}" alt="{{ $jdih->title }}">
                     @else
                         <div class="d-flex align-items-center justify-content-center bg-light" style="height: 180px;">
