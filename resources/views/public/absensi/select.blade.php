@@ -21,7 +21,11 @@
                             <p class="post-date mb-0">{{ $kegiatan->waktu }}</p>
                         </div>
                     </div>
-                    <a href="/absensi/{{ $kegiatan->slug }}" class="more-btn mt-2"><span>Daftar</span> <i class="bi bi-chevron-right"></i></a>
+                    @if ($kegiatan->isPresensiTertutup())
+                        <span class="badge bg-secondary mt-2">Presensi Ditutup</span>
+                    @else
+                        <a href="/absensi/{{ $kegiatan->slug }}" class="more-btn mt-2"><span>Daftar</span> <i class="bi bi-chevron-right"></i></a>
+                    @endif
                 </article>
             </div>
             @endforeach

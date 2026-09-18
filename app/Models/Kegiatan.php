@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -22,6 +23,15 @@ class Kegiatan extends Model
     public function materis()
     {
         return $this->hasMany(MateriPaparan::class)->orderBy('urutan');
+    }
+
+    public function isPresensiTertutup(): bool
+    {
+        if (! $this->batas_presensi) {
+            return false;
+        }
+
+        return Carbon::parse($this->batas_presensi)->isPast();
     }
 
 }

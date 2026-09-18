@@ -52,7 +52,8 @@ class PublicAbsensiController extends Controller
     {
         return view('public.absensi.create', [
             'title' => "Absensi Kegiatan     {$kegiatan->nama}",
-            'kegiatan' => $kegiatan
+            'kegiatan' => $kegiatan,
+            'presensiTertutup' => $kegiatan->isPresensiTertutup(),
         ]);
     }
 
@@ -76,6 +77,11 @@ class PublicAbsensiController extends Controller
 
     if ($this->isSpamSubmission($request)) {
         return redirect()->route('public.absensi.index')->withSuccess('Absensi berhasil! Cek email Anda untuk konfirmasi.');
+    }
+
+    $kegiatan = Kegiatan::find($request->kegiatan_id);
+    if ($kegiatan && $kegiatan->isPresensiTertutup()) {
+        return redirect()->back()->with('error', 'Batas waktu presensi untuk kegiatan ini sudah berakhir.');
     }
 
     // Memeriksa apakah ada entri dengan kegiatan yang sama dan ID kegiatan yang sama

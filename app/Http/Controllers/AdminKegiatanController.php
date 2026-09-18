@@ -49,6 +49,7 @@ class AdminKegiatanController extends Controller
                 'date',
                 'after_or_equal:today', // Memastikan waktu setidaknya sama dengan hari ini
             ],
+            'batas_presensi' => 'nullable|date',
             'link'  => 'Required',
             'jenis'  => 'Required',
             'image'  => 'Required',
@@ -71,6 +72,7 @@ class AdminKegiatanController extends Controller
         Kegiatan::create([
             'nama'  => $request->nama,
             'waktu'  => $request->waktu,
+            'batas_presensi'  => $request->batas_presensi,
             'jenis'  => $request->jenis,
             'image'  => $image,
             'link'  => $request->link,
@@ -124,6 +126,7 @@ class AdminKegiatanController extends Controller
                 'date',
                 'after_or_equal:today', // Memastikan waktu setidaknya sama dengan hari ini
             ],
+            'batas_presensi' => 'nullable|date',
             'link'  => 'Required',
             'jenis'  => 'Required',
             'status'  => 'Required',
@@ -145,6 +148,7 @@ class AdminKegiatanController extends Controller
             Kegiatan::where('id', $id)->update([
                 'nama'  => $request->nama,
                 'waktu'  => $request->waktu,
+                'batas_presensi'  => $request->batas_presensi,
                 'jenis'  => $request->jenis,
                 'image'  => $image,
                 'link'  => $request->link,
@@ -155,6 +159,7 @@ class AdminKegiatanController extends Controller
             Kegiatan::where('id', $id)->update([
                 'nama'  => $request->nama,
                 'waktu'  => $request->waktu,
+                'batas_presensi'  => $request->batas_presensi,
                 'jenis'  => $request->jenis,
                 'link'  => $request->link,
                 'slug'  => $slug,

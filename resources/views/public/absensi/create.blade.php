@@ -10,6 +10,23 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
+            @if ($presensiTertutup)
+                <div class="alert alert-warning text-center">
+                    <i class="bi bi-clock-history me-2"></i>
+                    Batas waktu presensi untuk kegiatan ini sudah berakhir
+                    ({{ \Carbon\Carbon::parse($kegiatan->batas_presensi)->translatedFormat('d F Y, H:i') }} WIB).
+                    Presensi tidak dapat diisi lagi.
+                </div>
+                <div class="text-center">
+                    <a href="/absensi" class="btn btn-outline-secondary">Kembali ke Daftar Kegiatan</a>
+                </div>
+            @else
+            @if ($kegiatan->batas_presensi)
+                <div class="alert alert-info text-center">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Presensi ditutup pada {{ \Carbon\Carbon::parse($kegiatan->batas_presensi)->translatedFormat('d F Y, H:i') }} WIB.
+                </div>
+            @endif
             <form class="Konsultasi" id="form-konsultasi" action="/absensi/{{ $kegiatan->slug }}/store"
                 method="POST">
                 @csrf
@@ -98,6 +115,7 @@
                 </div>
         </div>
         </form>
+        @endif
     </div>
 </div>
 </section>
@@ -110,7 +128,11 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('btn-konfirmasi').addEventListener('click', function() {
+            var btnKonfirmasi = document.getElementById('btn-konfirmasi');
+            if (!btnKonfirmasi) {
+                return;
+            }
+            btnKonfirmasi.addEventListener('click', function() {
                 // Menampilkan SweetAlert konfirmasi
                 Swal.fire({
                     title: 'Konfirmasi',
