@@ -32,7 +32,7 @@
         .org-photo-fallback { font-weight: 700; font-size: 1.1rem; color: #6c7382; }
         .org-nama { font-size: .92rem; margin: 0; font-weight: 700; }
         .org-jabatan { display: block; font-size: .78rem; color: #6c7382; margin-top: 2px; }
-        .org-unit { display: inline-block; margin-top: 6px; font-size: .68rem; background: #fdeceb; color: #f92c24; padding: 2px 8px; border-radius: 20px; }
+        .org-unit { display: inline-block; margin-top: 6px; font-size: .68rem; background: color-mix(in srgb, var(--accent-color), transparent 90%); color: var(--accent-color); padding: 2px 8px; border-radius: 20px; }
         .org-toggle {
             position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
             width: 20px; height: 20px; border-radius: 50%; border: 1px solid #d7dbe3; background: #fff;
@@ -43,15 +43,15 @@
 
         .org-search-bar { max-width: 420px; }
         .org-filter-chip { cursor: pointer; border: 1px solid #d7dbe3; background: #fff; border-radius: 20px; padding: 6px 16px; font-size: .82rem; margin: 4px; display: inline-block; transition: all .15s; }
-        .org-filter-chip.active, .org-filter-chip:hover { background: #f92c24; color: #fff; border-color: #f92c24; }
+        .org-filter-chip.active, .org-filter-chip:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
         .org-empty-state { display: none; text-align: center; padding: 2rem; color: #6c7382; }
     </style>
 
-    <div class="container-fluid py-5">
-        <div class="container py-3 px-lg-5">
+    <section class="section">
+        <div class="container">
 
             {{-- ================= BAGAN STRUKTUR INTERAKTIF ================= --}}
-            <div class="text-center wow fadeInUp mb-4" data-wow-delay="0.1s">
+            <div class="text-center mb-4" data-aos="fade-up">
                 <h3>Bagan Struktur Organisasi</h3>
                 <p class="text-muted">Klik tombol pada tiap kotak untuk melipat/membuka susunan di bawahnya.</p>
             </div>
@@ -61,7 +61,7 @@
                     Data struktur organisasi belum tersedia.
                 </div>
             @else
-                <div class="org-chart-wrap mb-5 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="org-chart-wrap mb-5" data-aos="fade-up" data-aos-delay="100">
                     <div class="org-chart">
                         <ul>
                             @foreach($tree as $root)
@@ -73,11 +73,11 @@
             @endif
 
             {{-- ================= PROFIL TIM (SEARCH + FILTER) ================= --}}
-            <div class="text-center wow fadeInUp mb-4" data-wow-delay="0.1s">
+            <div class="text-center mb-4" data-aos="fade-up">
                 <h3>Profil Pejabat &amp; Tim</h3>
             </div>
 
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3 wow fadeInUp" data-wow-delay="0.2s">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3" data-aos="fade-up" data-aos-delay="100">
                 <input type="text" id="orgSearchInput" class="form-control org-search-bar" placeholder="Cari nama atau jabatan...">
                 <div id="orgFilterChips" class="text-md-end">
                     <span class="org-filter-chip active" data-unit="">Semua</span>
@@ -89,7 +89,7 @@
 
             <div class="row g-4" id="orgTeamGrid">
                 @forelse($units as $unit)
-                    <div class="col-lg-3 col-md-6 org-team-card wow fadeInUp" data-wow-delay="0.1s"
+                    <div class="col-lg-3 col-md-6 org-team-card" data-aos="fade-up"
                          data-nama="{{ strtolower($unit->nama) }}" data-jabatan="{{ strtolower($unit->jabatan) }}" data-unit="{{ $unit->unit }}">
                         <div class="team-item bg-light rounded h-100">
                             <div class="text-center border-bottom p-4">
@@ -119,7 +119,7 @@
             </div>
             <div class="org-empty-state" id="orgEmptyState">Tidak ada data yang cocok dengan pencarian/filter.</div>
         </div>
-    </div>
+    </section>
 </main>
 @include('layout.web.footer')
 

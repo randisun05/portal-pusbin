@@ -3,14 +3,13 @@
 @include('layout.web.nav')
 @include('layout.web.header-detail')
 @include('layout.partial.notif')
+<main>
 <!-- Form Usulan Konsultasi -->
-<div class="container-xxl py-4">
+<section class="section">
+<div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div class="tp-blog-main-img mt-15 p-relative">
-                <img class="w-img" src="{{asset ('assets/img/konsul1.png') }} " style="width: 100%" alt="blog">
-                <img class="w-img" src="{{asset ('assets/img/konsul1.png') }}" style="width: 100%" alt="blog">
-            </div>
+            <img class="img-fluid rounded" src="{{ asset('storage/' . $kegiatan->image) }}" alt="{{ $kegiatan->nama }}">
         </div>
         <div class="col-md-6 ">
             <form class="Konsultasi" id="form-konsultasi" action="/konsultasi/{{ $kegiatan->slug }}/store"
@@ -103,8 +102,8 @@
         </form>
     </div>
 </div>
-
-
+</section>
+</main>
 
 @include('layout.web.footer')
 

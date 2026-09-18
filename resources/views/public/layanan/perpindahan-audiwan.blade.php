@@ -5,8 +5,8 @@
 <main>
     @include('layout.web.header-detail')
 
-    <div class="team-details-area pt-120 mb-55">
-        <div class="container" style="text-align:justify;text-justify: ">
+    <section class="section">
+        <div class="container prose-content">
             <p>Berdasarkan Peraturan Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi Nomor 94 Tahun 2020 tentang Jabatan Fungsional Auditor Manajemen Aparatur Sipil Negara, ditentukan bahwa Auditor Kepegawaian berubah menjadi Auditor Manajemen Aparatur Sipil Negara (Auditor Manajemen ASN) dan berkedudukan sebagai pelaksana teknis di bidang Audit Manajemen ASN pada Badan Kepegawaian Negara (tertutup). Kemudian dalam Surat Kepala Badan Kepegawaian Negara Nomor: 3475/B-BJ.02.02/SD/K/2021 tanggal 16 April 2021 tentang Pembinaan Jabatan Fungsional Auditor Kepegawaian diatur bahwa Auditor Kepegawaian di luar Badan Kepegawaian Negara mengajukan perpindahan ke Jabatan Fungsional Kepegawaian lain atau Jabatan Fungsional lainnya. Untuk kelancaran pelaksanaan perpindahan Jabatan Fungsional Auditor Kepegawaian ke dalam Jabatan Fungsional lainnya, perlu diterbitkan Surat Edaran Kepala Badan Kepegawaian Negara tentang Tata Cara Perpindahan Jabatan Fungsional Auditor Kepegawaian Ke Dalam Jabatan Fungsional Lainnya.</p>
             <p>Hal ini sesuai dengan <a href="{{asset('dokumen/sebknno132022.pdf')}}">Surat Edaran Kepala BKN Nomor 13 Tahun 2022</a></p>
             <p>Adapun point-point perpindahan Jabatan Fungsional Audiwan ke Jabatan Fungsional lain diantaranya:</p>
@@ -19,10 +19,7 @@
                 <li>Wajib pelaporan bagi perpindahan ke non JFK</li>
             </ul>
         </div>
-    </div>
-
-
-
+    </section>
 </main>
 
 

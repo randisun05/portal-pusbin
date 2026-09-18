@@ -6,7 +6,8 @@
 @include('layout.web.header-detail')
 
 <!-- Form Usulan Konsultasi -->
-                <div class="container-fluid">
+                <section class="section">
+                <div class="container">
                     <div class="row">
                         <div class="col-md-4 offset-md-4">
 
@@ -95,6 +96,7 @@
                         </div>
                     </div>
                 </div>
+                </section>
 </main>
 
 @include('layout.web.footer')

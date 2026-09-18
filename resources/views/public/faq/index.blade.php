@@ -6,11 +6,12 @@
 @include('layout.web.header-detail')
 
     <style>
-        .faq-accordion .accordion-button:not(.collapsed) { background: #fdeceb; color: #f92c24; }
+        .faq-accordion .accordion-button:not(.collapsed) { background: color-mix(in srgb, var(--accent-color), transparent 90%); color: var(--accent-color); }
         .faq-category { margin-bottom: 24px; }
     </style>
 
-    <div class="container py-5 px-lg-5">
+    <section class="section">
+    <div class="container">
         @if($faqs->isEmpty())
             <p class="text-center text-muted">Pertanyaan yang sering diajukan belum tersedia. Silakan hubungi kami melalui halaman <a href="/about/kontak-kami">Kontak</a>.</p>
         @else
@@ -39,9 +40,10 @@
 
         <div class="text-center mt-4">
             <p class="text-muted">Tidak menemukan jawaban yang Anda cari?</p>
-            <a href="/about/kontak-kami" class="tp-btn tp-btn-insu">Hubungi Kami</a>
+            <a href="/about/kontak-kami" class="btn btn-primary">Hubungi Kami</a>
         </div>
     </div>
+    </section>
 </main>
 
 @include('layout.web.footer')

@@ -6,17 +6,18 @@
 <main>
 @include('layout.web.header-detail')
 
-<div class="container-fluid">
+<section class="section">
+<div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3 py-5">
+        <div class="col-md-6 offset-md-3">
 
             @if (session()->has('success'))
-                <div class="text-center mb-4 p-4" style="background: linear-gradient(135deg, #fdeceb, #f7f8fb); border-radius: 16px;">
+                <div class="text-center mb-4 p-4" style="background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 90%), var(--surface-color)); border-radius: 16px;">
                     <div style="font-size: 3rem;">{{ session('badgeIcon', '🏆') }}</div>
                     <h4 class="mt-2 mb-1">Terima kasih atas kontribusi Anda!</h4>
                     <p class="text-muted mb-2">{{ session('success') }}</p>
                     @if (session()->has('badgeLabel'))
-                        <span class="badge rounded-pill" style="background:#f92c24; padding: 8px 18px; font-size: .85rem;">
+                        <span class="badge rounded-pill" style="background: var(--accent-color); padding: 8px 18px; font-size: .85rem;">
                             {{ session('badgeLabel') }} &middot; {{ session('jumlahSurveiSelesai') }} survei diisi
                         </span>
                     @endif
@@ -46,6 +47,7 @@
         </div>
     </div>
 </div>
+</section>
 </main>
 
 @include('layout.web.footer')

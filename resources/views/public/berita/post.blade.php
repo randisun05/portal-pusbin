@@ -4,16 +4,16 @@
 @include('layout.web.header-detail')
 
 <style>
-    .pk-meta { display: flex; gap: 18px; flex-wrap: wrap; color: #6c7382; font-size: .9rem; margin-bottom: 20px; }
+    .pk-meta { display: flex; gap: 18px; flex-wrap: wrap; color: var(--default-color); font-size: .9rem; margin-bottom: 20px; }
     .pk-share a { display: inline-flex; width: 36px; height: 36px; border-radius: 50%; align-items: center; justify-content: center; margin-right: 6px; color: #fff; }
     .pk-share .wa { background: #25D366; }
     .pk-share .fb { background: #1877F2; }
     .pk-share .tw { background: #1DA1F2; }
-    .pk-share .copy { background: #6c7382; cursor: pointer; border: 0; }
-    .pk-reactions button { border: 1px solid #eceff3; background: #fff; border-radius: 20px; padding: 6px 16px; margin-right: 8px; font-size: .88rem; cursor: pointer; transition: all .15s; }
-    .pk-reactions button.active, .pk-reactions button:hover { background: #fdeceb; border-color: #f92c24; color: #f92c24; }
-    .pk-comment-item { border-bottom: 1px solid #eceff3; padding: 14px 0; }
-    .pk-related-card { border: 1px solid #eceff3; border-radius: 12px; overflow: hidden; height: 100%; }
+    .pk-share .copy { background: var(--default-color); cursor: pointer; border: 0; }
+    .pk-reactions button { border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); background: #fff; border-radius: 20px; padding: 6px 16px; margin-right: 8px; font-size: .88rem; cursor: pointer; transition: all .15s; }
+    .pk-reactions button.active, .pk-reactions button:hover { background: color-mix(in srgb, var(--accent-color), transparent 90%); border-color: var(--accent-color); color: var(--accent-color); }
+    .pk-comment-item { border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); padding: 14px 0; }
+    .pk-related-card { border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); border-radius: 12px; overflow: hidden; height: 100%; }
     .pk-related-card img { width: 100%; height: 140px; object-fit: cover; }
     .pk-post-image { max-width: 50%; }
     @media (max-width: 767.98px) { .pk-post-image { max-width: 100%; } }
@@ -21,19 +21,21 @@
 
 <!-- Main Content -->
 <main>
-    <div class="tp-postbox-area pt-120 mb-20">
+    <section class="section">
         <div class="container">
             <h1>{{$post->title}}</h1>
             <div class="pk-meta">
-                <span><i class="fas fa-user me-2"></i>{{ $post->author->name }}</span>
-                <span><i class="far fa-calendar-alt me-2"></i>{{ $post->publish_at }}</span>
-                <span><i class="far fa-eye me-2"></i>{{ number_format($post->views) }} dilihat</span>
+                <span><i class="bi bi-person me-2"></i>{{ $post->author->name }}</span>
+                <span><i class="bi bi-calendar-event me-2"></i>{{ $post->publish_at }}</span>
+                <span><i class="bi bi-eye me-2"></i>{{ number_format($post->views) }} dilihat</span>
             </div>
-            <div class="text-center">
-                <img src="{{asset('storage/' . $post->image)}}" class="img-fluid pk-post-image">
-            </div>
-            <br>
-            <div class="text-black" style="text-align:justify;text-justify: ">
+            @if($post->image)
+                <div class="text-center">
+                    <img src="{{asset('storage/' . $post->image)}}" class="img-fluid pk-post-image rounded">
+                </div>
+                <br>
+            @endif
+            <div class="prose-content">
                 {!! $post->body !!}
                 @if($post->document)
                 <div class="mt-3">
@@ -51,10 +53,10 @@
                     @endforeach
                 </div>
                 <div class="pk-share mb-2">
-                    <a class="wa" target="_blank" href="https://wa.me/?text={{ urlencode($post->title . ' - ' . url()->current()) }}"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a class="fb" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a class="tw" target="_blank" href="https://twitter.com/intent/tweet?text={{ urlencode($post->title) }}&url={{ urlencode(url()->current()) }}"><i class="fa-brands fa-twitter"></i></a>
-                    <button type="button" class="copy" id="pkCopyLink" title="Salin Tautan"><i class="fa-solid fa-link"></i></button>
+                    <a class="wa" target="_blank" href="https://wa.me/?text={{ urlencode($post->title . ' - ' . url()->current()) }}"><i class="bi bi-whatsapp"></i></a>
+                    <a class="fb" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}"><i class="bi bi-facebook"></i></a>
+                    <a class="tw" target="_blank" href="https://twitter.com/intent/tweet?text={{ urlencode($post->title) }}&url={{ urlencode(url()->current()) }}"><i class="bi bi-twitter-x"></i></a>
+                    <button type="button" class="copy" id="pkCopyLink" title="Salin Tautan"><i class="bi bi-link-45deg"></i></button>
                 </div>
             </div>
 
@@ -63,10 +65,13 @@
                     <h4 class="mb-3">Publikasi Terkait</h4>
                     <div class="row g-3">
                         @foreach ($related as $r)
+                            @php
+                                $relatedImg = $r->image ? asset('storage/' . $r->image) : asset('assets-flexor/img/blog/blog-' . ((($loop->index % 5)) + 1) . '.jpg');
+                            @endphp
                             <div class="col-md-4">
                                 <a href="/publikasi/{{ $r->slug }}" class="text-decoration-none text-dark">
                                     <div class="pk-related-card">
-                                        <img src="{{ asset('storage/' . $r->image) }}" alt="{{ $r->title }}">
+                                        <img src="{{ $relatedImg }}" alt="{{ $r->title }}">
                                         <div class="p-3">
                                             <h6 class="mb-0">{{ \Illuminate\Support\Str::limit($r->title, 60) }}</h6>
                                         </div>
@@ -112,16 +117,17 @@
                             @error('body')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="tp-btn tp-btn-insu">Kirim Komentar</button>
+                            <button type="submit" class="btn btn-primary">Kirim Komentar</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
         <div class="text-center mt-4">
-            <a href="/webpusbin" class="tp-btn tp-btn-transparent me-4"><u>Kembali</u></a> <a href="/publikasi" class="tp-btn tp-btn-transparent me-4"><u>Daftar Publikasi</u></a>
+            <a href="/webpusbin" class="btn btn-outline-secondary me-2">Kembali</a>
+            <a href="/publikasi" class="btn btn-outline-secondary">Daftar Publikasi</a>
         </div>
-    </div>
+    </section>
 </main>
 
 
@@ -163,8 +169,8 @@
     if (copyBtn) {
         copyBtn.addEventListener('click', function () {
             navigator.clipboard.writeText(window.location.href).then(function () {
-                copyBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
-                setTimeout(function () { copyBtn.innerHTML = '<i class="fa-solid fa-link"></i>'; }, 1500);
+                copyBtn.innerHTML = '<i class="bi bi-check-lg"></i>';
+                setTimeout(function () { copyBtn.innerHTML = '<i class="bi bi-link-45deg"></i>'; }, 1500);
             });
         });
     }

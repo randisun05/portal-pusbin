@@ -4,8 +4,10 @@
 @include('layout.web.header-detail')
 @include('layout.partial.notif')
 
+<main>
 <!-- Form Usulan Konsultasi -->
-<div class="container-xxl py-4">
+<section class="section">
+<div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <form class="Konsultasi" id="form-konsultasi" action="/absensi/{{ $kegiatan->slug }}/store"
@@ -98,6 +100,8 @@
         </form>
     </div>
 </div>
+</section>
+</main>
 
 
 @include('layout.web.footer')

@@ -9,9 +9,9 @@
 <style>
     .sv-progress-wrap { position: sticky; top: 0; z-index: 20; background: #fff; padding: 14px 0; border-bottom: 1px solid #eceff3; }
     .sv-progress-bar { height: 10px; border-radius: 20px; background: #eceff3; overflow: hidden; }
-    .sv-progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #f92c24, #fd346e); transition: width .3s ease; }
+    .sv-progress-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #b5261f, #fd346e); transition: width .3s ease; }
     .sv-progress-label { font-size: .82rem; color: #6c7382; margin-top: 4px; display: flex; justify-content: space-between; }
-    .sv-progress-label .sv-pct { font-weight: 700; color: #f92c24; }
+    .sv-progress-label .sv-pct { font-weight: 700; color: #b5261f; }
 
     .sv-emoji-card { border: 1px solid #eceff3; border-radius: 16px; padding: 20px 22px; margin-bottom: 18px; background: #fff; box-shadow: 0 2px 12px rgba(20,23,43,.05); }
     .sv-emoji-question { font-weight: 700; margin-bottom: 16px; font-size: 1rem; }

@@ -2,40 +2,39 @@
 @section('container')
 @include('layout.web.nav')
 @include('layout.web.header-detail')
-@include('layout.partial.notif')
 
 <main>
-    <div class="container mt-50">
+    <section class="section">
+    <div class="container">
         @if ($kegiatans->count())
-        <div class="row">
+        <div class="row gy-4">
             @foreach ($kegiatans as $kegiatan)
-            <div class="col-lg-4 col-md-6">
-                <div class="tp-blog-wrapper mb-50 wow fadeInUp" data-wow-delay=".3s" data-wow-duration="1s">
-                    <div class="tp-blog-main-img mb-15 p-relative">
-                        <img class="w-img" src="{{ asset('assets/img/blog/blog.jpg') }}" alt="blog">
-                        <img class="w-img" src="{{ asset('assets/img/blog/blog.jpg') }}" alt="blog">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ 100 * (($loop->index % 6) + 1) }}">
+                <article>
+                    <div class="post-img">
+                        <img src="{{ asset('storage/' . $kegiatan->image) }}" alt="{{ $kegiatan->nama }}" class="img-fluid">
                     </div>
-                    <div class="tp-blog-content">
-                        <div class="tp-blog-meta mb-15">
-                            <span class="tp-blog-sub-meta tp-blog-sub-meta-fin p-relative"><a href="absensi/{{ $kegiatan->slug }}">{{$kegiatan->waktu}}</a></span>
-                            <span class="tp-blog-date p-relative">23 June, 2024</span>
+                    <h2 class="title"><a href="/absensi/{{ $kegiatan->slug }}">{{ $kegiatan->nama }}</a></h2>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-calendar-event flex-shrink-0 me-2"></i>
+                        <div class="post-meta">
+                            <p class="post-date mb-0">{{ $kegiatan->waktu }}</p>
                         </div>
-                        <h3 class="tp-blog-title tp-blog-title-2 mb-25"><a href="absensi/{{ $kegiatan->slug }}">{{ $kegiatan->nama }}</a></h3>
-                        <a href="kegiatan/{{ $kegiatan->slug }}" class="tp-blog-btn-2">Daftar<i class="fa-solid fa-arrow-right"></i></a>
                     </div>
-                </div>
+                    <a href="/absensi/{{ $kegiatan->slug }}" class="more-btn mt-2"><span>Daftar</span> <i class="bi bi-chevron-right"></i></a>
+                </article>
             </div>
             @endforeach
         </div>
-        <div class="d-flex justify-content-center">
-            {{$kegiatans->links()}}
+        <div class="d-flex justify-content-center mt-4">
+            {{ $kegiatans->links() }}
         </div>
         @else
-        <p class="text-center fs-4">No Event Found.</p>
+        <p class="text-center fs-4 text-muted">Belum ada kegiatan ditemukan.</p>
         @endif
     </div>
+    </section>
 </main>
-
 
 @include('layout.web.footer')
 @endsection

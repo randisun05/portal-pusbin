@@ -103,3 +103,8 @@
 .service-item-photo h3 { font-size: 16px; margin: 0; }
 .service-item-photo h3 a { color: var(--heading-color); }
 .service-item-photo h3 a:hover { color: var(--accent-color); }
+
+/* Konten teks panjang (halaman layanan statis, kebijakan, dsb) */
+.prose-content { text-align: justify; line-height: 1.9; }
+.prose-content p { margin-bottom: 1.1em; }
+.prose-content a { color: var(--accent-color); text-decoration: underline; }

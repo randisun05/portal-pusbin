@@ -6,9 +6,10 @@
 @include('layout.web.header-detail')
 
 <!-- Form Cari Konsultasi -->
-                <div class="container-fluid">
-                    <div class="row py-5">
-                        <div class="col-md-4 offset-md-4 py-4">
+                <section class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 offset-md-4">
                             <form class="Konsultasi" action="/konsultasi/jadwal" method="get">
                             <label for="search" class="form-label">No Tiket</label>
                             <input type="search" class="form-control mb-2 @error('search') is-invalid @enderror" id="search" name="search" required value="{{ old('search') }}">
@@ -26,6 +27,7 @@
                         </div>
                     </div>
                 </div>
+                </section>
 </main>
 
 @include('layout.web.footer')

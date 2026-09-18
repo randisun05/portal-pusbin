@@ -6,12 +6,12 @@
 <main>
 @include('layout.web.header-detail')
 
-<div class="text-center mt-5 py-5">
-    <p>No Tiket Konsultasi Anda</p>
-    <h1>{{$tiket}}</h1>
+<section class="section text-center">
+    <p class="text-muted mb-1">No Tiket Konsultasi Anda</p>
+    <h1 class="mb-3" style="color: var(--accent-color);">{{$tiket}}</h1>
     <p>Tiket dijawab kurang lebih 2 hari, cek jawaban konsultasi <a href="/konsultasi/cari">di sini</a></p>
-    <p><a href="/konsultasi">Kembali</a></p>
-</div>
+    <a href="/konsultasi" class="btn btn-outline-secondary mt-2">Kembali</a>
+</section>
 </main>
 
 @include('layout.web.footer')
