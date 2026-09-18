@@ -23,6 +23,7 @@ class Permission extends Model
                 'manage-comment' => 'Moderasi Komentar',
                 'manage-faq' => 'Kelola FAQ',
                 'manage-pengetahuan' => 'Kelola Basis Pengetahuan (Chat AI)',
+                'manage-chat-ai' => 'Kelola Pengaturan Provider Chat AI',
             ],
             'Organisasi' => [
                 'manage-organisasi' => 'Kelola Struktur Organisasi',

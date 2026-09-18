@@ -65,6 +65,10 @@ Route::prefix('admin')->group(function() {
         });
         Route::resource('/faq', AdminFaqController::class)->Middleware(['prevent-back-history', 'permission:manage-faq']);
         Route::resource('/pengetahuan', \App\Http\Controllers\Admin\AdminPengetahuanController::class)->Middleware(['prevent-back-history', 'permission:manage-pengetahuan']);
+        Route::group(['middleware' => ['permission:manage-chat-ai']], function () {
+            Route::get('/pengaturan-chat', [\App\Http\Controllers\Admin\AdminPengaturanChatController::class, 'edit'])->Middleware(['prevent-back-history']);
+            Route::put('/pengaturan-chat', [\App\Http\Controllers\Admin\AdminPengaturanChatController::class, 'update']);
+        });
 
         // Manajemen admin & role - hanya yang memiliki permission manage-users (Super Admin selalu punya)
         Route::group(['middleware' => ['permission:manage-users']], function () {

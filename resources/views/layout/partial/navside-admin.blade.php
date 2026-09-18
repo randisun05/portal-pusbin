@@ -62,6 +62,14 @@
                 </a>
               </li>
               @endif
+              @if($me->hasPermission('manage-chat-ai'))
+              <li class="menu-item {{ Request::is('admin/pengaturan-chat*') ? 'active' : '' }}">
+                <a href="/admin/pengaturan-chat" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-cog"></i>
+                  <div data-i18n="Analytics">Pengaturan Chat AI</div>
+                </a>
+              </li>
+              @endif
               @if($me->hasPermission('manage-layanan'))
               <li class="menu-item {{ Request::is('admin/layanan*') ? 'active' : '' }}">
                 <a href="/admin/layanan" class="menu-link">
