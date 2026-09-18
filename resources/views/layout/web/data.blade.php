@@ -6,28 +6,28 @@
             <div class="col-lg-3 col-md-6">
                 <div class="stats-item text-center" data-aos="fade-up" data-aos-delay="100">
                     <span class="counter2 home-counter" data-count="{{ $jumlahOrganisasi }}">0</span>
-                    <p>Pejabat &amp; Tim</p>
+                    <p>{{ $profil->stat_label_organisasi ?? 'Pejabat & Tim' }}</p>
                 </div>
             </div>
 
             <div class="col-lg-3 col-md-6">
                 <div class="stats-item text-center" data-aos="fade-up" data-aos-delay="200">
                     <span class="counter2 home-counter" data-count="{{ $jumlahLayanan }}">0</span>
-                    <p>Layanan Aktif</p>
+                    <p>{{ $profil->stat_label_layanan ?? 'Layanan Aktif' }}</p>
                 </div>
             </div>
 
             <div class="col-lg-3 col-md-6">
                 <div class="stats-item text-center" data-aos="fade-up" data-aos-delay="300">
                     <span class="counter2 home-counter" data-count="{{ $jumlahKegiatan }}">0</span>
-                    <p>Kegiatan Terlaksana</p>
+                    <p>{{ $profil->stat_label_kegiatan ?? 'Kegiatan Terlaksana' }}</p>
                 </div>
             </div>
 
             <div class="col-lg-3 col-md-6">
                 <div class="stats-item text-center" data-aos="fade-up" data-aos-delay="400">
                     <span class="counter2 home-counter" data-count="{{ $jumlahPublikasi }}">0</span>
-                    <p>Publikasi</p>
+                    <p>{{ $profil->stat_label_publikasi ?? 'Publikasi' }}</p>
                 </div>
             </div>
 

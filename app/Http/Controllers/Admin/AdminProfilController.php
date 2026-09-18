@@ -41,6 +41,13 @@ class AdminProfilController extends Controller
             'facebook' => 'nullable',
             'youtube' => 'nullable',
             'twitter' => 'nullable',
+            'hero_judul' => 'nullable',
+            'hero_deskripsi' => 'nullable',
+            'about_judul' => 'nullable',
+            'stat_label_organisasi' => 'nullable',
+            'stat_label_layanan' => 'nullable',
+            'stat_label_kegiatan' => 'nullable',
+            'stat_label_publikasi' => 'nullable',
         ]);
 
         $profil = Profil::first() ?? new Profil();

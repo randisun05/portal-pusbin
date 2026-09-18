@@ -21,7 +21,50 @@
                 @csrf
                 <div class="form-group mt-4 ms-5 me-5">
 
-                    <h5 class="mb-3">Tentang Kami</h5>
+                    <h5 class="mb-3">Beranda (Homepage)</h5>
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <label for="hero_judul" class="form-label">Judul Hero</label>
+                            <input type="text" class="form-control" @error('hero_judul') is-invalid @enderror name="hero_judul" id="hero_judul" value="{{old('hero_judul', $profil->hero_judul)}}" placeholder="Direktorat Jabatan Fungsional MASN">
+                            @error('hero_judul')<div class="invalid-feedback">{{$message}}</div>@enderror
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="about_judul" class="form-label">Judul Bagian Tentang (Beranda)</label>
+                            <input type="text" class="form-control" @error('about_judul') is-invalid @enderror name="about_judul" id="about_judul" value="{{old('about_judul', $profil->about_judul)}}" placeholder="Pelaksanaan Uji Kompetensi JFK">
+                            @error('about_judul')<div class="invalid-feedback">{{$message}}</div>@enderror
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="hero_deskripsi" class="form-label">Deskripsi Hero</label>
+                            <textarea class="form-control" @error('hero_deskripsi') is-invalid @enderror name="hero_deskripsi" id="hero_deskripsi" rows="2" placeholder="Membina, mengembangkan, dan memfasilitasi jabatan fungsional kepegawaian...">{{old('hero_deskripsi', $profil->hero_deskripsi)}}</textarea>
+                            @error('hero_deskripsi')<div class="invalid-feedback">{{$message}}</div>@enderror
+                        </div>
+                    </div>
+
+                    <h6 class="mb-3">Label Statistik Beranda</h6>
+                    <div class="row mb-4">
+                        <div class="col-md-3 mb-3">
+                            <label for="stat_label_organisasi" class="form-label">Label #1</label>
+                            <input type="text" class="form-control" name="stat_label_organisasi" id="stat_label_organisasi" value="{{old('stat_label_organisasi', $profil->stat_label_organisasi)}}" placeholder="Pejabat &amp; Tim">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="stat_label_layanan" class="form-label">Label #2</label>
+                            <input type="text" class="form-control" name="stat_label_layanan" id="stat_label_layanan" value="{{old('stat_label_layanan', $profil->stat_label_layanan)}}" placeholder="Layanan Aktif">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="stat_label_kegiatan" class="form-label">Label #3</label>
+                            <input type="text" class="form-control" name="stat_label_kegiatan" id="stat_label_kegiatan" value="{{old('stat_label_kegiatan', $profil->stat_label_kegiatan)}}" placeholder="Kegiatan Terlaksana">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="stat_label_publikasi" class="form-label">Label #4</label>
+                            <input type="text" class="form-control" name="stat_label_publikasi" id="stat_label_publikasi" value="{{old('stat_label_publikasi', $profil->stat_label_publikasi)}}" placeholder="Publikasi">
+                        </div>
+                    </div>
+                    <p class="text-muted">
+                        Untuk mengatur 3 kotak alasan di Hero, 3 poin di bagian Tentang, dan 4 kartu Fungsi &amp; Layanan Interaktif,
+                        gunakan menu <a href="/admin/highlight">Konten Beranda (Highlight)</a>.
+                    </p>
+
+                    <h5 class="mb-3 mt-4">Tentang Kami</h5>
                     <div class="mb-4">
                         <label for="tentang" class="form-label">Isi Halaman Tentang Kami</label>
                         <textarea class="form-control" @error('tentang') is-invalid @enderror name="tentang" id="tentang" rows="8" placeholder="Tuliskan profil singkat organisasi...">{{old('tentang', $profil->tentang)}}</textarea>

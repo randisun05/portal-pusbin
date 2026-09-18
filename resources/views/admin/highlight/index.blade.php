@@ -7,7 +7,7 @@
  <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 mt-5 text-center">Daftar Highlight</h1>
+    <h1 class="h3 mb-2 mt-5 text-center">Konten Beranda (Highlight)</h1>
         @if (session()->has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
              {{ session('success') }}
@@ -18,26 +18,52 @@
     <!-- Main Content -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <a  class="btn btn-primary" href="/admin/highlight/create">Buat Highlight</a>
+            <ul class="nav nav-tabs card-header-tabs">
+                @foreach ($groups as $slug => $label)
+                    <li class="nav-item">
+                        <a class="nav-link {{ $activeGroup === $slug ? 'active' : '' }}" href="/admin/highlight?group={{ $slug }}">{{ $label }}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="card-header py-3">
+          <a class="btn btn-primary" href="/admin/highlight/create?group={{ $activeGroup }}">Tambah Konten</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="text-center">No</th>
-                            <th class="text-center">Nama Highlight</th>
+                            <th class="text-center">Urutan</th>
+                            <th class="text-center">Judul</th>
                             <th class="text-center">Deskripsi</th>
-                            <th class="text-center">Image</th>
+                            <th class="text-center">Icon</th>
+                            <th class="text-center">Link</th>
+                            <th class="text-center">Gambar</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
-                    @foreach ($highlights as $highlight)
+                    <tbody>
+                    @forelse ($highlights as $highlight)
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
                         <td>{{$highlight->name}}</td>
                         <td>{{$highlight->desc}}</td>
-                        <td> <img class="navbar-brand-dark" src="{{asset('storage/' . $highlight->image)}}" style="height:200px"></td>
+                        <td class="text-center">
+                            @if($highlight->icon)
+                                <i class="bi {{ $highlight->icon }}"></i> {{ $highlight->icon }}
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td class="text-center">{{ $highlight->link ?: '-' }}</td>
+                        <td class="text-center">
+                            @if($highlight->image)
+                                <img class="navbar-brand-dark" src="{{asset('storage/' . $highlight->image)}}" style="height:80px">
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td class="text-center">
 
                             <a href="/admin/highlight/{{$highlight->id}}/edit" class="badge bg-warning"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -53,16 +79,12 @@
                             </form>
                         </td>
                     </tr>
-                    @endforeach
-                    <tfoot>
-                        <tr>
-                            <th class="text-center">No</th>
-                            <th class="text-center">Nama Highlight</th>
-                            <th class="text-center">Deskripsi</th>
-                            <th class="text-center">Image</th>
-                            <th class="text-center">Action</th>
-                        </tr>
-                    </tfoot>
+                    @empty
+                    <tr>
+                        <td class="text-center" colspan="7">Belum ada konten untuk bagian ini.</td>
+                    </tr>
+                    @endforelse
+                    </tbody>
                 </table>
             </div>
         </div>

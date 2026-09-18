@@ -6,8 +6,8 @@
     <div class="container position-relative">
 
         <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
-            <h2>Direktorat Jabatan Fungsional MASN</h2>
-            <p>Membina, mengembangkan, dan memfasilitasi jabatan fungsional kepegawaian di seluruh Indonesia secara profesional, transparan, dan mudah diakses.</p>
+            <h2>{{ $profil->hero_judul ?? 'Direktorat Jabatan Fungsional MASN' }}</h2>
+            <p>{{ $profil->hero_deskripsi ?? 'Membina, mengembangkan, dan memfasilitasi jabatan fungsional kepegawaian di seluruh Indonesia secara profesional, transparan, dan mudah diakses.' }}</p>
         </div><!-- End Welcome -->
 
         <div class="content row gy-4">
@@ -25,29 +25,23 @@
                 <div class="d-flex flex-column justify-content-center">
                     <div class="row gy-4">
 
-                        <div class="col-xl-4 d-flex align-items-stretch">
-                            <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
-                                <i class="bi bi-clipboard-data"></i>
-                                <h4>Uji Kompetensi</h4>
-                                <p>Dilaksanakan 4 periode dalam setahun secara daring, tanpa dipungut biaya.</p>
+                        @forelse ($heroHighlights as $item)
+                            <div class="col-xl-4 d-flex align-items-stretch">
+                                <div class="icon-box" data-aos="zoom-out" data-aos-delay="{{ 300 + (100 * $loop->index) }}">
+                                    <i class="bi {{ $item->icon ?: 'bi-star' }}"></i>
+                                    <h4>{{ $item->name }}</h4>
+                                    <p>{{ $item->desc }}</p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-xl-4 d-flex align-items-stretch">
-                            <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
-                                <i class="bi bi-headset"></i>
-                                <h4>Konsultasi Online</h4>
-                                <p>Ajukan pertanyaan seputar jabatan fungsional dan dapatkan nomor tiket jawaban.</p>
+                        @empty
+                            <div class="col-xl-4 d-flex align-items-stretch">
+                                <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
+                                    <i class="bi bi-clipboard-data"></i>
+                                    <h4>Uji Kompetensi</h4>
+                                    <p>Dilaksanakan 4 periode dalam setahun secara daring, tanpa dipungut biaya.</p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-xl-4 d-flex align-items-stretch">
-                            <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
-                                <i class="bi bi-patch-check"></i>
-                                <h4>Sertifikat Digital</h4>
-                                <p>Unduh sertifikat kegiatan langsung, lengkap dengan QR verifikasi keaslian.</p>
-                            </div>
-                        </div>
+                        @endforelse
 
                     </div>
                     <div class="d-flex flex-wrap gap-3 mt-4">

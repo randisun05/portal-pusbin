@@ -6,7 +6,6 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Dashboard;
-use App\Models\highlight;
 use App\Models\JadwalUkom;
 use App\Models\Jdihjfk;
 use App\Models\Kegiatan;
@@ -257,23 +256,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        highlight::create([
-            'name' => 'Highlight 1',
-            'desc' => 'Highlight 1',
-            'image' => 'post-image\high(1).png',
-        ]);
-
-        highlight::create([
-            'name' => 'Highlight 2',
-            'desc' => 'Highlight 2',
-            'image' => 'post-image\high(2).png',
-        ]);
-
-        highlight::create([
-            'name' => 'Highlight 3',
-            'desc' => 'Highlight 3',
-            'image' => 'post-image\high(3).png',
-        ]);
+        // Konten default beranda (hero, about, fungsi interaktif) diseed
+        // lewat migration add_group_fields_to_highlights_table, bukan di
+        // sini, supaya tidak dobel dengan data placeholder lama.
 
         Survei::create([
             'title' => 'Pengumpulan Data JFK',

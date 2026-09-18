@@ -9,7 +9,7 @@ use App\Models\Profil;
 use App\Models\Layanan;
 use App\Models\Kegiatan;
 use App\Models\MisiItem;
-use App\Models\highlight;
+use App\Models\highlight as Highlight;
 use App\Models\PesanKontak;
 use App\Models\OrganisasiUnit;
 use Illuminate\Http\Request;
@@ -43,6 +43,9 @@ class PublicController extends Controller
             'faqs' => Faq::orderBy('urutan')->limit(4)->get(),
             'peraturans' => Jdihjfk::published()->latest()->limit(3)->get(),
             'profil' => Profil::current(),
+            'heroHighlights' => Highlight::group(Highlight::GROUP_HERO)->get(),
+            'aboutHighlights' => Highlight::group(Highlight::GROUP_ABOUT)->get(),
+            'fungsiHighlights' => Highlight::group(Highlight::GROUP_FUNGSI)->get(),
             'jumlahOrganisasi' => OrganisasiUnit::count(),
             'jumlahLayanan' => Layanan::where('status', 1)->count(),
             'jumlahKegiatan' => Kegiatan::count(),
