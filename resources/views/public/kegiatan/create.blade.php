@@ -14,6 +14,7 @@
                 method="POST">
                 @csrf
                 @include('layout.partial.honeypot')
+                @include('layout.partial.recaptcha')
                 {{-- ID KEGIATAN --}}
                 <input type="hidden" id="kegiatan_id" name="kegiatan_id" value="{{ $kegiatan->id }}">
 

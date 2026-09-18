@@ -56,6 +56,7 @@
                 <form action="/survei/{{ $survei->id }}" method="POST" id="svForm">
                     @csrf
                     @include('layout.partial.honeypot')
+                    @include('layout.partial.recaptcha')
 
                     <div class="mb-3">
                         <label for="nip" class="form-label">NIP</label>

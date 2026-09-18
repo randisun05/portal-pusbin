@@ -81,6 +81,7 @@
                     <form class="kk-form" action="/about/kontak-kami" method="POST">
                         @csrf
                         @include('layout.partial.honeypot')
+                        @include('layout.partial.recaptcha')
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="nama" class="form-label">Nama</label>

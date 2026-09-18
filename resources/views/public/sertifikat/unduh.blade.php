@@ -19,6 +19,7 @@
             <form action="/sertifikat/unduh" method="POST">
                 @csrf
                 @include('layout.partial.honeypot')
+                @include('layout.partial.recaptcha')
 
                 <div class="mb-3">
                     <label for="kegiatan_id" class="form-label">Kegiatan</label>
