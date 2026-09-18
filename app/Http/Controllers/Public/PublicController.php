@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Models\Post;
 use App\Models\Faq;
+use App\Models\Jdihjfk;
 use App\Models\Profil;
 use App\Models\Layanan;
 use App\Models\Kegiatan;
@@ -40,6 +41,7 @@ class PublicController extends Controller
             "layanans" => $layanans,
             'kegiatans' => $kegiatans,
             'faqs' => Faq::orderBy('urutan')->limit(4)->get(),
+            'peraturans' => Jdihjfk::published()->latest()->limit(3)->get(),
             'profil' => Profil::current(),
             'jumlahOrganisasi' => OrganisasiUnit::count(),
             'jumlahLayanan' => Layanan::where('status', 1)->count(),

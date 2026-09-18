@@ -10,9 +10,11 @@
     @include('layout.web.header')
     @include('layout.web.data')
     @include('layout.web.show')
+    @include('layout.web.fungsi')
     @include('layout.web.layanan')
     @include('layout.web.kegiatan')
     @include('layout.web.berita')
+    @include('layout.web.peraturan')
 
     <!-- FAQ Section -->
     <section id="faq" class="faq section">
