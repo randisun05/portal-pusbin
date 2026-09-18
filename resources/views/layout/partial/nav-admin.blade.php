@@ -52,6 +52,11 @@
                                             <div class="dropdown-divider"></div>
                                         </li>
                                         <li>
+                                            <a class="dropdown-item" href="/admin/two-factor">
+                                                <i class="bx bx-shield-quarter me-1"></i> Autentikasi Dua Faktor
+                                            </a>
+                                        </li>
+                                        <li>
                                             <div class="dropdown-divider"></div>
                                         </li>
                                         <li>

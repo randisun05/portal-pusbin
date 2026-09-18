@@ -50,6 +50,12 @@ Route::prefix('admin')->group(function() {
         Route::get('/publikasi/checkSlug', [AdminPostController::class, 'checkSlug']);
         Route::get('/', [AdminDashboardController::class, 'home'] )->Middleware(['prevent-back-history']);
 
+        // Two-Factor Authentication - swakelola per admin, tidak butuh permission khusus
+        Route::get('/two-factor', [\App\Http\Controllers\Admin\AdminTwoFactorController::class, 'edit'])->Middleware(['prevent-back-history']);
+        Route::post('/two-factor/enable', [\App\Http\Controllers\Admin\AdminTwoFactorController::class, 'enable']);
+        Route::post('/two-factor/confirm', [\App\Http\Controllers\Admin\AdminTwoFactorController::class, 'confirm']);
+        Route::post('/two-factor/disable', [\App\Http\Controllers\Admin\AdminTwoFactorController::class, 'disable']);
+
         // Modul konten
         Route::resource('/publikasi', \App\Http\Controllers\Admin\AdminPostController::class)->parameters(['publikasi' => 'post'])->Middleware(['prevent-back-history', 'permission:manage-publikasi']);
         Route::resource('/layanan', \App\Http\Controllers\Admin\AdminLayananController::class)->Middleware(['prevent-back-history', 'permission:manage-layanan']);
@@ -133,6 +139,8 @@ Route::prefix('admin')->group(function() {
 Route::get('/login', [LoginController::class, 'index'] )->name('login')->Middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'] );
 Route::post('/logout', [LoginController::class, 'logout'] );
+Route::get('/login/verifikasi-2fa', [LoginController::class, 'showTwoFactorChallenge']);
+Route::post('/login/verifikasi-2fa', [LoginController::class, 'verifyTwoFactor'])->middleware('throttle:5,1');
 
 //ROUTE PUBLIC
 //route halaman awal web
