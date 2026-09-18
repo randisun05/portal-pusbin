@@ -41,6 +41,10 @@
 <script>
 (function () {
     var faqData = @json($chatFaqs ?? []);
+    var knowledgeData = @json($chatKnowledge ?? []);
+    knowledgeData.forEach(function (item) {
+        faqData.push({ pertanyaan: item.judul + (item.kata_kunci ? ' ' + item.kata_kunci : ''), jawaban: item.isi });
+    });
     var toggle = document.getElementById('pkChatToggle');
     var panel = document.getElementById('pkChatPanel');
     var closeBtn = document.getElementById('pkChatClose');

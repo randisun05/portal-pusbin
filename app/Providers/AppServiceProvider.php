@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Faq;
 use App\Models\Profil;
+use App\Models\Pengetahuan;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -39,7 +40,12 @@ class AppServiceProvider extends ServiceProvider
                 ? Faq::select('pertanyaan', 'jawaban')->get()
                 : collect();
 
+            $knowledge = Schema::hasTable('pengetahuans')
+                ? Pengetahuan::active()->get(['judul', 'isi', 'kata_kunci'])
+                : collect();
+
             $view->with('chatFaqs', $faqs);
+            $view->with('chatKnowledge', $knowledge);
         });
     }
 }

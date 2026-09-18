@@ -54,6 +54,14 @@
                 </a>
               </li>
               @endif
+              @if($me->hasPermission('manage-pengetahuan'))
+              <li class="menu-item {{ Request::is('admin/pengetahuan*') ? 'active' : '' }}">
+                <a href="/admin/pengetahuan" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-bulb"></i>
+                  <div data-i18n="Analytics">Basis Pengetahuan</div>
+                </a>
+              </li>
+              @endif
               @if($me->hasPermission('manage-layanan'))
               <li class="menu-item {{ Request::is('admin/layanan*') ? 'active' : '' }}">
                 <a href="/admin/layanan" class="menu-link">

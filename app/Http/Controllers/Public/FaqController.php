@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Models\Faq;
 use App\Models\Jdihjfk;
+use App\Models\Pengetahuan;
 use App\Services\AiChatService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -30,7 +31,8 @@ class FaqController extends Controller
         $answer = $aiChat->answer(
             $request->input('question'),
             Faq::select('pertanyaan', 'jawaban')->get(),
-            Jdihjfk::select('title', 'deskripsi')->get()
+            Jdihjfk::select('title', 'deskripsi')->get(),
+            Pengetahuan::active()->get(['judul', 'isi', 'kata_kunci'])
         );
 
         return response()->json(['answer' => $answer]);

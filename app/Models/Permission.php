@@ -22,6 +22,7 @@ class Permission extends Model
                 'manage-highlight' => 'Kelola Highlight',
                 'manage-comment' => 'Moderasi Komentar',
                 'manage-faq' => 'Kelola FAQ',
+                'manage-pengetahuan' => 'Kelola Basis Pengetahuan (Chat AI)',
             ],
             'Organisasi' => [
                 'manage-organisasi' => 'Kelola Struktur Organisasi',

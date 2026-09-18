@@ -64,6 +64,7 @@ Route::prefix('admin')->group(function() {
             Route::delete('/comment/{comment}', [AdminCommentController::class, 'destroy']);
         });
         Route::resource('/faq', AdminFaqController::class)->Middleware(['prevent-back-history', 'permission:manage-faq']);
+        Route::resource('/pengetahuan', \App\Http\Controllers\Admin\AdminPengetahuanController::class)->Middleware(['prevent-back-history', 'permission:manage-pengetahuan']);
 
         // Manajemen admin & role - hanya yang memiliki permission manage-users (Super Admin selalu punya)
         Route::group(['middleware' => ['permission:manage-users']], function () {

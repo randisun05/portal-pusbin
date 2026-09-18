@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Log;
 class AiChatService
 {
     /**
-     * Jawab pertanyaan pengunjung memakai Claude, dibekali daftar FAQ dan
-     * dokumen Repository (baik yang dipublikasikan maupun yang internal)
-     * sebagai konteks pengetahuan. Mengembalikan null jika API key belum
-     * dikonfigurasi atau pemanggilan gagal, sehingga pemanggil bisa jatuh
-     * kembali ke pencarian kata kunci FAQ biasa.
+     * Jawab pertanyaan pengunjung memakai Claude, dibekali daftar FAQ,
+     * materi Basis Pengetahuan, dan dokumen Repository (baik yang
+     * dipublikasikan maupun yang internal) sebagai konteks pengetahuan.
+     * Mengembalikan null jika API key belum dikonfigurasi atau pemanggilan
+     * gagal, sehingga pemanggil bisa jatuh kembali ke pencarian kata kunci
+     * FAQ biasa.
      */
-    public function answer(string $question, Collection $faqs, ?Collection $repository = null): ?string
+    public function answer(string $question, Collection $faqs, ?Collection $repository = null, ?Collection $knowledge = null): ?string
     {
         $apiKey = config('services.anthropic.api_key');
 
@@ -31,10 +32,16 @@ class AiChatService
             return "Judul: {$doc->title}\nIsi: {$doc->deskripsi}";
         })->implode("\n\n");
 
+        $knowledgeContext = ($knowledge ?? collect())->map(function ($item) {
+            $kataKunci = $item->kata_kunci ? " (Kata kunci: {$item->kata_kunci})" : '';
+
+            return "Judul: {$item->judul}{$kataKunci}\nIsi: {$item->isi}";
+        })->implode("\n\n");
+
         $systemPrompt = "Anda adalah asisten virtual Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara (Direktorat JF MASN), Badan Kepegawaian Negara. "
             . "Jawab pertanyaan pengunjung website secara singkat, sopan, dan dalam Bahasa Indonesia, "
-            . "berdasarkan daftar FAQ dan dokumen Repository berikut. Jika pertanyaan tidak tercakup dalam sumber tersebut, arahkan pengunjung "
-            . "untuk menghubungi kami melalui halaman Kontak.\n\nDaftar FAQ:\n{$faqContext}\n\nDokumen Repository:\n{$repositoryContext}";
+            . "berdasarkan Basis Pengetahuan, daftar FAQ, dan dokumen Repository berikut. Jika pertanyaan tidak tercakup dalam sumber tersebut, arahkan pengunjung "
+            . "untuk menghubungi kami melalui halaman Kontak.\n\nBasis Pengetahuan:\n{$knowledgeContext}\n\nDaftar FAQ:\n{$faqContext}\n\nDokumen Repository:\n{$repositoryContext}";
 
         try {
             $client = new Client(apiKey: $apiKey);
