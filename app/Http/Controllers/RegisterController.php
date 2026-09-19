@@ -50,6 +50,7 @@ class RegisterController extends Controller
             'email'=>'required|unique:users',
             'password'=>'required|min:5|max:255',
             'role_id'=>'nullable|exists:roles,id',
+            'nip'=>'nullable|string|unique:users,nip',
            ]);
 
            $validatedData['password'] = Hash::make($validatedData['password']);
@@ -105,6 +106,7 @@ class RegisterController extends Controller
             'email'=>'required|unique:users,email,' . $user->id,
             'password'=>'nullable|min:5|max:255',
             'role_id'=>'nullable|exists:roles,id',
+            'nip'=>'nullable|string|unique:users,nip,' . $user->id,
            ]);
 
            if (! empty($validatedData['password'])) {

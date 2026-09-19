@@ -51,6 +51,15 @@
                             @enderror
                           </div>
                           <div class="form-floating">
+                            <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror" id="nip" placeholder="NIP" value="{{ old('nip')}}">
+                            <label for="nip">NIP (opsional, untuk login SSO SIASN)</label>
+                            @error('nip')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                          </div>
+                          <div class="form-floating">
                             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password" required>
                             <label for="password">Password</label>
                             @error('password')

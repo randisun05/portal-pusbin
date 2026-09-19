@@ -50,4 +50,34 @@ return [
         'secret_key' => env('RECAPTCHA_SECRET_KEY'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | SSO SIASN (BKN)
+    |--------------------------------------------------------------------------
+    |
+    | Endpoint & struktur config di bawah ini disalin dari implementasi
+    | Laravel nyata yang sudah dipakai untuk integrasi SIASN
+    | (kanekescom/laravel-siasn-api), bukan dikira-kira - supaya kalau nanti
+    | dibutuhkan integrasi SIASN lain (bukan cuma SSO), konvensi nama env
+    | sudah konsisten. Login SSO SIASN otomatis nonaktif (tidak muncul di
+    | halaman login) selama SIASN_SSO_CLIENT_ID kosong, karena client_id ini
+    | harus didaftarkan resmi ke tim integrasi SIASN BKN - tidak bisa diisi
+    | sembarangan.
+    |
+    */
+    'siasn' => [
+        'mode' => env('SIASN_MODE', 'training'),
+
+        'sso' => [
+            'production' => [
+                'url' => env('SIASN_SSO_URL', 'https://sso-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token'),
+                'client_id' => env('SIASN_SSO_CLIENT_ID'),
+            ],
+            'training' => [
+                'url' => env('SIASN_SSO_URL_TRAINING', 'https://iam-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token'),
+                'client_id' => env('SIASN_SSO_CLIENT_ID_TRAINING', env('SIASN_SSO_CLIENT_ID')),
+            ],
+        ],
+    ],
+
 ];

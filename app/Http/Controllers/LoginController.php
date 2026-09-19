@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AuditLog;
 use App\Models\User;
+use App\Services\SiasnSsoService;
 use App\Services\TwoFactorAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,8 @@ class LoginController extends Controller
     {
         return view('login.index', [
         'title' => "login",
-        'active' => "Login"
+        'active' => "Login",
+        'siasnEnabled' => app(SiasnSsoService::class)->isConfigured(),
         ]);
     }
 
@@ -35,6 +37,52 @@ class LoginController extends Controller
             return back()->with('loginerror', 'Login Gagal');
         }
 
+        return $this->proceedAfterCredentialsVerified($request, $user, 'lokal');
+    }
+
+    /**
+     * Login pakai SSO SIASN: NIP + password SIASN diverifikasi ke BKN,
+     * lalu dicocokkan ke akun admin lokal yang NIP-nya sudah ditautkan
+     * (lihat kolom nip di tabel users). Identitas valid di SIASN TIDAK
+     * otomatis memberi akses admin - akun lokalnya harus sudah ada &
+     * ditautkan lebih dulu oleh Super Admin.
+     */
+    public function authenticateSiasn(Request $request, SiasnSsoService $siasn)
+    {
+        if (! $siasn->isConfigured()) {
+            return back()->with('loginerror', 'Login SSO SIASN belum diaktifkan.');
+        }
+
+        $credentials = $request->validate([
+            'nip' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $identity = $siasn->authenticate($credentials['nip'], $credentials['password']);
+
+        if (! $identity) {
+            AuditLog::record('login-failed', 'Percobaan login SSO SIASN gagal untuk NIP ' . $credentials['nip']);
+
+            return back()->with('loginerror', 'NIP atau password SIASN salah.');
+        }
+
+        $user = User::where('nip', $identity['nip'])->first();
+
+        if (! $user) {
+            AuditLog::record('login-failed', 'Login SIASN berhasil tapi NIP ' . $identity['nip'] . ' belum ditautkan ke akun admin manapun.');
+
+            return back()->with('loginerror', 'Identitas SIASN Anda valid, tapi belum terdaftar sebagai admin di portal ini. Hubungi Super Admin untuk menautkan NIP Anda.');
+        }
+
+        return $this->proceedAfterCredentialsVerified($request, $user, 'SSO SIASN');
+    }
+
+    /**
+     * Titik temu setelah kredensial (lokal maupun SIASN) terverifikasi:
+     * lanjut ke tantangan 2FA jika aktif, atau langsung masuk.
+     */
+    protected function proceedAfterCredentialsVerified(Request $request, User $user, string $via)
+    {
         if ($user->hasTwoFactorEnabled()) {
             $request->session()->put('2fa:user:id', $user->id);
 
@@ -43,7 +91,7 @@ class LoginController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
-        AuditLog::record('login', $user->name . ' login ke panel admin');
+        AuditLog::record('login', $user->name . " login ke panel admin ({$via})");
 
         return redirect()->intended('/admin')->with('success', 'Berhasil Login');
     }

@@ -88,6 +88,19 @@
                             </div>
                         @endif
 
+                        @if ($siasnEnabled ?? false)
+                            <ul class="nav nav-pills nav-justified mb-3" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="pill" href="#loginLokal">Login Lokal</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="pill" href="#loginSiasn">SSO SIASN</a>
+                                </li>
+                            </ul>
+                        @endif
+
+                        <div class="tab-content">
+                        <div class="tab-pane fade show active" id="loginLokal">
                         {{-- FORM LOGIN --}}
                         <form action="/login" method="post">
                             @csrf
@@ -114,6 +127,35 @@
                             </div>
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Login</button>
                         </form>
+                        </div>
+
+                        @if ($siasnEnabled ?? false)
+                        <div class="tab-pane fade" id="loginSiasn">
+                            <form action="/login/siasn" method="post">
+                                @csrf
+                                <div class="d-flex align-items-center justify-content-center mb-3">
+                                    <h3 class="txt-clr">Login SSO SIASN</h3>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip" placeholder="NIP" value="{{ old('nip') }}" autofocus>
+                                    <label for="nip">NIP</label>
+                                    @error('nip')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-floating mb-4">
+                                    <input type="password" class="form-control" id="siasnPassword" placeholder="Password SIASN" name="password">
+                                    <label for="siasnPassword">Password SIASN</label>
+                                    @error('password')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Login dengan SIASN</button>
+                                <p class="text-muted small text-center">NIP Anda harus sudah ditautkan ke akun admin oleh Super Admin.</p>
+                            </form>
+                        </div>
+                        @endif
+                        </div>
                     </div>
                 </div>
             </div>
