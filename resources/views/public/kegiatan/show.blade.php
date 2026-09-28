@@ -30,6 +30,21 @@
                 </div>
             </div>
 
+            <div class="row mt-5 align-items-center" data-aos="fade-up">
+                <div class="col-12">
+                    <div class="p-4 rounded border d-flex flex-wrap align-items-center justify-content-between gap-4" style="background: color-mix(in srgb, var(--accent-color), transparent 95%);">
+                        <div>
+                            <h4 class="mb-2"><i class="bi bi-qr-code-scan me-2"></i>Absen Kegiatan</h4>
+                            <p class="text-muted mb-3 mb-md-0" style="max-width: 480px;">
+                                Sudah hadir di kegiatan ini? Scan kode QR di samping pakai kamera HP, atau klik tombol untuk mengisi absensi langsung.
+                            </p>
+                            <a href="/absensi/{{ $kegiatan->slug }}" class="btn btn-primary">Isi Absensi <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                        <img src="{{ $absensiQrCodeDataUri }}" alt="QR Absensi {{ $kegiatan->nama }}" width="150" height="150" class="rounded bg-white p-2 border">
+                    </div>
+                </div>
+            </div>
+
             @if($kegiatan->materis->isNotEmpty())
                 <div class="row mt-5" data-aos="fade-up">
                     <div class="col-12">

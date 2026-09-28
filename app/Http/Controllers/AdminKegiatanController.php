@@ -8,9 +8,11 @@ use App\Models\MateriPaparan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Contracts\Service\Attribute\Required;
+use App\Http\Controllers\Concerns\GeneratesKegiatanQr;
 
 class AdminKegiatanController extends Controller
 {
+    use GeneratesKegiatanQr;
     /**
      * Display a listing of the resource.
      *
@@ -179,6 +181,20 @@ class AdminKegiatanController extends Controller
     {
         Kegiatan::destroy($kegiatan->id);
         return redirect('/admin/kegiatan')->with('success', 'Kegiatan Berhasil Dihapus');
+    }
+
+    /**
+     * Tampilkan QR absensi kegiatan (untuk dicetak/ditampilkan di layar saat acara).
+     *
+     * @param  \App\Models\Kegiatan  $kegiatan
+     * @return \Illuminate\Http\Response
+     */
+    public function qrAbsensi(Kegiatan $kegiatan)
+    {
+        return view('admin.kegiatan.qr-absensi', [
+            'kegiatan' => $kegiatan,
+            'qrCodeDataUri' => $this->absensiQrCodeDataUri($kegiatan),
+        ]);
     }
 
     /**

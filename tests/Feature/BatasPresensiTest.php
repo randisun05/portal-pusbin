@@ -52,7 +52,7 @@ class BatasPresensiTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('sudah berakhir');
-        $response->assertDontSee('id="form-konsultasi"', false);
+        $response->assertDontSee('id="form-absensi"', false);
     }
 
     public function test_presensi_form_is_visible_before_deadline()
@@ -62,7 +62,7 @@ class BatasPresensiTest extends TestCase
         $response = $this->get("/absensi/{$kegiatan->slug}");
 
         $response->assertOk();
-        $response->assertSee('id="form-konsultasi"', false);
+        $response->assertSee('id="form-absensi"', false);
     }
 
     public function test_submission_after_deadline_is_rejected()
@@ -76,6 +76,7 @@ class BatasPresensiTest extends TestCase
             'email' => 'peserta@example.com',
             'jabatan' => 'Analis SDM Aparatur',
             'instansi' => 'BKN',
+            'rating' => 3,
         ]);
 
         $response->assertRedirect();
@@ -95,6 +96,7 @@ class BatasPresensiTest extends TestCase
             'email' => 'peserta@example.com',
             'jabatan' => 'Analis SDM Aparatur',
             'instansi' => 'BKN',
+            'rating' => 3,
         ]);
 
         $response->assertRedirect(route('public.absensi.index'));

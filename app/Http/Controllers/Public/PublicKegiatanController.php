@@ -10,10 +10,12 @@ use App\Mail\SendEmailKegiatan;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Concerns\GuardsAgainstSpam;
+use App\Http\Controllers\Concerns\GeneratesKegiatanQr;
 
 class PublicKegiatanController extends Controller
 {
     use GuardsAgainstSpam;
+    use GeneratesKegiatanQr;
 
     /**
      * Display a listing of the resource.
@@ -123,7 +125,8 @@ class PublicKegiatanController extends Controller
     {
         return view('public.kegiatan.show', [
             'title' => $kegiatan->nama,
-            'kegiatan' => $kegiatan
+            'kegiatan' => $kegiatan,
+            'absensiQrCodeDataUri' => $this->absensiQrCodeDataUri($kegiatan),
         ]);
     }
 

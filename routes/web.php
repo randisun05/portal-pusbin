@@ -63,6 +63,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/kegiatan/{kegiatan}/materi', [AdminKegiatanController::class, 'materiIndex'])->Middleware(['prevent-back-history', 'permission:manage-kegiatan']);
         Route::post('/kegiatan/{kegiatan}/materi', [AdminKegiatanController::class, 'materiStore'])->Middleware(['prevent-back-history', 'permission:manage-kegiatan']);
         Route::delete('/kegiatan/{kegiatan}/materi/{materi}', [AdminKegiatanController::class, 'materiDestroy'])->Middleware(['prevent-back-history', 'permission:manage-kegiatan']);
+        Route::get('/kegiatan/{kegiatan}/qr-absensi', [AdminKegiatanController::class, 'qrAbsensi'])->Middleware(['prevent-back-history', 'permission:manage-kegiatan']);
         Route::resource('/highlight', HighlightController::class)->Middleware(['prevent-back-history', 'permission:manage-highlight']);
         Route::group(['middleware' => ['permission:manage-comment']], function () {
             Route::get('/comment', [AdminCommentController::class, 'index'])->Middleware(['prevent-back-history']);

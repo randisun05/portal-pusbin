@@ -52,6 +52,7 @@
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                             </svg></a>
                             <a href="/admin/kegiatan/{{$kegiatan->id}}/materi" class="badge bg-info">Kelola Materi</a>
+                            <a href="/admin/kegiatan/{{$kegiatan->id}}/qr-absensi" class="badge bg-primary">QR Absensi</a>
                             <form action="/admin/kegiatan/{{$kegiatan->id}}" method="POST" class="d-inline">
                           @method('delete')
                           @csrf

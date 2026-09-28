@@ -146,6 +146,7 @@ class RecaptchaTest extends TestCase
             'email' => 'peserta@example.com',
             'jabatan' => 'Analis',
             'instansi' => 'BKN',
+            'rating' => 4,
         ]);
 
         $response->assertRedirect();

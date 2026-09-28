@@ -74,6 +74,7 @@ class PublicFormsTest extends TestCase
             'email' => 'peserta@example.com',
             'jabatan' => 'Analis',
             'instansi' => 'BKN',
+            'rating' => 4,
         ]);
 
         $response->assertRedirect(route('public.absensi.index'));
@@ -101,6 +102,7 @@ class PublicFormsTest extends TestCase
             'email' => 'peserta@example.com',
             'jabatan' => 'Analis',
             'instansi' => 'BKN',
+            'rating' => 4,
         ]);
 
         $response->assertRedirect();
@@ -120,6 +122,7 @@ class PublicFormsTest extends TestCase
             'email' => 'bot@example.com',
             'jabatan' => 'Analis',
             'instansi' => 'BKN',
+            'rating' => 4,
             'website' => 'http://spam.example.com',
         ]);
 
