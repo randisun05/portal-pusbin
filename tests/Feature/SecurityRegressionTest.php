@@ -154,4 +154,31 @@ class SecurityRegressionTest extends TestCase
         $response->assertHeader('X-Content-Type-Options', 'nosniff');
         $response->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     }
+
+    public function test_content_security_policy_allows_known_third_party_assets_only()
+    {
+        $response = $this->get('/');
+        $response->assertHeader('Content-Security-Policy');
+
+        $csp = $response->headers->get('Content-Security-Policy');
+
+        // Aset pihak ketiga yang benar-benar dipakai (reCAPTCHA, SweetAlert2,
+        // Google Fonts, font-awesome via cdnjs) harus diizinkan...
+        foreach ([
+            'cdn.jsdelivr.net',
+            'www.google.com',
+            'www.gstatic.com',
+            'fonts.googleapis.com',
+            'fonts.gstatic.com',
+            'cdnjs.cloudflare.com',
+        ] as $domain) {
+            $this->assertStringContainsString($domain, $csp);
+        }
+
+        // ...tapi origin sembarangan tidak didaftarkan di mana pun.
+        $this->assertStringNotContainsString('evil.example.com', $csp);
+        $this->assertStringContainsString("object-src 'none'", $csp);
+        $this->assertStringContainsString("base-uri 'self'", $csp);
+        $this->assertStringContainsString("form-action 'self'", $csp);
+    }
 }
