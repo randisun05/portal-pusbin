@@ -13,7 +13,7 @@ trait HasLampiran
         return $this->morphMany(Lampiran::class, 'lampirable');
     }
 
-    public function simpanLampiran(UploadedFile $file, string $folder = 'lampiran'): Lampiran
+    public function simpanLampiran(UploadedFile $file, string $folder = 'lampiran', ?string $keterangan = null): Lampiran
     {
         $path = $file->store($folder, 'public');
 
@@ -22,6 +22,7 @@ trait HasLampiran
             'nama_asli' => $file->getClientOriginalName(),
             'mime' => $file->getClientMimeType(),
             'ukuran' => $file->getSize(),
+            'keterangan' => $keterangan,
         ]);
     }
 }

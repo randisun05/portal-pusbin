@@ -62,6 +62,7 @@
                         </ul>
                     </li>
                     <li><a href="/survei" class="{{ Request::is('survei*') ? 'active' : '' }}">Survei</a></li>
+                    <li><a href="/form" class="{{ Request::is('form*') ? 'active' : '' }}">Formulir</a></li>
                     <li><a href="/repository" class="{{ Request::is('repository*') ? 'active' : '' }}">Repository</a></li>
                     <li class="dropdown">
                         <a href="#" class="{{ Request::is('faq*') || Request::is('sertifikat*') || Request::is('verifikasi-sertifikat*') ? 'active' : '' }}"><span>HelpDesk</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>

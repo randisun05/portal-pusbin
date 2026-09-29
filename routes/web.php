@@ -97,6 +97,16 @@ Route::prefix('admin')->group(function() {
             Route::post('/survei/{survei}/store', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'StoreIndikator']);
             Route::delete('/survei/{indikator}/delete', [\App\Http\Controllers\Admin\AdminSurveiController::class, 'DeleteIndikator']);
         });
+        Route::group(['middleware' => ['permission:manage-formulir']], function () {
+            Route::resource('/formulir', \App\Http\Controllers\Admin\AdminFormulirController::class)->except(['show'])->Middleware(['prevent-back-history']);
+            Route::get('/formulir/{formulir}/field', [\App\Http\Controllers\Admin\AdminFormulirController::class, 'fieldIndex'])->Middleware(['prevent-back-history']);
+            Route::post('/formulir/{formulir}/field', [\App\Http\Controllers\Admin\AdminFormulirController::class, 'fieldStore'])->Middleware(['prevent-back-history']);
+            Route::delete('/formulir/{formulir}/field/{field}', [\App\Http\Controllers\Admin\AdminFormulirController::class, 'fieldDestroy'])->Middleware(['prevent-back-history']);
+            Route::post('/formulir/{formulir}/field/{field}/naik', [\App\Http\Controllers\Admin\AdminFormulirController::class, 'fieldNaik'])->Middleware(['prevent-back-history']);
+            Route::post('/formulir/{formulir}/field/{field}/turun', [\App\Http\Controllers\Admin\AdminFormulirController::class, 'fieldTurun'])->Middleware(['prevent-back-history']);
+            Route::get('/formulir/{formulir}/submissions', [\App\Http\Controllers\Admin\AdminFormulirController::class, 'submissions'])->Middleware(['prevent-back-history']);
+            Route::get('/formulir/{formulir}/export', [\App\Http\Controllers\Admin\AdminFormulirController::class, 'export'])->Middleware(['prevent-back-history']);
+        });
         Route::resource('/dashboard', AdminDashboardController::class)->Middleware(['prevent-back-history']);
         Route::resource('/jadwalukom', AdminJadwalController::class)->Middleware(['prevent-back-history', 'permission:manage-jadwalukom']);
         Route::get('/absensi/export', [AdminAbsensiController::class, 'export'])->Middleware(['prevent-back-history', 'permission:manage-absensi']);
@@ -220,6 +230,11 @@ Route::post('/chat/ask', [\App\Http\Controllers\Public\FaqController::class, 'as
 Route::get('/survei', [\App\Http\Controllers\Public\SurveiPublicController::class, 'index'])->name('public.survei.index');
 Route::get('/survei/{survei}/create', [\App\Http\Controllers\Public\SurveiPublicController::class, 'create']);
 Route::post('/survei/{survei}', [\App\Http\Controllers\Public\SurveiPublicController::class, 'store'])->middleware('throttle:5,1');
+
+//ROUTE FORMULIR
+Route::get('/form', [\App\Http\Controllers\Public\PublicFormulirController::class, 'index'])->name('public.formulir.index');
+Route::get('/form/{formulir:slug}', [\App\Http\Controllers\Public\PublicFormulirController::class, 'create']);
+Route::post('/form/{formulir:slug}', [\App\Http\Controllers\Public\PublicFormulirController::class, 'store'])->middleware('throttle:5,1');
 
 //ROUTE ABOUT
 Route::get('/layanan/pengajuan-rekomendasi', [\App\Http\Controllers\Public\PublicController::class, 'kebutuhan']);

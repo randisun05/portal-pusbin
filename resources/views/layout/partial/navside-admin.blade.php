@@ -188,6 +188,14 @@
                 </a>
               </li>
               @endif
+              @if($me->hasPermission('manage-formulir'))
+              <li class="menu-item {{ Request::is('admin/formulir') || Request::is('admin/formulir/*') ? 'active' : '' }}">
+                <a href="/admin/formulir" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-list-check"></i>
+                  <div data-i18n="Analytics">Formulir</div>
+                </a>
+              </li>
+              @endif
               @if($me->hasPermission('view-statistik'))
               <li class="menu-item {{ Request::is('admin/survei-statistik*') ? 'active' : '' }}">
                 <a href="/admin/survei-statistik" class="menu-link">

@@ -37,6 +37,7 @@ class Permission extends Model
                 'manage-repository' => 'Kelola Repository',
                 'manage-survei' => 'Kelola Survei',
                 'manage-absensi' => 'Kelola Absensi',
+                'manage-formulir' => 'Kelola Formulir',
                 'manage-kodekonsultasi' => 'Kelola Kode Konsultasi',
                 'manage-sertifikat' => 'Kelola Sertifikat',
                 'manage-sertifikat-template' => 'Kelola Template & Penomoran Sertifikat',
