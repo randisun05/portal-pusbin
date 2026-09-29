@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use App\Models\Concerns\Auditable;
+use App\Services\HtmlSanitizer;
 
 class Post extends Model
 {
@@ -16,6 +17,11 @@ class Post extends Model
 
      protected $guarded = ['id'];
      protected $with = ['author','category'];
+
+     public function setBodyAttribute($value)
+     {
+         $this->attributes['body'] = HtmlSanitizer::clean($value);
+     }
 
 
      public function scopeFilter ($query, array $filters)

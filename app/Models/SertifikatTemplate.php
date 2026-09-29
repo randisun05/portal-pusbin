@@ -34,13 +34,17 @@ class SertifikatTemplate extends Model
      */
     public function renderKeterangan($absensi): string
     {
+        // Nilai token berasal dari input publik (form absensi/konsultasi tanpa
+        // login), jadi WAJIB di-escape sebelum disisipkan - teks_keterangan
+        // sendiri (milik admin) dibiarkan apa adanya karena dirender via {!! !!}
+        // di view untuk mempertahankan format yang diketik admin.
         $tokens = [
-            '{nama}' => $absensi->nama,
-            '{nip}' => $absensi->nip,
-            '{jabatan}' => $absensi->jabatan,
-            '{instansi}' => $absensi->instansi,
-            '{kegiatan}' => optional($absensi->kegiatan)->nama,
-            '{waktu}' => optional($absensi->kegiatan)->waktu,
+            '{nama}' => e($absensi->nama),
+            '{nip}' => e($absensi->nip),
+            '{jabatan}' => e($absensi->jabatan),
+            '{instansi}' => e($absensi->instansi),
+            '{kegiatan}' => e(optional($absensi->kegiatan)->nama),
+            '{waktu}' => e(optional($absensi->kegiatan)->waktu),
         ];
 
         return strtr($this->teks_keterangan, $tokens);

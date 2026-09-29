@@ -148,7 +148,7 @@ Route::prefix('admin')->group(function() {
 
 // route login
 Route::get('/login', [LoginController::class, 'index'] )->name('login')->Middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate'] );
+Route::post('/login', [LoginController::class, 'authenticate'] )->middleware('throttle:5,1');
 Route::post('/login/siasn', [LoginController::class, 'authenticateSiasn'])->middleware('throttle:5,1');
 Route::post('/logout', [LoginController::class, 'logout'] );
 Route::get('/login/verifikasi-2fa', [LoginController::class, 'showTwoFactorChallenge']);

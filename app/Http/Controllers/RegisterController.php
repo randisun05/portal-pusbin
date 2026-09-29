@@ -48,7 +48,7 @@ class RegisterController extends Controller
             'name'=>'required|max:255',
             'username'=>['required','min:3','max:255','unique:users'],
             'email'=>'required|unique:users',
-            'password'=>'required|min:5|max:255',
+            'password'=>'required|min:8|max:255',
             'role_id'=>'nullable|exists:roles,id',
             'nip'=>'nullable|string|unique:users,nip',
            ]);
@@ -104,7 +104,7 @@ class RegisterController extends Controller
             'name'=>'required|max:255',
             'username'=>['required','min:3','max:255','unique:users,username,' . $user->id],
             'email'=>'required|unique:users,email,' . $user->id,
-            'password'=>'nullable|min:5|max:255',
+            'password'=>'nullable|min:8|max:255',
             'role_id'=>'nullable|exists:roles,id',
             'nip'=>'nullable|string|unique:users,nip,' . $user->id,
            ]);
