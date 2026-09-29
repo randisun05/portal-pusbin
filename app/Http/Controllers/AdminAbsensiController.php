@@ -19,7 +19,7 @@ class AdminAbsensiController extends Controller
      */
     public function index()
     {
-        $absensis = Absensi::latest();
+        $absensis = Absensi::with('lampirans')->latest();
         $ids = Kegiatan::where('jenis','Konsultasi')->pluck('id');
 
         if(request('search')){

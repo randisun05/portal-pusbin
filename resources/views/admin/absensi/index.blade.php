@@ -63,6 +63,7 @@
                             <th class="text-center">Jabatan</th>
                             <th class="text-center">Instansi</th>
                             <th class="text-center">Nama Kegiatan</th>
+                            <th class="text-center">Lampiran</th>
                         </tr>
                     </thead>
                     @foreach ($absensis as $absensi )
@@ -73,6 +74,15 @@
                         <td>{{$absensi->jabatan}}</td>
                         <td>{{$absensi->instansi}}</td>
                         <td>{{$absensi->kegiatan->nama}}</td>
+                        <td class="text-center">
+                            @forelse ($absensi->lampirans as $lampiran)
+                                <a href="{{ asset('storage/' . $lampiran->path) }}" target="_blank" class="badge bg-secondary text-decoration-none" title="{{ $lampiran->nama_asli }} ({{ $lampiran->ukuranFormatted() }})">
+                                    <i class="fas fa-paperclip"></i> Unduh
+                                </a>
+                            @empty
+                                <span class="text-muted">-</span>
+                            @endforelse
+                        </td>
                     </tr>
                     @endforeach
 
@@ -84,6 +94,7 @@
                             <th class="text-center">Jabatan</th>
                             <th class="text-center">Instansi</th>
                             <th class="text-center">Nama Kegiatan</th>
+                            <th class="text-center">Lampiran</th>
                         </tr>
                         </tr>
                     </tfoot>

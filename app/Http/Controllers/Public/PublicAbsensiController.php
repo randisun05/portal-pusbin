@@ -75,6 +75,7 @@ class PublicAbsensiController extends Controller
         'instansi' => 'required|',
         'rating' => 'required|integer|min:1|max:4',
         'saran' => 'nullable|string|max:2000',
+        'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:5120',
     ]);
 
     $successMessage = 'Absensi berhasil! Cek email Anda untuk konfirmasi.';
@@ -114,7 +115,7 @@ class PublicAbsensiController extends Controller
         }
 
 
-       Absensi::create([
+       $absensi = Absensi::create([
             'nip' => $request->nip,
             'nama' => $request->nama,
             'kegiatan_id' => $request->kegiatan_id,
@@ -124,6 +125,10 @@ class PublicAbsensiController extends Controller
             'rating' => $request->rating,
             'saran' => $request->saran,
         ]);
+
+        if ($request->hasFile('lampiran')) {
+            $absensi->simpanLampiran($request->file('lampiran'));
+        }
 
         $data = Absensi::where('nip', $request->nip)->where('kegiatan_id', $request->kegiatan_id)->with('kegiatan')->latest()->first();
 

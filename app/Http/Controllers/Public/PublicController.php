@@ -177,13 +177,20 @@ class PublicController extends Controller
             'telepon' => 'nullable',
             'subjek' => 'nullable',
             'pesan' => 'required',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:5120',
         ]);
 
         if ($this->isSpamSubmission($request)) {
             return redirect('/about/kontak-kami')->with('success', 'Terima kasih, pesan Anda berhasil terkirim. Kami akan segera merespon.');
         }
 
-        PesanKontak::create($validatedData);
+        unset($validatedData['lampiran']);
+
+        $pesan = PesanKontak::create($validatedData);
+
+        if ($request->hasFile('lampiran')) {
+            $pesan->simpanLampiran($request->file('lampiran'));
+        }
 
         return redirect('/about/kontak-kami')->with('success', 'Terima kasih, pesan Anda berhasil terkirim. Kami akan segera merespon.');
     }

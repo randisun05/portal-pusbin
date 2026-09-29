@@ -58,7 +58,7 @@
                 <div class="ab-step-dot" data-step="2">2</div>
             </div>
 
-            <form id="form-absensi" action="/absensi/{{ $kegiatan->slug }}/store" method="POST">
+            <form id="form-absensi" action="/absensi/{{ $kegiatan->slug }}/store" method="POST" enctype="multipart/form-data">
                 @csrf
                 @include('layout.partial.honeypot')
                 @include('layout.partial.recaptcha')
@@ -146,6 +146,13 @@
                         <label for="saran" class="form-label">Saran / Masukan (opsional)</label>
                         <textarea class="form-control @error('saran') is-invalid @enderror" id="saran" name="saran" rows="3" placeholder="Tulis masukan Anda...">{{ old('saran') }}</textarea>
                         @error('saran')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="lampiran" class="form-label">Lampiran (opsional)</label>
+                        <input type="file" class="form-control @error('lampiran') is-invalid @enderror" id="lampiran" name="lampiran">
+                        <div class="form-text">PDF/JPG/PNG/DOC/DOCX, maksimal 5MB.</div>
+                        @error('lampiran')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="col text-center m-3">

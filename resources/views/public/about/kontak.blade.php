@@ -78,7 +78,7 @@
 
                 <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
                     <h3 class="mb-4">Kirim Pesan</h3>
-                    <form class="kk-form" action="/about/kontak-kami" method="POST">
+                    <form class="kk-form" action="/about/kontak-kami" method="POST" enctype="multipart/form-data">
                         @csrf
                         @include('layout.partial.honeypot')
                         @include('layout.partial.recaptcha')
@@ -107,6 +107,12 @@
                                 <label for="pesan" class="form-label">Pesan</label>
                                 <textarea class="form-control @error('pesan') is-invalid @enderror" name="pesan" id="pesan" rows="5" required>{{ old('pesan') }}</textarea>
                                 @error('pesan')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                            <div class="col-12">
+                                <label for="lampiran" class="form-label">Lampiran (opsional)</label>
+                                <input type="file" class="form-control @error('lampiran') is-invalid @enderror" name="lampiran" id="lampiran">
+                                <div class="form-text">PDF/JPG/PNG/DOC/DOCX, maksimal 5MB.</div>
+                                @error('lampiran')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Kirim Pesan <i class="bi bi-send"></i></button>

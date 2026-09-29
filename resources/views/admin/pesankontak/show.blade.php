@@ -35,6 +35,18 @@
                     <th>Pesan</th>
                     <td style="white-space: pre-line;">{{$pesan->pesan}}</td>
                 </tr>
+                <tr>
+                    <th>Lampiran</th>
+                    <td>
+                        @forelse ($pesan->lampirans as $lampiran)
+                            <a href="{{ asset('storage/' . $lampiran->path) }}" target="_blank">
+                                <i class="fas fa-paperclip"></i> {{ $lampiran->nama_asli }} ({{ $lampiran->ukuranFormatted() }})
+                            </a>
+                        @empty
+                            <span class="text-muted">Tidak ada lampiran</span>
+                        @endforelse
+                    </td>
+                </tr>
             </table>
             <div class="text-center mt-3">
                 <a href="mailto:{{$pesan->email}}" class="btn btn-primary">Balas via Email</a>

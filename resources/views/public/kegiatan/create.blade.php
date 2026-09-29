@@ -10,8 +10,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <form class="Konsultasi" id="form-konsultasi" action="/absensi/{{ $kegiatan->slug }}/store"
-                method="POST">
+            <form class="Konsultasi" id="form-konsultasi" action="/kegiatan/{{ $kegiatan->slug }}/store"
+                method="POST" enctype="multipart/form-data">
                 @csrf
                 @include('layout.partial.honeypot')
                 @include('layout.partial.recaptcha')
@@ -86,6 +86,20 @@
                         name="instansi" value="{{ old('instansi') }}" placeholder="Masukan Instansi">
 
                     @error('instansi')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                {{-- LAMPIRAN --}}
+                <div class="mb-3">
+                    <label for="lampiran" class="form-label">LAMPIRAN (opsional)</label>
+                    <input type="file" class="form-control @error('lampiran') is-invalid @enderror" id="lampiran"
+                        name="lampiran">
+                    <div class="form-text">PDF/JPG/PNG/DOC/DOCX, maksimal 5MB.</div>
+
+                    @error('lampiran')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
