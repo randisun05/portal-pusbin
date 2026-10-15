@@ -22,30 +22,39 @@
             </div><!-- End Why Box -->
 
             <div class="col-lg-8 d-flex align-items-stretch">
-                <div class="d-flex flex-column justify-content-center">
-                    <div class="row gy-4">
+                @php
+                    $heroCount = $heroHighlights->count();
+                    $heroCol = $heroCount >= 3 ? 'col-md-6 col-xl-4' : ($heroCount === 2 ? 'col-md-6' : 'col-12');
+                    $heroLayananLink = optional(\App\Models\LayananHalaman::active()->first())->url ?? '/layanan';
+                @endphp
+                <div class="hero-side d-flex flex-column w-100">
+                    <div class="row gy-4 flex-grow-1">
 
                         @forelse ($heroHighlights as $item)
-                            <div class="col-xl-4 d-flex align-items-stretch">
-                                <div class="icon-box" data-aos="zoom-out" data-aos-delay="{{ 300 + (100 * $loop->index) }}">
+                            <div class="{{ $heroCol }} d-flex align-items-stretch">
+                                <div class="icon-box {{ $heroCount === 1 ? 'icon-box-wide' : '' }}" data-aos="zoom-out" data-aos-delay="{{ 300 + (100 * $loop->index) }}">
                                     <i class="bi {{ $item->icon ?: 'bi-star' }}"></i>
-                                    <h4>{{ $item->name }}</h4>
-                                    <p>{{ $item->desc }}</p>
+                                    <div class="icon-box-text">
+                                        <h4>{{ $item->name }}</h4>
+                                        <p>{{ $item->desc }}</p>
+                                    </div>
                                 </div>
                             </div>
                         @empty
-                            <div class="col-xl-4 d-flex align-items-stretch">
-                                <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
+                            <div class="col-12 d-flex align-items-stretch">
+                                <div class="icon-box icon-box-wide" data-aos="zoom-out" data-aos-delay="300">
                                     <i class="bi bi-clipboard-data"></i>
-                                    <h4>Uji Kompetensi</h4>
-                                    <p>Dilaksanakan 4 periode dalam setahun secara daring, tanpa dipungut biaya.</p>
+                                    <div class="icon-box-text">
+                                        <h4>Uji Kompetensi</h4>
+                                        <p>Dilaksanakan 4 periode dalam setahun secara daring, tanpa dipungut biaya.</p>
+                                    </div>
                                 </div>
                             </div>
                         @endforelse
 
                     </div>
-                    <div class="d-flex flex-wrap gap-3 mt-4">
-                        <a class="btn btn-primary" href="/layanan/pengajuan-rekomendasi">Lihat Layanan <i class="bi bi-arrow-right"></i></a>
+                    <div class="mt-4">
+                        <a class="btn btn-primary" href="{{ $heroLayananLink }}">Lihat Layanan <i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
             </div>

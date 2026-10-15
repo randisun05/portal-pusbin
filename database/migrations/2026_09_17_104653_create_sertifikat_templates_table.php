@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('warna_aksen')->default('#f92c24');
             $table->string('logo')->nullable();
             $table->string('teks_pembuka')->default('Diberikan kepada:');
-            $table->text('teks_keterangan')->default('NIP {nip}, {jabatan} dari {instansi}, atas partisipasinya dalam kegiatan {kegiatan} yang diselenggarakan pada {waktu}.');
+            $table->text('teks_keterangan');
             $table->string('nama_penandatangan')->nullable();
             $table->string('jabatan_penandatangan')->nullable();
             $table->string('tanda_tangan')->nullable();

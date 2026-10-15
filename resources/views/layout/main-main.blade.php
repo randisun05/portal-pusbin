@@ -62,7 +62,10 @@
 
     @stack('scripts')
 
-    @include('layout.partial.chat-widget')
+    @hasSection('noChat')
+    @else
+        @include('layout.partial.chat-widget')
+    @endif
 
 </body>
 

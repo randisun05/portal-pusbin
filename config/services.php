@@ -77,6 +77,10 @@ return [
                 'url' => env('SIASN_SSO_URL_TRAINING', 'https://iam-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token'),
                 'client_id' => env('SIASN_SSO_CLIENT_ID_TRAINING', env('SIASN_SSO_CLIENT_ID')),
             ],
+
+            // Callback login MyASN. Kosongkan untuk memakai {APP_URL}/login/sso/callback.
+            // Alamat ini harus terdaftar sebagai valid redirect URI untuk client_id di SSO SIASN.
+            'redirect_uri' => env('SIASN_SSO_REDIRECT_URI'),
         ],
     ],
 

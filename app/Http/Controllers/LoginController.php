@@ -15,9 +15,17 @@ class LoginController extends Controller
     public function index()
     {
         return view('login.index', [
-        'title' => "login",
-        'active' => "Login",
-        'siasnEnabled' => app(SiasnSsoService::class)->isConfigured(),
+            'title' => "login",
+            'active' => "Login",
+        ]);
+    }
+
+    public function sso(SiasnSsoService $siasn)
+    {
+        return view('login.sso', [
+            'title' => "login sso",
+            'active' => "Login",
+            'siasnEnabled' => $siasn->isConfigured(),
         ]);
     }
 
@@ -41,29 +49,48 @@ class LoginController extends Controller
     }
 
     /**
-     * Login pakai SSO SIASN: NIP + password SIASN diverifikasi ke BKN,
-     * lalu dicocokkan ke akun admin lokal yang NIP-nya sudah ditautkan
-     * (lihat kolom nip di tabel users). Identitas valid di SIASN TIDAK
-     * otomatis memberi akses admin - akun lokalnya harus sudah ada &
-     * ditautkan lebih dulu oleh Super Admin.
+     * Mulai login MyASN (SSO SIASN): arahkan pengguna ke halaman login BKN
+     * dengan alur authorization code + PKCE. Kredensial SIASN dimasukkan
+     * langsung di halaman BKN, tidak pernah lewat portal ini.
      */
-    public function authenticateSiasn(Request $request, SiasnSsoService $siasn)
+    public function ssoRedirect(Request $request, SiasnSsoService $siasn)
     {
         if (! $siasn->isConfigured()) {
-            return back()->with('loginerror', 'Login SSO SIASN belum diaktifkan.');
+            return redirect('/login/sso')->with('loginerror', 'Login SSO SIASN belum diaktifkan.');
         }
 
-        $credentials = $request->validate([
-            'nip' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        $auth = $siasn->buildAuthorization();
+        $request->session()->put('siasn:state', $auth['state']);
+        $request->session()->put('siasn:verifier', $auth['verifier']);
 
-        $identity = $siasn->authenticate($credentials['nip'], $credentials['password']);
+        return redirect()->away($auth['url']);
+    }
+
+    /**
+     * Callback dari SSO SIASN: tukar code dengan token, lalu cocokkan NIP ke
+     * akun admin lokal yang NIP-nya sudah ditautkan (kolom nip di tabel
+     * users). Identitas valid di SIASN TIDAK otomatis memberi akses admin -
+     * akun lokalnya harus sudah ada & ditautkan lebih dulu oleh Super Admin.
+     */
+    public function ssoCallback(Request $request, SiasnSsoService $siasn)
+    {
+        $state = $request->session()->pull('siasn:state');
+        $verifier = $request->session()->pull('siasn:verifier');
+
+        if ($request->filled('error')) {
+            return redirect('/login/sso')->with('loginerror', 'Login MyASN dibatalkan atau ditolak.');
+        }
+
+        if (! $state || ! $verifier || ! $request->filled('code') || ! hash_equals($state, (string) $request->query('state'))) {
+            return redirect('/login/sso')->with('loginerror', 'Sesi login MyASN tidak valid atau kedaluwarsa. Silakan coba lagi.');
+        }
+
+        $identity = $siasn->exchangeCode($request->query('code'), $verifier);
 
         if (! $identity) {
-            AuditLog::record('login-failed', 'Percobaan login SSO SIASN gagal untuk NIP ' . $credentials['nip']);
+            AuditLog::record('login-failed', 'Login SSO SIASN gagal (penukaran code ditolak).');
 
-            return back()->with('loginerror', 'NIP atau password SIASN salah.');
+            return redirect('/login/sso')->with('loginerror', 'Login MyASN gagal. Silakan coba lagi.');
         }
 
         $user = User::where('nip', $identity['nip'])->first();
@@ -71,7 +98,7 @@ class LoginController extends Controller
         if (! $user) {
             AuditLog::record('login-failed', 'Login SIASN berhasil tapi NIP ' . $identity['nip'] . ' belum ditautkan ke akun admin manapun.');
 
-            return back()->with('loginerror', 'Identitas SIASN Anda valid, tapi belum terdaftar sebagai admin di portal ini. Hubungi Super Admin untuk menautkan NIP Anda.');
+            return redirect('/login/sso')->with('loginerror', 'Identitas SIASN Anda valid, tapi belum terdaftar sebagai admin di portal ini. Hubungi Super Admin untuk menautkan NIP Anda.');
         }
 
         return $this->proceedAfterCredentialsVerified($request, $user, 'SSO SIASN');

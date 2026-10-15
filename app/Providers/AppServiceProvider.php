@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Faq;
+use App\Models\LayananHalaman;
 use App\Models\Profil;
 use App\Models\Pengetahuan;
 use Illuminate\Support\ServiceProvider;
@@ -33,6 +34,12 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer(['layout.web.footer', 'layout.web.nav'], function ($view) {
             $view->with('profil', Profil::current());
+        });
+
+        View::composer('layout.web.nav', function ($view) {
+            $view->with('layananMenu', Schema::hasTable('layanan_halamans')
+                ? LayananHalaman::active()->get(['nama', 'slug'])
+                : collect());
         });
 
         View::composer('layout.partial.chat-widget', function ($view) {

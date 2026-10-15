@@ -4,7 +4,13 @@
 <!-- Menu -->
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <span class="menu-text fw-bolder ms-2 fs-4">Admin Website</span>
+      <a href="/admin" class="pk-admin-logo">
+        <span class="pk-admin-logo-badge">JF</span>
+        <span class="pk-admin-logo-text">
+          <span class="pk-admin-logo-line1">Admin Portal</span>
+          <span class="pk-admin-logo-line2">JF MASN &middot; BKN</span>
+        </span>
+      </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
           <i class="bx bx-chevron-left bx-sm align-middle"></i>
@@ -71,10 +77,18 @@
               </li>
               @endif
               @if($me->hasPermission('manage-layanan'))
-              <li class="menu-item {{ Request::is('admin/layanan*') ? 'active' : '' }}">
+              <li class="menu-item {{ Request::is('admin/layanan', 'admin/layanan/*') ? 'active' : '' }}">
                 <a href="/admin/layanan" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Layanan</div>
+                </a>
+              </li>
+              @endif
+              @if($me->hasPermission('manage-layanan'))
+              <li class="menu-item {{ Request::is('admin/layanan-halaman*') ? 'active' : '' }}">
+                <a href="/admin/layanan-halaman" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                  <div data-i18n="Analytics">Menu Layanan (Navbar)</div>
                 </a>
               </li>
               @endif

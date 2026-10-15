@@ -108,3 +108,74 @@
 .prose-content { text-align: justify; line-height: 1.9; }
 .prose-content p { margin-bottom: 1.1em; }
 .prose-content a { color: var(--accent-color); text-decoration: underline; }
+
+/* Konten dari editor admin (Trix) memakai <div>, bukan <p> */
+.prose-content > div { margin-bottom: 1.1em; }
+.prose-content ul, .prose-content ol { margin-bottom: 1.1em; }
+.prose-content h1, .prose-content h2, .prose-content h3 { margin: 1.4em 0 .6em; }
+
+/*
+ * Tombol Bootstrap disesuaikan dengan gaya tombol template Flexor
+ * (lihat .pricing .btn-buy): warna aksen, sudut 4px, font heading.
+ */
+.btn {
+  --bs-btn-border-radius: 4px;
+  font-family: var(--heading-font);
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn-primary {
+  --bs-btn-color: var(--contrast-color);
+  --bs-btn-bg: var(--accent-color);
+  --bs-btn-border-color: var(--accent-color);
+  --bs-btn-hover-color: var(--contrast-color);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--accent-color), transparent 20%);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+  --bs-btn-active-color: var(--contrast-color);
+  --bs-btn-active-bg: color-mix(in srgb, var(--accent-color), #000 15%);
+  --bs-btn-active-border-color: color-mix(in srgb, var(--accent-color), #000 15%);
+  --bs-btn-focus-shadow-rgb: 181, 38, 31;
+  --bs-btn-disabled-bg: var(--accent-color);
+  --bs-btn-disabled-border-color: var(--accent-color);
+}
+.btn-outline-primary,
+.btn-outline-secondary {
+  --bs-btn-color: var(--accent-color);
+  --bs-btn-border-color: color-mix(in srgb, var(--accent-color), transparent 50%);
+  --bs-btn-hover-color: var(--contrast-color);
+  --bs-btn-hover-bg: var(--accent-color);
+  --bs-btn-hover-border-color: var(--accent-color);
+  --bs-btn-active-color: var(--contrast-color);
+  --bs-btn-active-bg: var(--accent-color);
+  --bs-btn-active-border-color: var(--accent-color);
+  --bs-btn-focus-shadow-rgb: 181, 38, 31;
+  --bs-btn-disabled-color: var(--accent-color);
+  --bs-btn-disabled-border-color: var(--accent-color);
+}
+.btn:not(.btn-sm):not(.btn-lg) { padding: 8px 24px 10px; }
+
+/* Hero: kotak highlight menyesuaikan tinggi kotak "Kenapa Layanan Kami?" */
+.hero .content .icon-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 32px 24px;
+}
+.hero .content .icon-box i { font-size: 44px; line-height: 1; }
+.hero .content .icon-box h4 { margin: 8px 0 12px; }
+.hero .content .icon-box p { margin: 0; font-size: 15px; line-height: 1.6; }
+.hero .content .icon-box.icon-box-wide {
+  flex-direction: row;
+  text-align: left;
+  justify-content: flex-start;
+  gap: 28px;
+  padding: 36px 40px;
+}
+.hero .content .icon-box.icon-box-wide i { font-size: 56px; flex: 0 0 auto; }
+.hero .content .icon-box.icon-box-wide h4 { margin-top: 0; font-size: 22px; }
+.hero .content .icon-box.icon-box-wide p { font-size: 16px; }
+@media (max-width: 575.98px) {
+  .hero .content .icon-box.icon-box-wide { flex-direction: column; text-align: center; padding: 28px 22px; }
+}

@@ -40,12 +40,18 @@ class AdminLayananController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            "*" => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nama' => 'required',
+            'deskripsi' => 'required',
+            'link' => 'required',
+            'icon' => 'nullable|max:60|regex:/^bi-[a-z0-9-]+$/',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'icon.regex' => 'Icon harus berupa nama class Bootstrap Icons, contoh: bi-headset',
         ]);
 
-        $file = $request->file('image')->store('post-image');
-        $validatedData['image'] = $file;
+        if ($request->file('image')) {
+            $validatedData['image'] = $request->file('image')->store('post-image');
+        }
         Layanan::create($validatedData);
 
         return redirect()->to('/admin/layanan')->with('success', 'Layanan Berhasil Dibuat');
@@ -94,9 +100,11 @@ class AdminLayananController extends Controller
             'nama' => 'required',
             'deskripsi' => 'required',
             'link' => 'required',
+            'icon' => 'nullable|max:60|regex:/^bi-[a-z0-9-]+$/',
             'image' => 'image|file|max:1024',
             'status' => 'required',
-
+        ], [
+            'icon.regex' => 'Icon harus berupa nama class Bootstrap Icons, contoh: bi-headset',
         ]);
 
         if ($request->file('image')) {

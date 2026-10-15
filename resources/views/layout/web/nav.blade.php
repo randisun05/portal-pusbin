@@ -44,13 +44,9 @@
                     <li class="dropdown">
                         <a href="#" class="{{ Request::is('layanan*') ? 'active' : '' }}"><span>Layanan</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li><a href="/layanan/pengajuan-rekomendasi">Usul Formasi JFK</a></li>
-                            <li><a href="/layanan/pengembangan-kompetensi">Pengembangan Kompetensi JFK</a></li>
-                            <li><a href="/layanan/uji-kompetensi">Uji Kompetensi JFK</a></li>
-                            <li><a href="/layanan/perpindahan-audiwan">Perpindahan JF Audiwan</a></li>
-                            <li><a href="/layanan/konversi-angka-kredit">Konversi Angka Kredit</a></li>
-                            <li><a href="/layanan/pengusulan-pak">Pengusulan PAK</a></li>
-                            <li><a href="/layanan/perubahan-nomenklatur">Perubahan Nomenklatur</a></li>
+                            @foreach ($layananMenu as $menu)
+                                <li><a href="/layanan/{{ $menu->slug }}" class="{{ Request::is('layanan/' . $menu->slug) ? 'active' : '' }}">{{ $menu->nama }}</a></li>
+                            @endforeach
                         </ul>
                     </li>
                     <li class="dropdown">

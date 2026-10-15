@@ -59,6 +59,7 @@ Route::prefix('admin')->group(function() {
         // Modul konten
         Route::resource('/publikasi', \App\Http\Controllers\Admin\AdminPostController::class)->parameters(['publikasi' => 'post'])->Middleware(['prevent-back-history', 'permission:manage-publikasi']);
         Route::resource('/layanan', \App\Http\Controllers\Admin\AdminLayananController::class)->Middleware(['prevent-back-history', 'permission:manage-layanan']);
+        Route::resource('/layanan-halaman', \App\Http\Controllers\Admin\AdminLayananHalamanController::class)->parameters(['layanan-halaman' => 'layananHalaman'])->except('show')->Middleware(['prevent-back-history', 'permission:manage-layanan']);
         Route::resource('/kegiatan', AdminKegiatanController::class)->Middleware(['prevent-back-history', 'permission:manage-kegiatan']);
         Route::get('/kegiatan/{kegiatan}/materi', [AdminKegiatanController::class, 'materiIndex'])->Middleware(['prevent-back-history', 'permission:manage-kegiatan']);
         Route::post('/kegiatan/{kegiatan}/materi', [AdminKegiatanController::class, 'materiStore'])->Middleware(['prevent-back-history', 'permission:manage-kegiatan']);
@@ -148,8 +149,10 @@ Route::prefix('admin')->group(function() {
 
 // route login
 Route::get('/login', [LoginController::class, 'index'] )->name('login')->Middleware('guest');
+Route::get('/login/sso', [LoginController::class, 'sso'])->Middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'] )->middleware('throttle:5,1');
-Route::post('/login/siasn', [LoginController::class, 'authenticateSiasn'])->middleware('throttle:5,1');
+Route::get('/login/sso/redirect', [LoginController::class, 'ssoRedirect'])->middleware(['guest', 'throttle:10,1']);
+Route::get('/login/sso/callback', [LoginController::class, 'ssoCallback'])->middleware(['guest', 'throttle:10,1']);
 Route::post('/logout', [LoginController::class, 'logout'] );
 Route::get('/login/verifikasi-2fa', [LoginController::class, 'showTwoFactorChallenge']);
 Route::post('/login/verifikasi-2fa', [LoginController::class, 'verifyTwoFactor'])->middleware('throttle:5,1');
@@ -237,13 +240,7 @@ Route::get('/form/{formulir:slug}', [\App\Http\Controllers\Public\PublicFormulir
 Route::post('/form/{formulir:slug}', [\App\Http\Controllers\Public\PublicFormulirController::class, 'store'])->middleware('throttle:5,1');
 
 //ROUTE ABOUT
-Route::get('/layanan/pengajuan-rekomendasi', [\App\Http\Controllers\Public\PublicController::class, 'kebutuhan']);
-Route::get('/layanan/pengembangan-kompetensi', [\App\Http\Controllers\Public\PublicController::class, 'pengembangan']);
-Route::get('/layanan/uji-kompetensi', [\App\Http\Controllers\Public\PublicController::class, 'ujikom']);
-Route::get('/layanan/perpindahan-audiwan', [\App\Http\Controllers\Public\PublicController::class, 'audiwan']);
-Route::get('/layanan/konversi-angka-kredit', [\App\Http\Controllers\Public\PublicController::class, 'konversiAk']);
-Route::get('/layanan/pengusulan-pak', [\App\Http\Controllers\Public\PublicController::class, 'pengusulanPak']);
-Route::get('/layanan/perubahan-nomenklatur', [\App\Http\Controllers\Public\PublicController::class, 'perubahanNomenklatur']);
+Route::get('/layanan/{slug}', [\App\Http\Controllers\Public\PublicController::class, 'layananHalaman']);
 Route::get('/about/tentang-kami', [\App\Http\Controllers\Public\PublicController::class, 'about']);
 Route::get('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontak']);
 Route::post('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontakStore'])->middleware('throttle:5,1');

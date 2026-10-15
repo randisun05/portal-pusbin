@@ -1,40 +1,48 @@
 <style>
     #pkChatToggle {
-        position: fixed; bottom: 24px; right: 24px; width: 58px; height: 58px; border-radius: 50%;
-        background: #f92c24; color: #fff; border: 0; box-shadow: 0 8px 20px rgba(249,44,36,.4);
-        z-index: 1050; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; cursor: pointer;
+        position: fixed; bottom: 84px; right: 15px; width: 58px; height: 58px; border-radius: 50%;
+        background: var(--accent-color, #b5261f); color: #fff; border: 0; box-shadow: 0 8px 20px rgba(181,38,31,.4);
+        z-index: 1050; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer;
+        transition: transform .2s, box-shadow .2s;
+    }
+    #pkChatToggle:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 12px 24px rgba(181,38,31,.45); }
+    #pkChatToggle .pk-chat-dot {
+        position: absolute; top: 4px; right: 4px; width: 12px; height: 12px; border-radius: 50%;
+        background: #2ecc71; border: 2px solid #fff;
     }
     #pkChatPanel {
-        position: fixed; bottom: 92px; right: 24px; width: 340px; max-width: calc(100vw - 32px); height: 440px;
+        position: fixed; bottom: 152px; right: 15px; width: 340px; max-width: calc(100vw - 32px); height: 440px;
         background: #fff; border-radius: 16px; box-shadow: 0 12px 32px rgba(20,20,43,.2); z-index: 1050;
         display: flex; flex-direction: column; overflow: hidden;
     }
     #pkChatPanel.d-none { display: none !important; }
-    #pkChatHeader { background: #f92c24; color: #fff; padding: 14px 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+    #pkChatHeader { background: var(--accent-color, #b5261f); color: #fff; padding: 14px 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+    #pkChatHeader .pk-chat-title { display: flex; align-items: center; gap: 10px; }
+    #pkChatHeader .pk-chat-title i { font-size: 1.3rem; }
     #pkChatHeader button { background: none; border: 0; color: #fff; font-size: 1.1rem; cursor: pointer; }
     #pkChatBody { flex: 1; overflow-y: auto; padding: 14px; background: #f7f8fb; }
     .pk-chat-bubble { max-width: 85%; padding: 10px 14px; border-radius: 12px; margin-bottom: 10px; font-size: .88rem; line-height: 1.4; }
     .pk-chat-bot { background: #fdeceb; color: #22284a; border-bottom-left-radius: 2px; }
-    .pk-chat-user { background: #f92c24; color: #fff; margin-left: auto; border-bottom-right-radius: 2px; }
+    .pk-chat-user { background: var(--accent-color, #b5261f); color: #fff; margin-left: auto; border-bottom-right-radius: 2px; }
     #pkChatForm { display: flex; border-top: 1px solid #eceff3; }
     #pkChatInput { flex: 1; border: 0; padding: 12px 14px; font-size: .88rem; }
     #pkChatInput:focus { outline: none; }
-    #pkChatForm button { border: 0; background: #f92c24; color: #fff; padding: 0 18px; }
+    #pkChatForm button { border: 0; background: var(--accent-color, #b5261f); color: #fff; padding: 0 18px; }
 </style>
 
-<button type="button" id="pkChatToggle" aria-label="Chat Bantuan"><i class="fa-solid fa-comment-dots"></i></button>
+<button type="button" id="pkChatToggle" aria-label="Chat Bantuan"><i class="bi bi-chat-dots-fill"></i><span class="pk-chat-dot"></span></button>
 
 <div id="pkChatPanel" class="d-none">
     <div id="pkChatHeader">
-        <span>Bantuan Direktorat JF MASN</span>
-        <button type="button" id="pkChatClose" aria-label="Tutup">&times;</button>
+        <span class="pk-chat-title"><i class="bi bi-headset"></i>Bantuan Direktorat JF MASN</span>
+        <button type="button" id="pkChatClose" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
     </div>
     <div id="pkChatBody">
         <div class="pk-chat-bubble pk-chat-bot">Halo! Ada yang bisa kami bantu? Silakan ketik pertanyaan Anda, atau lihat halaman <a href="/faq" target="_blank">FAQ</a> lengkap kami.</div>
     </div>
     <form id="pkChatForm">
         <input type="text" id="pkChatInput" placeholder="Tulis pertanyaan..." autocomplete="off">
-        <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+        <button type="submit"><i class="bi bi-send-fill"></i></button>
     </form>
 </div>
 

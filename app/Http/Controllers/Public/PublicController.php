@@ -109,55 +109,14 @@ class PublicController extends Controller
             'misis' => MisiItem::orderBy('urutan')->get(),
         ]);
     }
-    public function kebutuhan()
+
+    public function layananHalaman($slug)
     {
+        $halaman = \App\Models\LayananHalaman::active()->where('slug', $slug)->firstOrFail();
 
-       return view('public.layanan.pengajuan-rekomendasi',[
-        'title' => "Rekomendasi Kebutuhan Jabatan Fungsional Kepegawaian",
-       ]);
-    }
-
-    public function pengembangan()
-    {
-        return view('public.layanan.pengembangan-kompetensi',[
-            'title' => "Pengembangan Kompetensi Jabatan Fungsional Kepegawaian",
-        ]);
-    }
-
-    public function ujikom()
-    {
-
-        return view('public.layanan.pendaftaran-ukom',[
-            'title' => "Uji Kompetensi Jabatan Fungsional Kepegawaian",
-        ]);
-
-    }
-
-    public function audiwan()
-    {
-        return view('public.layanan.perpindahan-audiwan',[
-            'title' => "Perpindahan Audiwan Ke Jabatan Fungsional Kepegawaian Lainnya",
-        ]);
-    }
-
-    public function konversiAk()
-    {
-        return view('public.layanan.konversi-ak',[
-            'title' => "Konversi Angka Kredit Jabatan Fungsional Kepegawaian",
-        ]);
-    }
-
-    public function pengusulanPak()
-    {
-        return view('public.layanan.pengusulan-pak',[
-            'title' => "Pengusulan Penetapan Angka Kredit (PAK)",
-        ]);
-    }
-
-    public function perubahanNomenklatur()
-    {
-        return view('public.layanan.perubahan-nomenklatur',[
-            'title' => "Perubahan Nomenklatur Jabatan Fungsional Kepegawaian",
+        return view('public.layanan.halaman', [
+            'title' => $halaman->judul,
+            'halaman' => $halaman,
         ]);
     }
 

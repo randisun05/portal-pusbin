@@ -4,19 +4,52 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class SiasnSsoService
 {
     /**
-     * Verifikasi NIP + password ke SSO SIASN (BKN), memakai grant_type
-     * "password" ke endpoint token Keycloak milik BKN - persis alur yang
-     * dipakai integrasi SIASN nyata (bukan dikira-kira), lihat komentar di
-     * config/services.php. Mengembalikan klaim identitas dari token jika
-     * berhasil, atau null jika gagal / belum dikonfigurasi.
+     * Susun URL otorisasi SSO SIASN (Keycloak BKN) untuk alur authorization
+     * code + PKCE. Pengguna diarahkan ke halaman login MyASN, lalu kembali ke
+     * redirect_uri dengan parameter "code". "state" dan "code_verifier"
+     * dibuat acak per permintaan dan harus disimpan (session) oleh pemanggil
+     * untuk dicocokkan di callback.
+     *
+     * @return array{url: string, state: string, verifier: string}
+     */
+    public function buildAuthorization(): array
+    {
+        $config = $this->activeConfig();
+
+        $state = Str::random(32);
+        $verifier = $this->base64Url(random_bytes(48));
+        $challenge = $this->base64Url(hash('sha256', $verifier, true));
+
+        $query = http_build_query([
+            'client_id' => $config['client_id'],
+            'redirect_uri' => $this->redirectUri(),
+            'response_type' => 'code',
+            'response_mode' => 'query',
+            'scope' => 'openid',
+            'state' => $state,
+            'code_challenge' => $challenge,
+            'code_challenge_method' => 'S256',
+        ], '', '&', PHP_QUERY_RFC3986);
+
+        return [
+            'url' => $this->authorizationEndpoint() . '?' . $query,
+            'state' => $state,
+            'verifier' => $verifier,
+        ];
+    }
+
+    /**
+     * Tukar authorization code dengan token ke SSO SIASN, lalu kembalikan
+     * klaim identitas. Null jika gagal / belum dikonfigurasi.
      *
      * @return array{nip: ?string, name: ?string, raw: array}|null
      */
-    public function authenticate(string $nip, string $password): ?array
+    public function exchangeCode(string $code, string $verifier): ?array
     {
         $config = $this->activeConfig();
 
@@ -26,14 +59,15 @@ class SiasnSsoService
 
         try {
             $response = Http::asForm()->timeout(15)->post($config['url'], [
-                'grant_type' => 'password',
+                'grant_type' => 'authorization_code',
                 'client_id' => $config['client_id'],
-                'username' => $nip,
-                'password' => $password,
+                'code' => $code,
+                'redirect_uri' => $this->redirectUri(),
+                'code_verifier' => $verifier,
             ]);
 
             if (! $response->successful()) {
-                Log::info('SiasnSsoService: SSO SIASN menolak kredensial.', [
+                Log::info('SiasnSsoService: SSO SIASN menolak penukaran code.', [
                     'status' => $response->status(),
                     'body' => $response->json(),
                 ]);
@@ -41,16 +75,24 @@ class SiasnSsoService
                 return null;
             }
 
-            $accessToken = $response->json('access_token');
+            $token = $response->json('id_token') ?: $response->json('access_token');
 
-            if (empty($accessToken)) {
+            if (empty($token)) {
                 return null;
             }
 
-            $claims = $this->decodeJwtClaims($accessToken);
+            $claims = $this->decodeJwtClaims($token);
+
+            if (empty($claims['preferred_username'])) {
+                $claims = $this->decodeJwtClaims((string) $response->json('access_token')) + $claims;
+            }
+
+            if (empty($claims['preferred_username'])) {
+                return null;
+            }
 
             return [
-                'nip' => $claims['preferred_username'] ?? $nip,
+                'nip' => $claims['preferred_username'],
                 'name' => $claims['name'] ?? null,
                 'raw' => $claims,
             ];
@@ -67,6 +109,20 @@ class SiasnSsoService
     }
 
     /**
+     * Alamat callback yang harus didaftarkan (sebagai valid redirect URI)
+     * untuk client_id portal ini di SSO SIASN.
+     */
+    public function redirectUri(): string
+    {
+        return config('services.siasn.sso.redirect_uri') ?: url('/login/sso/callback');
+    }
+
+    protected function authorizationEndpoint(): string
+    {
+        return preg_replace('#/token$#', '/auth', $this->activeConfig()['url']);
+    }
+
+    /**
      * @return array{url: string, client_id: ?string}
      */
     protected function activeConfig(): array
@@ -74,6 +130,11 @@ class SiasnSsoService
         $mode = config('services.siasn.mode', 'training') === 'production' ? 'production' : 'training';
 
         return config("services.siasn.sso.{$mode}");
+    }
+
+    protected function base64Url(string $binary): string
+    {
+        return rtrim(strtr(base64_encode($binary), '+/', '-_'), '=');
     }
 
     /**

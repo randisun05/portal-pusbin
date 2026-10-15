@@ -14,7 +14,9 @@
                 @endphp
                 <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ 100 * ($loop->index + 1) }}">
                     <div class="service-item-photo position-relative">
-                        @if($hasImage)
+                        @if($layanan->icon)
+                            <i class="bi {{ $layanan->icon }} fallback-icon"></i>
+                        @elseif($hasImage)
                             <img src="{{ asset('storage/' . $layanan->image) }}" alt="{{ $layanan->nama }}">
                         @else
                             <i class="bi bi-diagram-3 fallback-icon"></i>
