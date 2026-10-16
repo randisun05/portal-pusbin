@@ -42,9 +42,9 @@
                         <label class="form-check-label w-100" for="provider_gemini">
                             <strong>Gemini (Google)</strong>
                             @if($geminiConfigured)
-                                <span class="badge bg-success ms-2">API key terkonfigurasi</span>
+                                <span class="badge bg-success ms-2">{{ $geminiKeyCount }} API key terkonfigurasi{{ $geminiKeyCount > 1 ? ' (dipakai bergantian)' : '' }}</span>
                             @else
-                                <span class="badge bg-warning text-dark ms-2">API key belum diisi (GEMINI_API_KEY)</span>
+                                <span class="badge bg-warning text-dark ms-2">API key belum diisi (GEMINI_API_KEY_1 s/d _5)</span>
                             @endif
                         </label>
                     </div>

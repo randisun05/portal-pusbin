@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\PengaturanChat;
+use App\Services\GeminiKeyPool;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,7 +21,8 @@ class AdminPengaturanChatController extends Controller
             'pengaturan' => PengaturanChat::current(),
             'providers' => PengaturanChat::providers(),
             'claudeConfigured' => ! empty(config('services.anthropic.api_key')),
-            'geminiConfigured' => ! empty(config('services.gemini.api_key')),
+            'geminiKeyCount' => app(GeminiKeyPool::class)->count(),
+            'geminiConfigured' => app(GeminiKeyPool::class)->isConfigured(),
         ]);
     }
 

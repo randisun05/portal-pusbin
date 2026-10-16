@@ -41,7 +41,17 @@ return [
     ],
 
     'gemini' => [
+        // Satu key (cara lama). Tetap dipakai sebagai GEMINI_API_KEY_1 bila _1 kosong.
         'api_key' => env('GEMINI_API_KEY'),
+        // Hingga 5 key dipakai bergantian: jika kuota key sebelumnya habis atau error
+        // otomatis pindah ke key berikutnya (lihat App\Services\GeminiKeyPool).
+        'keys' => [
+            env('GEMINI_API_KEY_1') ?: env('GEMINI_API_KEY'),
+            env('GEMINI_API_KEY_2'),
+            env('GEMINI_API_KEY_3'),
+            env('GEMINI_API_KEY_4'),
+            env('GEMINI_API_KEY_5'),
+        ],
         'model' => env('GEMINI_MODEL', 'gemini-2.0-flash'),
     ],
 
