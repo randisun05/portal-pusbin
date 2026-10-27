@@ -33,24 +33,24 @@
 
                 <div class="row row-cols-3 mb-4">
                     <div class="col col-lg-2"><label for="type">Tipe Penilaian</label></div>
-                    <div class="col"> <select class="form-select @error('type') is-invalid @enderror" name="type"> </div>
-                        <option disabled selected>Pilih Tipe Penilaian</option>
-                                <option value="1">Teks</option> 
-                                <option value="2">Ya/Tidak</option>
-                                <option value="3">Skala Penilaian 3</option>
-                                <option value="5">Skala Penilaian 5</option>
-                                <option value="4">Skala Penilaian 4</option>
-                        
+                    <div class="col">
+                        <select class="form-select @error('type') is-invalid @enderror" name="type" id="type">
+                            <option value="" disabled selected>Pilih Tipe Penilaian</option>
+                            <option value="1">Teks</option>
+                            <option value="2">Ya/Tidak</option>
+                            <option value="3">Skala Penilaian 3</option>
+                            <option value="4">Skala Penilaian 4</option>
                         </select>
-                      @error('type')
-                      <div class="invalid-feedback">
-                        Masukan Tipe Penilaian
-                      </div>
-                      @enderror
-                          <div class="col text-center m-3">
-                            <button class="btn btn-lg btn-primary mt-3" type="submit">Simpan</button>
-                            <a href="/admin/survei" class="btn btn-lg btn-primary ms-4 mt-3">Batal</a>
-                          </div>
+                        @error('type')
+                        <div class="invalid-feedback">
+                            Masukan Tipe Penilaian
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col text-center m-3">
+                    <button class="btn btn-lg btn-primary mt-3" type="submit">Simpan</button>
+                    <a href="/admin/survei" class="btn btn-lg btn-primary ms-4 mt-3">Batal</a>
                 </div>
             </form>
         </div>

@@ -25,7 +25,7 @@ class Konsultasi extends Model
 
      public function kode_konsultasi()
      {
-         return $this->hasMany(KodeKonsultasi::class);
+         return $this->belongsTo(KodeKonsultasi::class, 'kode_id');
      }
 
 }

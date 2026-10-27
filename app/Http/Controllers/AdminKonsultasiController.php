@@ -45,22 +45,30 @@ class AdminKonsultasiController extends Controller
             ]);
     }
 
-
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the individual Konsultasi Q&A tickets, with a
+     * link to answer each one.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function tiketIndex()
     {
-        $konsultasi = Kegiatan::findOrFail($id);
+        $tikets = Konsultasi::with('kode_konsultasi')->latest();
 
-        return view('public.konsultasi.create', [
-            'title' => "Daftar Konsultasi Online",
-            'konsultasi' => $konsultasi,
+        if (request('search')) {
+            $search = request('search');
+            $tikets->where(function ($query) use ($search) {
+                $query->where('tiket', 'like', '%' . $search . '%')
+                    ->orWhere('nama', 'like', '%' . $search . '%')
+                    ->orWhere('nip', 'like', '%' . $search . '%');
+            });
+        }
+
+        return view('admin.konsultasi.tiket', [
+            'tikets' => $tikets->paginate(10),
         ]);
-
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -108,14 +116,11 @@ class AdminKonsultasiController extends Controller
         ];
 
         Mail::to($data['email'])->send(new SendEmail($data));
-        dd("Email Berhasil dikirim.");
-        return view('konsultasi.tiket',[
+
+        return view('public.konsultasi.tiket',[
             "tiket" => $tiket,
             "title" => "Nomor Tiket",
         ]);
-
-        Alert::success('Success Title', 'Success Message');
-
     }
 
     /**
@@ -135,12 +140,21 @@ class AdminKonsultasiController extends Controller
 
     public function search(Request $request)
     {
+        $konsultasi = null;
 
         if ($request->has('search')) {
             $konsultasi = Konsultasi::where('tiket','LIKE','%'.$request->search)->first();
         }
 
-        return view('konsultasi.show',['konsultasi'=>$konsultasi,  'title' => "Cari Konsultasi",]);
+        return view('public.konsultasi.show',['konsultasi'=>$konsultasi,  'title' => "Cari Konsultasi",]);
+    }
+
+    public function tiket(Request $request)
+    {
+        return view('public.konsultasi.tiket', [
+            'tiket' => $request->query('tiket'),
+            'title' => "Nomor Tiket",
+        ]);
     }
 
     /**

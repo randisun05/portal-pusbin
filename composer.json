@@ -6,7 +6,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "anthropic-ai/sdk": "^0.47.0",
+        "barryvdh/laravel-dompdf": "^3.1",
         "cviebrock/eloquent-sluggable": "^9.0",
+        "doctrine/dbal": "^3.1.4",
+        "endroid/qr-code": "^3.9",
+        "ezyang/htmlpurifier": "^4.19",
         "guzzlehttp/guzzle": "^7.5",
         "intervention/image": "^3.5",
         "intervention/image-laravel": "^1.2",
@@ -14,7 +19,8 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.1",
-        "maatwebsite/excel": "3.1.38",
+        "maatwebsite/excel": "^3.1.70",
+        "pragmarx/google2fa": "^8.0",
         "psr/simple-cache": "1.0.1",
         "realrashid/sweet-alert": "^5.1"
     },
@@ -42,7 +48,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan storage:link --force --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

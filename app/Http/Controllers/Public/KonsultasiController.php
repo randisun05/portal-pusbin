@@ -10,9 +10,12 @@ use App\Mail\SendEmailKonsultasi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
 
 class KonsultasiController extends Controller
 {
+    use GuardsAgainstSpam;
+
     /**
      * Display a listing of the resource.
      *
@@ -73,7 +76,12 @@ class KonsultasiController extends Controller
         'email' => 'required|email',
         'jabatan' => 'required|',
         'instansi' => 'required|',
+        'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:5120',
     ]);
+
+    if ($this->isSpamSubmission($request)) {
+        return redirect()->route('public.konsultasi.index')->withSuccess('Pendaftaran berhasil, cek email anda!');
+    }
 
      // Memeriksa apakah ada entri dengan kegiatan yang sama dan ID kegiatan yang sama
      $existingEntry = Absensi::where('kegiatan_id', $request->kegiatan_id)
@@ -84,7 +92,7 @@ class KonsultasiController extends Controller
      return redirect()->back()->with('error', 'Anda sudah terdaftar untuk kegiatan ini.');
      }
 
-       Absensi::create([
+       $absensi = Absensi::create([
             'nip' => $request->nip,
             'nama' => $request->nama,
             'kegiatan_id' => $request->kegiatan_id,
@@ -92,6 +100,10 @@ class KonsultasiController extends Controller
             'jabatan' => $request->jabatan,
             'instansi' => $request->instansi,
         ]);
+
+        if ($request->hasFile('lampiran')) {
+            $absensi->simpanLampiran($request->file('lampiran'));
+        }
 
         $data = Absensi::where('nip', $request->nip)->with('kegiatan')->latest()->first();
 

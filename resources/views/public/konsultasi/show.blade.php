@@ -6,10 +6,11 @@
 
 
 <!-- Form Show Konsultasi -->
-
+<main>
+<section class="section">
 @if ($konsultasi != null)
     @if ($konsultasi->jawab == 1)
-    <div class="container-fluid mt-4">
+    <div class="container">
         <div class="col-md-6 offset-md-3 card">
             <div class="card-header">
             <h5 class="mb-0">Jadwal Konsultasi</h5>
@@ -55,19 +56,21 @@
         </div>
     </div>
     @elseif ($konsultasi->jawab == 0)
-    <div class="">
-        <p class="text-center fs-4 padingfooter">Tiket Belum Dijawab</p>
+    <div class="container">
+        <p class="text-center fs-4">Tiket Belum Dijawab</p>
     </div>
     @endif
     @else
-<p class="text-center fs-4 padingfooter">Tiket Usul Tidak Tersedia</p>
+<div class="container">
+    <p class="text-center fs-4">Tiket Usul Tidak Tersedia</p>
+</div>
 @endif
 
-                <div class="text-center mb-0">
-                    <a href="/konsultasi/cari"><u>Kembali </u></a>
+                <div class="text-center mt-4">
+                    <a href="/konsultasi/cari" class="btn btn-outline-secondary">Kembali</a>
                 </div>
-<div class="padingfooter">
+</section>
+</main>
 @include('layout.web.footer')
-</div>
 
 @endsection

@@ -17,7 +17,7 @@ class AdminJdifjfkController extends Controller
     public function index()
     {
         return view('admin.jdihjfk.index', [
-            'datas' => Jdihjfk::all(),
+            'datas' => Jdihjfk::latest()->get(),
         ]);
     }
 
@@ -28,9 +28,7 @@ class AdminJdifjfkController extends Controller
      */
     public function create()
     {
-        return view('admin.jdihjfk.create', [
-
-        ]);
+        return view('admin.jdihjfk.create');
     }
 
     /**
@@ -41,92 +39,86 @@ class AdminJdifjfkController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request ->validate([
-            "*" => 'required',
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'link' => 'nullable|url',
+            'image' => 'nullable|image|file|max:1024',
+            'status' => 'required|in:published,internal',
+        ]);
 
-           ]);
-
-        $file = $request->file('image')->store('post-image');
-
-        $validatedData['image'] = $file;
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = $request->file('image')->store('post-image');
+        }
 
         Jdihjfk::create($validatedData);
 
-           return redirect()->to('/admin/jdihjfk')->with('success', 'Peraturan Berhasil Dibuat');
+        return redirect()->to('/admin/repository')->with('success', 'Dokumen repository berhasil dibuat');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Jdihjfk $repository)
     {
-        //
+        return redirect("/admin/repository/{$repository->id}/edit");
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Jdihjfk $repository)
     {
-
-        $data = Jdihjfk::find($id);
-        return view('admin.jdihjfk.edit',[
-            'data' => $data
-           ]);
+        return view('admin.jdihjfk.edit', [
+            'data' => $repository,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jdihjfk $jdihjfk)
+    public function update(Request $request, Jdihjfk $repository)
     {
-
-        $validateData = $request->validate([
-            'title' => 'required',
-            'deskripsi' => 'required',
-            'link' => 'required',
-            'image' => 'image|file|max:1024',
-
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'link' => 'nullable|url',
+            'image' => 'nullable|image|file|max:1024',
+            'status' => 'required|in:published,internal',
         ]);
 
-        if($request->file('image')){
-            if($request->oldImage){
-                Storage::delete($request->oldImage);
+        if ($request->hasFile('image')) {
+            if ($repository->image) {
+                Storage::delete($repository->image);
             }
-            $validateData['image'] = $request->file('image')->store('post-image');
+            $validatedData['image'] = $request->file('image')->store('post-image');
         }
 
-        Jdihjfk::where('id', $jdihjfk->id)
-                ->update($validateData);
+        $repository->update($validatedData);
 
-        return redirect('/admin/jdihjfk')->with('success','Peraturan Berhasil Diupdate');
+        return redirect('/admin/repository')->with('success', 'Dokumen repository berhasil diupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jdihjfk $data, $id)
+    public function destroy(Jdihjfk $repository)
     {
-
-        if($data->image){
-        Storage::delete($data->image);
+        if ($repository->image) {
+            Storage::delete($repository->image);
         }
-        
-        Jdihjfk::destroy($id);
-        return redirect('/admin/jdihjfk')->with('success','Peraturan Berhasil Dihapus');
+
+        $repository->delete();
+
+        return redirect('/admin/repository')->with('success', 'Dokumen repository berhasil dihapus');
     }
 }
-

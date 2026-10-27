@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tiket Konsultasi Jabatan Fungsional Kepegawaian</title>
+    <title>Tiket Konsultasi Direktorat JF MASN</title>
 </head>
 <body>
 <h3> Dear {{ $data['nip'] }}</h3>
@@ -10,10 +10,10 @@
 <p>Kami akan segera menindaklanjuti usulan Anda.</p>
 
 <div class="mb-0">Anda dapat memantau progres usul konsultasi secara online melalui link berikut:</div>
-<strong>www.pusbin.com/cektiket</strong>
+<strong><a href="{{ url('/konsultasi/tiket') }}">{{ url('/konsultasi/tiket') }}</a></strong>
 <p>
 <div class="mb-0">Regards,</div>
-<div class="mb-0">Pusat Pembinaan Jabatan Fungsional Kepegawaian</div>
+<div class="mb-0">Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara</div>
 <div class="mb-0"><strong>Badan Kepegawaian Negara</strong></div>
 
 </body>

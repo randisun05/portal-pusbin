@@ -1,0 +1,140 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Models\Kegiatan;
+use App\Models\Absensi;
+use App\Models\Sertifikat;
+use App\Models\SertifikatTemplate;
+use Illuminate\Http\Request;
+use App\Services\JfManagementService;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\GeneratesSertifikatQr;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+class AdminSertifikatController extends Controller
+{
+    use GeneratesSertifikatQr;
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $kegiatans = Kegiatan::orderByDesc('waktu')->get();
+
+        $absensis = collect();
+        if ($request->kegiatan_id) {
+            $absensis = Absensi::where('kegiatan_id', $request->kegiatan_id)
+                ->with(['kegiatan', 'sertifikat'])
+                ->latest()
+                ->get();
+        }
+
+        return view('admin.sertifikat.index', [
+            'title' => 'Sertifikat Kegiatan',
+            'kegiatans' => $kegiatans,
+            'absensis' => $absensis,
+            'kegiatanId' => $request->kegiatan_id,
+            'jfConfigured' => ! empty(config('services.jf_management.url')),
+            'templates' => SertifikatTemplate::orderByDesc('is_default')->orderBy('nama')->get(),
+        ]);
+    }
+
+    /**
+     * Terbitkan sertifikat untuk satu data absensi.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Absensi  $absensi
+     * @return \Illuminate\Http\Response
+     */
+    public function issue(Request $request, Absensi $absensi)
+    {
+        if ($absensi->sertifikat) {
+            return back()->with('error', 'Sertifikat untuk peserta ini sudah diterbitkan.');
+        }
+
+        $template = $request->template_id
+            ? SertifikatTemplate::find($request->template_id)
+            : SertifikatTemplate::default();
+
+        Sertifikat::create([
+            'absensi_id' => $absensi->id,
+            'template_id' => optional($template)->id,
+            'nomor_sertifikat' => Sertifikat::generateNomor(),
+        ]);
+
+        return back()->with('success', 'Sertifikat berhasil diterbitkan.');
+    }
+
+    /**
+     * Ganti template desain untuk sertifikat yang sudah diterbitkan.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Sertifikat  $sertifikat
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTemplate(Request $request, Sertifikat $sertifikat)
+    {
+        $request->validate([
+            'template_id' => 'nullable|exists:sertifikat_templates,id',
+        ]);
+
+        $sertifikat->update(['template_id' => $request->template_id]);
+
+        return back()->with('success', 'Template sertifikat berhasil diganti.');
+    }
+
+    /**
+     * Kirim data sertifikat ke sistem Manajemen JF.
+     *
+     * @param  \App\Models\Sertifikat  $sertifikat
+     * @param  \App\Services\JfManagementService  $service
+     * @return \Illuminate\Http\Response
+     */
+    public function send(Sertifikat $sertifikat, JfManagementService $service)
+    {
+        $sertifikat = $service->send($sertifikat);
+
+        if ($sertifikat->status === 'terkirim') {
+            return back()->with('success', 'Data sertifikat berhasil dikirim ke Manajemen JF.');
+        }
+
+        return back()->with('error', 'Data belum terkirim: ' . $sertifikat->sent_response);
+    }
+
+    /**
+     * Tampilkan sertifikat untuk dicetak.
+     *
+     * @param  \App\Models\Sertifikat  $sertifikat
+     * @return \Illuminate\Http\Response
+     */
+    public function cetak(Sertifikat $sertifikat)
+    {
+        return view('admin.sertifikat.cetak', [
+            'sertifikat' => $sertifikat->load('absensi.kegiatan', 'template'),
+            'qrCode' => $this->qrCodeDataUri($sertifikat),
+        ]);
+    }
+
+    /**
+     * Unduh sertifikat sebagai file PDF.
+     *
+     * @param  \App\Models\Sertifikat  $sertifikat
+     * @return \Illuminate\Http\Response
+     */
+    public function download(Sertifikat $sertifikat)
+    {
+        $sertifikat->load('absensi.kegiatan', 'template');
+
+        $pdf = Pdf::loadView('admin.sertifikat.pdf', [
+            'sertifikat' => $sertifikat,
+            'qrCode' => $this->qrCodeDataUri($sertifikat),
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->download('Sertifikat-' . str_replace('/', '-', $sertifikat->nomor_sertifikat) . '.pdf');
+    }
+}

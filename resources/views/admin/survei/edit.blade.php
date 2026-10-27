@@ -25,7 +25,7 @@
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="nama">Nama Survei</label></div>
                   <div class="col"> <input type="text" class="form-control" @error('title') is-invalid @enderror name="title" id="title" value="{{old('title', $data->title)}}" placeholder="Masukan Nama Peraturan"></div>
-                  @error('nama')
+                  @error('title')
                   <div class="invalid-feedback">
                       Nama Survei Harus Diisi
                   </div>
@@ -33,19 +33,18 @@
                 </div>
                 <div class="row row-cols-3 mb-4">
                     <div class="col col-lg-2"><label for="type">Skala Penilaian</label></div>
-                    <div class="col"> <select class="form-select @error('type') is-invalid @enderror" name="type" value="{{old('title', $data->type)}}"> </div>
-                            <option disabled>Pilih Skala Penilaian</option>
-                              <option value="1">Teks</option> 
-                              <option value="2">Ya/Tidak</option>
-                              <option value="3">Skala Penilaian 3</option>
-                              <option value="5">Skala Penilaian 5</option>
-                              <option value="4">Skala Penilaian 4</option>
-                            </select>
-                                @error('type')
-                                <div class="invalid-feedback">
-                                Masukan Skala Penilaian
-                                </div>
-                                 @enderror
+                    <div class="col">
+                        <select class="form-select @error('type') is-invalid @enderror" name="type" id="type">
+                            <option value="" disabled>Pilih Skala Penilaian</option>
+                            @foreach (['1' => 'Teks', '2' => 'Ya/Tidak', '3' => 'Skala Penilaian 3', '4' => 'Skala Penilaian 4'] as $value => $label)
+                                <option value="{{ $value }}" {{ (string) old('type', $data->type) === (string) $value ? 'selected' : '' }}>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                        @error('type')
+                        <div class="invalid-feedback">
+                            Masukan Skala Penilaian
+                        </div>
+                        @enderror
                     </div>
                 </div>
 

@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Kegiatan;
+use App\Models\MateriPaparan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Contracts\Service\Attribute\Required;
+use App\Http\Controllers\Concerns\GeneratesKegiatanQr;
 
 class AdminKegiatanController extends Controller
 {
+    use GeneratesKegiatanQr;
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +51,7 @@ class AdminKegiatanController extends Controller
                 'date',
                 'after_or_equal:today', // Memastikan waktu setidaknya sama dengan hari ini
             ],
+            'batas_presensi' => 'nullable|date',
             'link'  => 'Required',
             'jenis'  => 'Required',
             'image'  => 'Required',
@@ -69,6 +74,7 @@ class AdminKegiatanController extends Controller
         Kegiatan::create([
             'nama'  => $request->nama,
             'waktu'  => $request->waktu,
+            'batas_presensi'  => $request->batas_presensi,
             'jenis'  => $request->jenis,
             'image'  => $image,
             'link'  => $request->link,
@@ -122,15 +128,12 @@ class AdminKegiatanController extends Controller
                 'date',
                 'after_or_equal:today', // Memastikan waktu setidaknya sama dengan hari ini
             ],
+            'batas_presensi' => 'nullable|date',
             'link'  => 'Required',
             'jenis'  => 'Required',
             'status'  => 'Required',
         ]);
 
-
-        if ($request->file('image')) {
-            $image = $request->file('image')->store('post-image');
-        }
 
         $slug = strtolower(str_replace(' ', '-', $request->nama));
         $original_slug = $slug;
@@ -147,6 +150,7 @@ class AdminKegiatanController extends Controller
             Kegiatan::where('id', $id)->update([
                 'nama'  => $request->nama,
                 'waktu'  => $request->waktu,
+                'batas_presensi'  => $request->batas_presensi,
                 'jenis'  => $request->jenis,
                 'image'  => $image,
                 'link'  => $request->link,
@@ -157,6 +161,7 @@ class AdminKegiatanController extends Controller
             Kegiatan::where('id', $id)->update([
                 'nama'  => $request->nama,
                 'waktu'  => $request->waktu,
+                'batas_presensi'  => $request->batas_presensi,
                 'jenis'  => $request->jenis,
                 'link'  => $request->link,
                 'slug'  => $slug,
@@ -176,5 +181,80 @@ class AdminKegiatanController extends Controller
     {
         Kegiatan::destroy($kegiatan->id);
         return redirect('/admin/kegiatan')->with('success', 'Kegiatan Berhasil Dihapus');
+    }
+
+    /**
+     * Tampilkan QR absensi kegiatan (untuk dicetak/ditampilkan di layar saat acara).
+     *
+     * @param  \App\Models\Kegiatan  $kegiatan
+     * @return \Illuminate\Http\Response
+     */
+    public function qrAbsensi(Kegiatan $kegiatan)
+    {
+        return view('admin.kegiatan.qr-absensi', [
+            'kegiatan' => $kegiatan,
+            'qrCodeDataUri' => $this->absensiQrCodeDataUri($kegiatan),
+        ]);
+    }
+
+    /**
+     * Display the materi paparan list for the given kegiatan.
+     *
+     * @param  \App\Models\Kegiatan  $kegiatan
+     * @return \Illuminate\Http\Response
+     */
+    public function materiIndex(Kegiatan $kegiatan)
+    {
+        return view('admin.kegiatan.materi', [
+            'kegiatan' => $kegiatan,
+            'materis' => $kegiatan->materis,
+        ]);
+    }
+
+    /**
+     * Store a newly uploaded materi paparan for the given kegiatan.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Kegiatan  $kegiatan
+     * @return \Illuminate\Http\Response
+     */
+    public function materiStore(Request $request, Kegiatan $kegiatan)
+    {
+        $request->validate([
+            'judul' => 'required',
+            'file' => 'required|file|mimes:pdf,ppt,pptx,doc,docx|max:20480',
+            'keterangan' => 'nullable',
+        ]);
+
+        $file = $request->file('file')->store('materi-paparan');
+
+        MateriPaparan::create([
+            'kegiatan_id' => $kegiatan->id,
+            'judul' => $request->judul,
+            'file' => $file,
+            'keterangan' => $request->keterangan,
+            'urutan' => $kegiatan->materis()->count(),
+        ]);
+
+        return redirect("/admin/kegiatan/{$kegiatan->id}/materi")->with('success', 'Materi Paparan Berhasil Ditambah');
+    }
+
+    /**
+     * Remove the given materi paparan.
+     *
+     * @param  \App\Models\Kegiatan  $kegiatan
+     * @param  \App\Models\MateriPaparan  $materi
+     * @return \Illuminate\Http\Response
+     */
+    public function materiDestroy(Kegiatan $kegiatan, MateriPaparan $materi)
+    {
+        if ($materi->kegiatan_id !== $kegiatan->id) {
+            abort(404);
+        }
+
+        Storage::delete($materi->file);
+        $materi->delete();
+
+        return redirect("/admin/kegiatan/{$kegiatan->id}/materi")->with('success', 'Materi Paparan Berhasil Dihapus');
     }
 }

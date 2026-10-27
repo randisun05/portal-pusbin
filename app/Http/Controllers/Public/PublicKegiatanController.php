@@ -6,18 +6,32 @@ use Carbon\Carbon;
 use App\Models\Absensi;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use App\Mail\SendEmailKegiatan;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
+use App\Http\Controllers\Concerns\GeneratesKegiatanQr;
 
 class PublicKegiatanController extends Controller
 {
+    use GuardsAgainstSpam;
+    use GeneratesKegiatanQr;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kegiatans = Kegiatan::where('jenis','!=', 'Konsultasi')->where('jenis','!=', 'Uji Kompetensi')->latest()->paginate(6);
+        $base = Kegiatan::where('jenis', '!=', 'Konsultasi')->where('jenis', '!=', 'Uji Kompetensi');
+
+        $daftarJenis = (clone $base)->select('jenis')->distinct()->pluck('jenis')->filter()->values();
+
+        $kegiatans = (clone $base)->when($request->jenis, function ($query, $jenis) {
+                $query->where('jenis', $jenis);
+            })->latest()->paginate(6)->withQueryString();
+
         foreach ($kegiatans as $kegiatan) {
             $waktu = Carbon::parse($kegiatan->waktu);
             // Set timezone ke Asia/Jakarta agar sesuai dengan waktu Indonesia Barat
@@ -30,6 +44,8 @@ class PublicKegiatanController extends Controller
 
         return view('public.kegiatan.index', [
             'kegiatans' => $kegiatans,
+            'daftarJenis' => $daftarJenis,
+            'jenisAktif' => $request->jenis,
             'title' => "Kegiatan Selanjutnya"
         ]);
 
@@ -64,7 +80,12 @@ class PublicKegiatanController extends Controller
         'email' => 'required|email',
         'jabatan' => 'required|',
         'instansi' => 'required|',
+        'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:5120',
     ]);
+
+    if ($this->isSpamSubmission($request)) {
+        return redirect()->route('public.kegiatan.index')->withSuccess('Pendaftaran berhasil! Cek email Anda untuk konfirmasi.');
+    }
 
     // Memeriksa apakah ada entri dengan kegiatan yang sama dan ID kegiatan yang sama
         $existingEntry = Absensi::where('kegiatan_id', $request->kegiatan_id)
@@ -75,7 +96,7 @@ class PublicKegiatanController extends Controller
         return redirect()->back()->with('error', 'Anda sudah melakukan pendaftaran untuk kegiatan ini.');
         }
 
-       Absensi::create([
+       $absensi = Absensi::create([
             'nip' => $request->nip,
             'nama' => $request->nama,
             'kegiatan_id' => $request->kegiatan_id,
@@ -84,9 +105,19 @@ class PublicKegiatanController extends Controller
             'instansi' => $request->instansi,
         ]);
 
+        if ($request->hasFile('lampiran')) {
+            $absensi->simpanLampiran($request->file('lampiran'));
+        }
+
         $data = Absensi::where('nip', $request->nip)->with('kegiatan')->latest()->first();
 
-        return redirect()->route('public.kegiatan.index')->withSuccess('Pendaftaran berhasil!');
+        try {
+            Mail::to($data->email)->send(new SendEmailKegiatan($data));
+        } catch (\Throwable $e) {
+            // Pendaftaran tetap berhasil walau email konfirmasi gagal terkirim
+        }
+
+        return redirect()->route('public.kegiatan.index')->withSuccess('Pendaftaran berhasil! Cek email Anda untuk konfirmasi.');
     }
 
     /**
@@ -99,7 +130,8 @@ class PublicKegiatanController extends Controller
     {
         return view('public.kegiatan.show', [
             'title' => $kegiatan->nama,
-            'kegiatan' => $kegiatan
+            'kegiatan' => $kegiatan,
+            'absensiQrCodeDataUri' => $this->absensiQrCodeDataUri($kegiatan),
         ]);
     }
 

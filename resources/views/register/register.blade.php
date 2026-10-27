@@ -27,6 +27,7 @@
                             <th class="text-center">Nama Admin</th>
                             <th class="text-center">Username</th>
                             <th class="text-center">Email</th>
+                            <th class="text-center">Role</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -36,6 +37,7 @@
                         <td>{{$user->name}}</td>
                         <td>{{$user->username}}</td>
                         <td>{{$user->email}}</td>
+                        <td class="text-center">{{ optional($user->role)->label ?? '-' }}</td>
                         <td class="text-center">
                             <a href="/admin/register/{{$user->id}}" class="badge bg-info"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                             <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -61,6 +63,7 @@
                             <th class="text-center">Nama Admin</th>
                             <th class="text-center">Username</th>
                             <th class="text-center">Email</th>
+                            <th class="text-center">Role</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </tfoot>

@@ -6,14 +6,18 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Dashboard;
-use App\Models\highlight;
 use App\Models\JadwalUkom;
 use App\Models\Jdihjfk;
 use App\Models\Kegiatan;
 use App\Models\KodeKonsultasi;
 use App\Models\Konsultasi;
 use App\Models\Layanan;
+use App\Models\MisiItem;
+use App\Models\OrganisasiUnit;
+use App\Models\Permission;
 use App\Models\Post;
+use App\Models\Profil;
+use App\Models\Role;
 use App\Models\Survei;
 use App\Models\SurveiIndikator;
 use App\Models\User;
@@ -35,11 +39,49 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        $superAdminRole = Role::create([
+            'name' => Role::SUPER_ADMIN,
+            'label' => 'Super Admin',
+            'deskripsi' => 'Akses penuh ke seluruh modul, termasuk manajemen admin & role.',
+        ]);
+
+        $adminRole = Role::create([
+            'name' => Role::ADMIN,
+            'label' => 'Admin',
+            'deskripsi' => 'Akses ke seluruh modul operasional & konten, tanpa manajemen admin.',
+        ]);
+
+        $editorRole = Role::create([
+            'name' => Role::EDITOR,
+            'label' => 'Editor',
+            'deskripsi' => 'Akses terbatas pada modul Publikasi, Layanan, Kegiatan, dan Highlight.',
+        ]);
+
+        $permissionIds = [];
+        foreach (Permission::definitions() as $grup => $items) {
+            foreach ($items as $slug => $label) {
+                $permissionIds[$slug] = Permission::create([
+                    'slug' => $slug,
+                    'label' => $label,
+                    'grup' => $grup,
+                ])->id;
+            }
+        }
+
+        // Admin: semua permission kecuali manajemen admin/role.
+        $adminRole->permissions()->sync(collect($permissionIds)->except('manage-users')->values());
+
+        // Editor: hanya modul konten.
+        $editorRole->permissions()->sync(collect($permissionIds)->only([
+            'manage-publikasi', 'manage-layanan', 'manage-kegiatan', 'manage-highlight', 'manage-comment', 'manage-faq',
+        ])->values());
+
         User::create([
             'name' => 'Administrator',
             'username' => 'administrator',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt('password')
+            'password' => bcrypt('password'),
+            'role_id' => $superAdminRole->id,
 
         ]);
 
@@ -100,9 +142,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Layanan::create([
-            'nama' => "Peraturan Terkait JFK",
-            'deskripsi' => "Dashboard JFK",
-            'link' => "/jdihjfk",
+            'nama' => "Repository JF MASN",
+            'deskripsi' => "Kumpulan peraturan & dokumen terkait JF MASN",
+            'link' => "/repository",
             'image' => "post-image\jdih.png",
         ]);
 
@@ -214,23 +256,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        highlight::create([
-            'name' => 'Highlight 1',
-            'desc' => 'Highlight 1',
-            'image' => 'post-image\high(1).png',
-        ]);
-
-        highlight::create([
-            'name' => 'Highlight 2',
-            'desc' => 'Highlight 2',
-            'image' => 'post-image\high(2).png',
-        ]);
-
-        highlight::create([
-            'name' => 'Highlight 3',
-            'desc' => 'Highlight 3',
-            'image' => 'post-image\high(3).png',
-        ]);
+        // Konten default beranda (hero, about, fungsi interaktif) diseed
+        // lewat migration add_group_fields_to_highlights_table, bukan di
+        // sini, supaya tidak dobel dengan data placeholder lama.
 
         Survei::create([
             'title' => 'Pengumpulan Data JFK',
@@ -248,7 +276,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Survei::create([
-            'title' => 'Survei Kepuasan Layanan Pusbin',
+            'title' => 'Survei Kepuasan Layanan Direktorat JF MASN',
             'type' => '4'
         ]);
         Survei::create([
@@ -300,6 +328,7 @@ class DatabaseSeeder extends Seeder
             'deskripsi' => 'Peraturan BKN Nomor 3 Tahun 2023 tentang Angka Kredit, Kenaikan Pangkat dan Jenjang Jabatan Fungsional',
             'link' => 'https://www.bkn.go.id/regulasi/peraturan-bkn-nomor-3-tahun-2023/',
             'image' => 'post-image/perbkn_3.png',
+            'status' => Jdihjfk::STATUS_PUBLISHED,
         ]);
 
         Jdihjfk::create([
@@ -307,9 +336,61 @@ class DatabaseSeeder extends Seeder
             'deskripsi' => 'UU ini mengatur tentang Aparatur Sipil Negara dengan menetapkan batasan istilah yang digunakan dalam pengaturannya. Pokok-pokok pengaturan yang terdapat di dalam Undang-Undang ini',
             'link' => 'https://peraturan.bpk.go.id/Details/269470/uu-no-20-tahun-2023',
             'image' => 'post-image/uu_20.png',
+            'status' => Jdihjfk::STATUS_PUBLISHED,
         ]);
 
+        Jdihjfk::create([
+            'title' => 'Prosedur Internal Penanganan Usul Angka Kredit',
+            'deskripsi' => "Alur internal (tidak dipublikasikan) untuk penanganan usul angka kredit: (1) Berkas usul diterima melalui sistem, (2) Verifikasi kelengkapan oleh tim Pokja terkait, (3) Penilaian oleh tim penilai angka kredit, (4) Penetapan PAK oleh Direktur, (5) Notifikasi hasil ke pemohon. Informasi ini digunakan sebagai pengetahuan internal untuk menjawab pertanyaan pengunjung melalui chat.",
+            'link' => null,
+            'image' => null,
+            'status' => Jdihjfk::STATUS_INTERNAL,
+        ]);
 
+        $kapus = OrganisasiUnit::create([
+            'nama' => 'Dr. Achmad Slamet Hidayat, S.Pd., M.Si.',
+            'jabatan' => 'Direktur Jabatan Fungsional MASN',
+            'unit' => 'Pimpinan',
+            'urutan' => 0,
+        ]);
+
+        $pokja = [
+            ['nama' => 'Sarni, S.E.', 'jabatan' => 'Analis SDM Aparatur Ahli Madya', 'unit' => 'Pokja 1'],
+            ['nama' => 'Agung Sugiarto, S.H., M.H.', 'jabatan' => 'Analis SDM Aparatur Ahli Madya', 'unit' => 'Pokja 2'],
+            ['nama' => 'Tauchid Djatmiko, S.H., M.Si.', 'jabatan' => 'Analis SDM Aparatur Ahli Utama', 'unit' => 'Pokja 3'],
+            ['nama' => 'Dr. Elin Cahyaningsih, S.Kom., MMSI.', 'jabatan' => 'Analis SDM Aparatur Ahli Madya', 'unit' => 'Pokja 4'],
+        ];
+
+        foreach ($pokja as $i => $data) {
+            OrganisasiUnit::create(array_merge($data, [
+                'parent_id' => $kapus->id,
+                'urutan' => $i + 1,
+            ]));
+        }
+
+        Profil::create([
+            'tentang' => "Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara (Direktorat JF MASN) adalah unit kerja Badan Kepegawaian Negara (BKN) yang bertugas melaksanakan pembinaan jabatan fungsional di bidang kepegawaian, meliputi penyusunan kebutuhan formasi, uji kompetensi, penilaian angka kredit, serta pengembangan kompetensi bagi para pejabat fungsional kepegawaian di seluruh Indonesia.\n\nKami berkomitmen memberikan layanan yang profesional, transparan, dan mudah diakses, baik secara daring maupun luring, guna mendukung peningkatan profesionalisme Aparatur Sipil Negara (ASN) khususnya pada rumpun jabatan fungsional kepegawaian.",
+            'visi' => 'Menjadi direktorat pembinaan jabatan fungsional manajemen ASN yang profesional, kredibel, dan berbasis teknologi dalam mendukung terwujudnya ASN yang kompeten dan berkinerja tinggi.',
+            'alamat' => 'Jl. Mayjen Sutoyo No. 12, Jakarta Timur, 13640 – Indonesia',
+            'telepon' => '021-8093008',
+            'email' => 'pusbinjfk@gmail.com',
+            'jam_operasional' => 'Senin - Jumat, 08.00 - 16.00 WIB',
+        ]);
+
+        $misis = [
+            'Menyusun kebutuhan dan formasi jabatan fungsional kepegawaian secara akurat dan berkelanjutan.',
+            'Menyelenggarakan uji kompetensi jabatan fungsional kepegawaian yang objektif dan transparan.',
+            'Melaksanakan penilaian dan penetapan angka kredit secara tepat waktu.',
+            'Mengembangkan kompetensi pejabat fungsional kepegawaian melalui pelatihan dan bimbingan teknis.',
+            'Memberikan layanan konsultasi dan informasi jabatan fungsional kepegawaian yang responsif.',
+        ];
+
+        foreach ($misis as $i => $isi) {
+            MisiItem::create([
+                'isi' => $isi,
+                'urutan' => $i,
+            ]);
+        }
     }
 
 }

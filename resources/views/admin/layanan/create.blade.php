@@ -55,7 +55,16 @@
                 </div>
 
                 <div class="row row-cols-3 mb-4">
-                  <div class="col col-lg-2"><label for="image">image</label></div>
+                  <div class="col col-lg-2"><label for="icon">Icon</label></div>
+                  <div class="col">
+                    <input type="text" class="form-control @error('icon') is-invalid @enderror" name="icon" id="icon" value="{{old('icon')}}" placeholder="mis. bi-headset">
+                    <div class="form-text">Nama class dari <a href="https://icons.getbootstrap.com/" target="_blank">Bootstrap Icons</a>, contoh: <code>bi-headset</code>. Jika diisi, icon dipakai menggantikan gambar di kartu layanan beranda.</div>
+                    @error('icon')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                  </div>
+                </div>
+
+                <div class="row row-cols-3 mb-4">
+                  <div class="col col-lg-2"><label for="image">Image (opsional)</label></div>
                   <div class="col"> <input type="file" class="form-control" @error('image') is-invalid @enderror name="image" id="image"
                     placeholder="Masukan image Layanan" accept=".jpg, .png, .jpeg"></div>
                     @error('image')
