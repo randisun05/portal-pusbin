@@ -1,0 +1,234 @@
+/*
+ * Skeleton loading untuk tema Flexor (publik) dan Sneat (admin).
+ * Menggantikan preloader lama (spinner layar penuh): blok abu-abu berkilau
+ * yang mengikuti bentuk halaman, ditampilkan selama halaman dimuat atau
+ * berpindah halaman. Warna aksen mengikuti variabel tema (--accent-color /
+ * --pk-primary / --pk-accent), jadi ikut berubah bila tema diganti.
+ */
+:root {
+  --skel-base: #ece7e6;
+  --skel-shine: #f8f4f3;
+  --skel-page-bg: #ffffff;
+  --skel-accent: var(--pk-primary, var(--pk-accent, var(--accent-color, #b5261f)));
+}
+
+@keyframes skel-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@keyframes skel-in {
+  to { opacity: 1; }
+}
+
+/* Jaring pengaman: jika skeleton.js gagal jalan, overlay hilang sendiri setelah 12 detik */
+@keyframes skel-failsafe {
+  to { visibility: hidden; }
+}
+
+@keyframes skel-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* --- Blok dasar --- */
+.skel,
+img.skeleton-img {
+  background: linear-gradient(90deg, var(--skel-base) 25%, var(--skel-shine) 37%, var(--skel-base) 63%);
+  background-size: 400% 100%;
+  animation: skel-shimmer 1.4s ease infinite;
+}
+
+.skel {
+  display: block;
+  width: var(--w, 100%);
+  height: var(--h, 1rem);
+  border-radius: var(--r, 6px);
+  flex-shrink: 0;
+}
+
+.skel-circle { --r: 50%; }
+
+/* Gambar yang belum selesai dimuat: tampilkan kilau, sembunyikan teks alt */
+img.skeleton-img {
+  color: transparent;
+  min-height: 1rem;
+}
+
+/* Kotak grafik (ApexCharts) sebelum grafik tergambar */
+.skel-chart {
+  --h: auto;
+  --r: 8px;
+  min-height: var(--skel-chart-h, 260px);
+}
+
+/* --- Overlay halaman --- */
+#page-skeleton {
+  position: fixed;
+  inset: 0;
+  z-index: 1000000; /* di atas header Flexor yang sticky dan chat widget */
+  background: var(--skel-page-bg);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Muncul dengan jeda singkat supaya halaman yang cepat dimuat tidak berkedip */
+#page-skeleton[data-state="loading"] {
+  animation: skel-in .2s ease .15s forwards, skel-failsafe 0s linear 12s forwards;
+}
+
+#page-skeleton[data-state="navigating"] {
+  animation: skel-in .2s ease .12s forwards;
+}
+
+#page-skeleton[data-state="idle"] {
+  display: none;
+}
+
+/* Garis kemajuan tipis berwarna aksen di tepi atas */
+#page-skeleton .skel-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  overflow: hidden;
+  z-index: 2;
+}
+
+#page-skeleton .skel-bar::after {
+  content: "";
+  display: block;
+  width: 30%;
+  height: 100%;
+  background: var(--skel-accent);
+  animation: skel-bar 1.3s ease-in-out infinite;
+}
+
+.skel-row { display: flex; align-items: center; gap: 12px; }
+
+/* Layout publik memuat dua bentuk badan; data-variant memilih salah satunya */
+#page-skeleton[data-variant="landing"] .skel-body-public,
+#page-skeleton:not([data-variant="landing"]) .skel-body-landing {
+  display: none;
+}
+
+/* Varian publik (header Flexor: topbar gelap + branding + menu) */
+.skel-topbar {
+  height: 40px;
+  background: #1d1918;
+}
+
+.skel-branding {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 max(5vw, 16px);
+  height: 82px;
+  border-bottom: 1px solid var(--skel-base);
+}
+
+.skel-logo { display: flex; align-items: center; gap: 12px; }
+.skel-logo-text { display: flex; flex-direction: column; gap: 7px; }
+.skel-nav-links { display: flex; gap: 26px; }
+
+.skel-pagetitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 44px 5vw;
+  background: #fbf3f2;
+  border-bottom: 1px solid var(--skel-base);
+}
+
+.skel-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 72px max(8vw, 16px) 56px;
+  background: #fbf3f2;
+}
+
+.skel-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  padding: 36px max(5vw, 16px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.skel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--skel-base);
+  border-radius: 8px;
+}
+
+/* Varian admin (Sneat: sidebar + navbar melayang + panel) */
+.skel-admin { display: flex; height: 100%; background: #f5f5f9; }
+
+.skel-side {
+  width: 260px;
+  flex-shrink: 0;
+  padding: 24px 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.skel-main { flex: 1; padding: 20px 24px; min-width: 0; }
+
+.skel-panel {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.skel-table-row {
+  display: grid;
+  grid-template-columns: 40px 2fr 1fr 1fr 80px;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (max-width: 1199.98px) {
+  .skel-side { display: none; }
+  .skel-nav-links { display: none; }
+}
+
+@media (max-width: 575.98px) {
+  .skel-topbar { height: 8px; }
+  .skel-table-row { grid-template-columns: 30px 1fr 60px; }
+  .skel-table-row > :nth-child(3),
+  .skel-table-row > :nth-child(4) { display: none; }
+}
+
+/* --- Balasan chat AI sedang disiapkan --- */
+.pk-chat-bubble.pk-chat-wait {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skel,
+  img.skeleton-img {
+    animation: none;
+  }
+  #page-skeleton .skel-bar::after {
+    animation: none;
+    width: 40%;
+  }
+}

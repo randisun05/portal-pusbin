@@ -48,7 +48,7 @@
             <div class="card shadow-sm">
                 <div class="card-header">Kunjungan 14 Hari Terakhir</div>
                 <div class="card-body">
-                    <div id="visitChart"></div>
+                    <div id="visitChart" class="skel skel-chart"></div>
                 </div>
             </div>
         </div>

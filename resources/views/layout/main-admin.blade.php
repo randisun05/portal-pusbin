@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{asset('assets-admin/css/demo.css')}}" />
     <link rel="stylesheet" href="{{asset('assets-admin/css/admin-theme.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets-flexor/css/skeleton.css') }}" />
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/libs/apex-charts/apex-charts.css')}}" />
@@ -53,6 +54,7 @@
 </head>
 
 <body>
+    @include('layout.partial.skeleton', ['variant' => 'admin'])
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -81,6 +83,7 @@
     <script src="{{asset('assets-admin/js/main.js')}}"></script>
     <!-- Page JS -->
     <script src="{{asset('assets-admin/js/dashboards-analytics.js')}}"></script>
+    <script src="{{ asset('assets-flexor/js/skeleton.js') }}"></script>
 </body>
 </html>
 

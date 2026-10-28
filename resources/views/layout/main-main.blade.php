@@ -26,6 +26,7 @@
     <!-- Main CSS Files -->
     <link href="{{ asset('assets-flexor/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('assets-flexor/css/custom-theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets-flexor/css/skeleton.css') }}" rel="stylesheet">
 
     @stack('styles')
 
@@ -39,14 +40,14 @@
 
 <body class="@yield('bodyClass', '')">
 
+    {{-- Skeleton loading menggantikan preloader spinner bawaan template; beranda punya bentuk sendiri --}}
+    @include('layout.partial.skeleton', ['variant' => trim(View::yieldContent('bodyClass')) === 'index-page' ? 'landing' : 'public'])
+
     @include('layout.partial.notif')
 
     @yield('container')
 
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Preloader -->
-    <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('assets-flexor/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -59,6 +60,7 @@
 
     <!-- Main JS File -->
     <script src="{{ asset('assets-flexor/js/main.js') }}"></script>
+    <script src="{{ asset('assets-flexor/js/skeleton.js') }}"></script>
 
     @stack('scripts')
 

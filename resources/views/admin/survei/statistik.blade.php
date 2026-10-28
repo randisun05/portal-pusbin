@@ -87,7 +87,7 @@
                         <div class="card-header">{{ $stat['indikator'] }}</div>
                         <div class="card-body">
                             @if($stat['type'] === 'chart')
-                                <div id="chart-{{ $i }}"></div>
+                                <div id="chart-{{ $i }}" class="skel skel-chart"></div>
                             @else
                                 @if($stat['answers']->isEmpty())
                                     <p class="text-muted mb-0">Belum ada jawaban.</p>

@@ -21,7 +21,7 @@
             <div class="card shadow-sm">
                 <div class="card-header">Tren Absensi 14 Hari Terakhir</div>
                 <div class="card-body">
-                    <div id="trendChart"></div>
+                    <div id="trendChart" class="skel skel-chart"></div>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="card shadow-sm">
                 <div class="card-header">Kegiatan dengan Kehadiran Terbanyak</div>
                 <div class="card-body">
-                    <div id="kegiatanChart"></div>
+                    <div id="kegiatanChart" class="skel skel-chart"></div>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="card shadow-sm">
                 <div class="card-header">Instansi dengan Kehadiran Terbanyak</div>
                 <div class="card-body">
-                    <div id="instansiChart"></div>
+                    <div id="instansiChart" class="skel skel-chart"></div>
                 </div>
             </div>
         </div>

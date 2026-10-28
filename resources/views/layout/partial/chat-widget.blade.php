@@ -68,6 +68,17 @@
         body.scrollTop = body.scrollHeight;
     }
 
+    // Skeleton tiga garis selama jawaban AI disiapkan; mengembalikan fungsi untuk menghapusnya
+    function addWaitBubble() {
+        var div = document.createElement('div');
+        div.className = 'pk-chat-bubble pk-chat-bot pk-chat-wait';
+        div.setAttribute('aria-label', 'Jawaban sedang disiapkan');
+        div.innerHTML = '<span class="skel" style="--h:11px"></span><span class="skel" style="--h:11px"></span><span class="skel" style="--w:55%;--h:11px"></span>';
+        body.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+        return function () { if (div.parentNode) div.parentNode.removeChild(div); };
+    }
+
     function findAnswer(question) {
         var q = question.toLowerCase();
         var words = q.split(/\s+/).filter(function (w) { return w.length > 2; });
@@ -107,6 +118,7 @@
         if (!question) return;
         addBubble(question, 'user');
         input.value = '';
+        var removeWait = addWaitBubble();
 
         fetch('/chat/ask', {
             method: 'POST',
@@ -118,12 +130,14 @@
         }).then(function (res) {
             return res.ok ? res.json() : { answer: null };
         }).then(function (data) {
+            removeWait();
             if (data && data.answer) {
                 addBubble(data.answer, 'bot');
             } else {
                 fallbackAnswer(question);
             }
         }).catch(function () {
+            removeWait();
             fallbackAnswer(question);
         });
     });

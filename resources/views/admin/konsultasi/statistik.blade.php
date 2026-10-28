@@ -20,7 +20,7 @@
         <div class="col-md-3">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <div id="statusChart"></div>
+                    <div id="statusChart" class="skel skel-chart"></div>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
             <div class="card shadow-sm">
                 <div class="card-header">Tren Tiket Masuk 14 Hari Terakhir</div>
                 <div class="card-body">
-                    <div id="trendChart"></div>
+                    <div id="trendChart" class="skel skel-chart"></div>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
             <div class="card shadow-sm">
                 <div class="card-header">Jenis Isu Konsultasi Terbanyak</div>
                 <div class="card-body">
-                    <div id="jenisChart"></div>
+                    <div id="jenisChart" class="skel skel-chart"></div>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="card shadow-sm">
                 <div class="card-header">Instansi Paling Aktif Berkonsultasi</div>
                 <div class="card-body">
-                    <div id="instansiChart"></div>
+                    <div id="instansiChart" class="skel skel-chart"></div>
                 </div>
             </div>
         </div>

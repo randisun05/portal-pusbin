@@ -58,7 +58,7 @@
                     <div class="card shadow-sm sk-stat-card">
                         <div class="card-body">
                             <div class="card-header bg-transparent border-0 px-0 pt-0">Sebaran Sentimen Jawaban</div>
-                            <div id="sentimentChart"></div>
+                            <div id="sentimentChart" class="skel skel-chart"></div>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                     <div class="card shadow-sm">
                         <div class="card-header">Indeks per Indikator</div>
                         <div class="card-body">
-                            <div id="indikatorChart"></div>
+                            <div id="indikatorChart" class="skel skel-chart"></div>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                     <div class="card shadow-sm">
                         <div class="card-header">Tren Responden 14 Hari Terakhir</div>
                         <div class="card-body">
-                            <div id="trendChart"></div>
+                            <div id="trendChart" class="skel skel-chart"></div>
                         </div>
                     </div>
                 </div>
