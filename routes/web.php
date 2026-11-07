@@ -112,7 +112,7 @@ Route::prefix('admin')->group(function() {
         Route::resource('/jadwalukom', AdminJadwalController::class)->Middleware(['prevent-back-history', 'permission:manage-jadwalukom']);
         Route::get('/absensi/export', [AdminAbsensiController::class, 'export'])->Middleware(['prevent-back-history', 'permission:manage-absensi']);
         Route::get('/absensi/daftar-hadir', [AdminAbsensiController::class, 'cetakDaftarHadir'])->Middleware(['prevent-back-history', 'permission:manage-absensi']);
-        Route::resource('/absensi', AdminAbsensiController::class)->Middleware(['prevent-back-history', 'permission:manage-absensi']);
+        Route::resource('/absensi', AdminAbsensiController::class)->only(['index'])->Middleware(['prevent-back-history', 'permission:manage-absensi']);
         Route::resource('/kodekonsultasi', KodeKonsultasiController::class)->Middleware(['prevent-back-history', 'permission:manage-kodekonsultasi']);
         Route::resource('/organisasi', AdminOrganisasiController::class)->Middleware(['prevent-back-history', 'permission:manage-organisasi']);
         Route::group(['middleware' => ['permission:manage-profil']], function () {
