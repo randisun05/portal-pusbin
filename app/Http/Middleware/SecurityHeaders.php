@@ -31,7 +31,7 @@ class SecurityHeaders
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
-        $response->headers->set('Content-Security-Policy', $this->contentSecurityPolicy());
+        $response->headers->set('Content-Security-Policy', $this->contentSecurityPolicy($request));
 
         if ($request->secure()) {
             $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
@@ -40,11 +40,20 @@ class SecurityHeaders
         return $response;
     }
 
-    protected function contentSecurityPolicy(): string
+    protected function contentSecurityPolicy(Request $request): string
     {
+        // Bundle webpack tema admin (jquery, helpers, popper, menu, apexcharts, dst) memakai eval().
+        // Tanpa 'unsafe-eval' semua JS admin mati (menu, dropdown, grafik). Dibatasi hanya untuk
+        // area /admin (ber-login); halaman publik tetap tanpa eval. Solusi jangka panjang: ganti
+        // file vendor admin dengan build produksi tanpa eval, lalu hapus pengecualian ini.
+        $scriptSrc = "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com";
+        if ($request->is('admin', 'admin/*')) {
+            $scriptSrc = str_replace("'unsafe-inline'", "'unsafe-inline' 'unsafe-eval'", $scriptSrc);
+        }
+
         $directives = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com",
+            $scriptSrc,
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
             "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com",
             "img-src 'self' data:",

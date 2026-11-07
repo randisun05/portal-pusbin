@@ -181,4 +181,13 @@ class SecurityRegressionTest extends TestCase
         $this->assertStringContainsString("base-uri 'self'", $csp);
         $this->assertStringContainsString("form-action 'self'", $csp);
     }
+
+    public function test_unsafe_eval_is_allowed_only_on_admin_routes()
+    {
+        $publik = $this->get('/webpusbin')->headers->get('Content-Security-Policy');
+        $this->assertStringNotContainsString("'unsafe-eval'", $publik);
+
+        $admin = $this->get('/admin')->headers->get('Content-Security-Policy');
+        $this->assertStringContainsString("'unsafe-eval'", $admin);
+    }
 }
