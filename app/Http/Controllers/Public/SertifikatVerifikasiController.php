@@ -22,6 +22,7 @@ class SertifikatVerifikasiController extends Controller
         if ($request->filled('nomor')) {
             $sertifikat = Sertifikat::with('absensi.kegiatan')
                 ->where('nomor_sertifikat', $request->nomor)
+                ->whereHas('absensi')
                 ->first();
 
             $notFound = ! $sertifikat;

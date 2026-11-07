@@ -69,4 +69,21 @@ class SertifikatTest extends TestCase
         $response->assertOk();
         $response->assertHeader('content-type', 'application/pdf');
     }
+
+    public function test_verification_page_does_not_crash_for_orphan_certificate()
+    {
+        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+        \Illuminate\Support\Facades\DB::table('sertifikats')->insert([
+            'absensi_id' => 99999,
+            'nomor_sertifikat' => 'YATIM/2026/0001',
+            'status' => 'diterbitkan',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
+
+        $this->get('/verifikasi-sertifikat?nomor=YATIM/2026/0001')
+            ->assertOk()
+            ->assertSee('tidak ditemukan');
+    }
 }

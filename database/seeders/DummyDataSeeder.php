@@ -50,7 +50,7 @@ class DummyDataSeeder extends Seeder
     private function bersihkan(): void
     {
         Schema::disableForeignKeyConstraints();
-        foreach (['posts', 'kegiatans', 'materi_paparans', 'absensis', 'faqs', 'pengetahuans', 'highlights', 'layanans',
+        foreach (['posts', 'kegiatans', 'materi_paparans', 'sertifikats', 'absensis', 'faqs', 'pengetahuans', 'highlights', 'layanans',
                   'misi_items', 'organisasi_units', 'profils', 'jdihjfks', 'konsultasis', 'sertifikat_templates',
                   'pengaturan_sertifikats'] as $t) {
             if (Schema::hasTable($t)) {

@@ -43,7 +43,8 @@ class KodeKonsultasiController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            "*" => 'required',
+            'jenis' => 'required|string|max:255',
+            'kode' => 'required|string|max:50',
         ]);
 
         KodeKonsultasi::create($validatedData);
@@ -68,10 +69,10 @@ class KodeKonsultasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(KodeKonsultasi $kode)
+    public function edit(KodeKonsultasi $kodekonsultasi)
     {
         return view('admin.kodekonsultasi.edit',[
-            'kode' =>  $kode
+            'kode' =>  $kodekonsultasi
        ]);
     }
 
@@ -82,16 +83,14 @@ class KodeKonsultasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KodeKonsultasi $kodes)
+    public function update(Request $request, KodeKonsultasi $kodekonsultasi)
     {
-
         $validateData = $request->validate([
-            "*" => 'required',
-
+            'jenis' => 'required|string|max:255',
+            'kode' => 'required|string|max:50',
         ]);
 
-        KodeKonsultasi::where('id', $kodes->id)
-                ->update($validateData);
+        $kodekonsultasi->update($validateData);
 
         return redirect('/admin/kodekonsultasi')->with('success','Kode Berhasil Diupdate');
     }
