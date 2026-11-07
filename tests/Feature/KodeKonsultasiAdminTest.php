@@ -30,4 +30,13 @@ class KodeKonsultasiAdminTest extends TestCase
             ->assertRedirect('/admin/kodekonsultasi');
         $this->assertDatabaseMissing('kode_konsultasis', ['id' => $kode->id]);
     }
+
+    public function test_sidebar_links_to_kode_konsultasi_for_permitted_admin()
+    {
+        $admin = User::factory()->create();
+
+        $this->actingAs($admin)->get('/admin')
+            ->assertOk()
+            ->assertSee('href="/admin/kodekonsultasi"', false);
+    }
 }

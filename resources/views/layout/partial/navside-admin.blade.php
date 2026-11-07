@@ -146,6 +146,14 @@
                 </a>
               </li>
               @endif
+              @if($me->hasPermission('manage-kodekonsultasi'))
+              <li class="menu-item {{ Request::is('admin/kodekonsultasi*') ? 'active' : '' }}">
+                <a href="/admin/kodekonsultasi" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Kode Konsultasi</div>
+                </a>
+              </li>
+              @endif
               @if($me->hasPermission('manage-absensi'))
               <li class="menu-item {{ Request::is('admin/absensi') || Request::is('admin/absensi/*') ? 'active' : '' }}">
                 <a href="/admin/absensi" class="menu-link">
