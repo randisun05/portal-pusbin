@@ -126,3 +126,6 @@ a:hover { color: var(--pk-accent-dark); }
 trix-toolbar .trix-button-group { border-radius: 4px; }
 trix-editor { border-radius: 0 0 4px 4px; }
 trix-editor:focus { border-color: var(--pk-accent); outline: none; }
+
+/* Pagination: bungkus ke baris berikutnya pada layar sempit agar halaman tidak melebar */
+.pagination { flex-wrap: wrap; justify-content: center; row-gap: .25rem; }
