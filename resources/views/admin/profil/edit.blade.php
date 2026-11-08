@@ -25,17 +25,17 @@
                     <div class="row mb-4">
                         <div class="col-md-6 mb-3">
                             <label for="hero_judul" class="form-label">Judul Hero</label>
-                            <input type="text" class="form-control" @error('hero_judul') is-invalid @enderror name="hero_judul" id="hero_judul" value="{{old('hero_judul', $profil->hero_judul)}}" placeholder="Direktorat Jabatan Fungsional MASN">
+                            <input type="text" class="form-control @error('hero_judul') is-invalid @enderror" name="hero_judul" id="hero_judul" value="{{old('hero_judul', $profil->hero_judul)}}" placeholder="Direktorat Jabatan Fungsional MASN">
                             @error('hero_judul')<div class="invalid-feedback">{{$message}}</div>@enderror
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="about_judul" class="form-label">Judul Bagian Tentang (Beranda)</label>
-                            <input type="text" class="form-control" @error('about_judul') is-invalid @enderror name="about_judul" id="about_judul" value="{{old('about_judul', $profil->about_judul)}}" placeholder="Pelaksanaan Uji Kompetensi JFK">
+                            <input type="text" class="form-control @error('about_judul') is-invalid @enderror" name="about_judul" id="about_judul" value="{{old('about_judul', $profil->about_judul)}}" placeholder="Pelaksanaan Uji Kompetensi JFK">
                             @error('about_judul')<div class="invalid-feedback">{{$message}}</div>@enderror
                         </div>
                         <div class="col-12 mb-3">
                             <label for="hero_deskripsi" class="form-label">Deskripsi Hero</label>
-                            <textarea class="form-control" @error('hero_deskripsi') is-invalid @enderror name="hero_deskripsi" id="hero_deskripsi" rows="2" placeholder="Membina, mengembangkan, dan memfasilitasi jabatan fungsional kepegawaian...">{{old('hero_deskripsi', $profil->hero_deskripsi)}}</textarea>
+                            <textarea class="form-control @error('hero_deskripsi') is-invalid @enderror" name="hero_deskripsi" id="hero_deskripsi" rows="2" placeholder="Membina, mengembangkan, dan memfasilitasi jabatan fungsional kepegawaian...">{{old('hero_deskripsi', $profil->hero_deskripsi)}}</textarea>
                             @error('hero_deskripsi')<div class="invalid-feedback">{{$message}}</div>@enderror
                         </div>
                     </div>
@@ -67,14 +67,14 @@
                     <h5 class="mb-3 mt-4">Tentang Kami</h5>
                     <div class="mb-4">
                         <label for="tentang" class="form-label">Isi Halaman Tentang Kami</label>
-                        <textarea class="form-control" @error('tentang') is-invalid @enderror name="tentang" id="tentang" rows="8" placeholder="Tuliskan profil singkat organisasi...">{{old('tentang', $profil->tentang)}}</textarea>
+                        <textarea class="form-control @error('tentang') is-invalid @enderror" name="tentang" id="tentang" rows="8" placeholder="Tuliskan profil singkat organisasi...">{{old('tentang', $profil->tentang)}}</textarea>
                         @error('tentang')<div class="invalid-feedback">{{$message}}</div>@enderror
                     </div>
 
                     <h5 class="mb-3 mt-4">Visi</h5>
                     <div class="mb-4">
                         <label for="visi" class="form-label">Visi Organisasi</label>
-                        <textarea class="form-control" @error('visi') is-invalid @enderror name="visi" id="visi" rows="3">{{old('visi', $profil->visi)}}</textarea>
+                        <textarea class="form-control @error('visi') is-invalid @enderror" name="visi" id="visi" rows="3">{{old('visi', $profil->visi)}}</textarea>
                         @error('visi')<div class="invalid-feedback">{{$message}}</div>@enderror
                         <small class="text-muted">Untuk mengatur daftar Misi, gunakan menu <a href="/admin/misi">Misi</a>.</small>
                     </div>
@@ -83,23 +83,23 @@
                     <div class="row mb-4">
                         <div class="col-md-6 mb-3">
                             <label for="alamat" class="form-label">Alamat</label>
-                            <textarea class="form-control" @error('alamat') is-invalid @enderror name="alamat" id="alamat" rows="3">{{old('alamat', $profil->alamat)}}</textarea>
+                            <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" rows="3">{{old('alamat', $profil->alamat)}}</textarea>
                             @error('alamat')<div class="invalid-feedback">{{$message}}</div>@enderror
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="telepon" class="form-label">Telepon</label>
-                                <input type="text" class="form-control" @error('telepon') is-invalid @enderror name="telepon" id="telepon" value="{{old('telepon', $profil->telepon)}}">
+                                <input type="text" class="form-control @error('telepon') is-invalid @enderror" name="telepon" id="telepon" value="{{old('telepon', $profil->telepon)}}">
                                 @error('telepon')<div class="invalid-feedback">{{$message}}</div>@enderror
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" @error('email') is-invalid @enderror name="email" id="email" value="{{old('email', $profil->email)}}">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{old('email', $profil->email)}}">
                                 @error('email')<div class="invalid-feedback">{{$message}}</div>@enderror
                             </div>
                             <div class="mb-3">
                                 <label for="jam_operasional" class="form-label">Jam Operasional</label>
-                                <input type="text" class="form-control" @error('jam_operasional') is-invalid @enderror name="jam_operasional" id="jam_operasional" value="{{old('jam_operasional', $profil->jam_operasional)}}" placeholder="Senin - Jumat, 08.00 - 16.00 WIB">
+                                <input type="text" class="form-control @error('jam_operasional') is-invalid @enderror" name="jam_operasional" id="jam_operasional" value="{{old('jam_operasional', $profil->jam_operasional)}}" placeholder="Senin - Jumat, 08.00 - 16.00 WIB">
                                 @error('jam_operasional')<div class="invalid-feedback">{{$message}}</div>@enderror
                             </div>
                         </div>
@@ -107,7 +107,7 @@
 
                     <div class="mb-4">
                         <label for="maps_embed" class="form-label">Embed Google Maps (URL src iframe)</label>
-                        <input type="text" class="form-control" @error('maps_embed') is-invalid @enderror name="maps_embed" id="maps_embed" value="{{old('maps_embed', $profil->maps_embed)}}" placeholder="https://www.google.com/maps/embed?...">
+                        <input type="text" class="form-control @error('maps_embed') is-invalid @enderror" name="maps_embed" id="maps_embed" value="{{old('maps_embed', $profil->maps_embed)}}" placeholder="https://www.google.com/maps/embed?...">
                         @error('maps_embed')<div class="invalid-feedback">{{$message}}</div>@enderror
                     </div>
 

@@ -143,7 +143,13 @@ class AdminKonsultasiController extends Controller
         $konsultasi = null;
 
         if ($request->has('search')) {
-            $konsultasi = Konsultasi::where('tiket','LIKE','%'.$request->search)->first();
+            // Wajib cocok persis dengan nomor tiket: pencarian parsial/kosong akan membocorkan
+            // data (NIP, link, PIC) milik tiket orang lain.
+            $nomor = trim((string) $request->query('search'));
+
+            if ($nomor !== '') {
+                $konsultasi = Konsultasi::with('kode_konsultasi')->where('tiket', $nomor)->first();
+            }
         }
 
         return view('public.konsultasi.show',['konsultasi'=>$konsultasi,  'title' => "Cari Konsultasi",]);
@@ -190,7 +196,7 @@ class AdminKonsultasiController extends Controller
         Konsultasi::where('id', $konsultasi->id)
                 ->update($validateData);
 
-        return redirect('/admin/konsultasi/')->with('success','Konsultasi Telah Dijawab');
+        return redirect('/admin/konsultasi-tiket')->with('success','Konsultasi Telah Dijawab');
     }
 
     /**

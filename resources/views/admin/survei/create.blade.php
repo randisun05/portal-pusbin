@@ -22,7 +22,7 @@
               <div class="form-group mt-4 ms-5">
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="nama">Nama Survei</label></div>
-                    <div class="col"> <input type="text" class="form-control" @error('title') is-invalid @enderror name="title" id="title"
+                    <div class="col"> <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title"
                     value="{{old('title')}}" placeholder="Masukan Nama Survei"></div>
                     @error('title')
                     <div class="invalid-feedback">

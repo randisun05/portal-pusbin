@@ -50,7 +50,7 @@ class KonsultasiAnswerTest extends TestCase
             'pic' => 'Admin Penjawab',
         ]);
 
-        $response->assertRedirect('/admin/konsultasi');
+        $response->assertRedirect('/admin/konsultasi-tiket');
         $ticket->refresh();
         $this->assertTrue((bool) $ticket->jawab);
         $this->assertSame('Admin Penjawab', $ticket->pic);
@@ -65,5 +65,23 @@ class KonsultasiAnswerTest extends TestCase
         $ticket = $this->makeTicket();
 
         $this->assertSame('Jabatan Fungsional Kepegawaian', $ticket->kode_konsultasi->jenis);
+    }
+
+    public function test_public_ticket_lookup_requires_exact_ticket_number()
+    {
+        $ticket = $this->makeTicket();
+        $ticket->update(['jawab' => 1, 'jadwalfix' => now(), 'link' => 'https://zoom.us/j/999', 'pic' => 'Penjawab']);
+
+        foreach (['', '1', '234', 'JFK'] as $parsial) {
+            $this->get('/konsultasi/jadwal?search=' . urlencode($parsial))
+                ->assertOk()
+                ->assertDontSee('199001012020011001')
+                ->assertDontSee('https://zoom.us/j/999');
+        }
+
+        $this->get('/konsultasi/jadwal?search=JFK1234')
+            ->assertOk()
+            ->assertSee('199001012020011001')
+            ->assertSee('Jabatan Fungsional Kepegawaian');
     }
 }

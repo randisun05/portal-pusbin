@@ -21,7 +21,7 @@
                 <div class="form-group mt-4 ms-5">
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="pertanyaan">Pertanyaan</label></div>
-                        <div class="col"> <input type="text" class="form-control" @error('pertanyaan') is-invalid @enderror
+                        <div class="col"> <input type="text" class="form-control @error('pertanyaan') is-invalid @enderror"
                                 name="pertanyaan" id="pertanyaan" value="{{old('pertanyaan')}}" placeholder="Masukan Pertanyaan">
                         </div>
                         @error('pertanyaan')
@@ -31,7 +31,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="jawaban">Jawaban</label></div>
-                        <div class="col"> <textarea class="form-control" @error('jawaban') is-invalid @enderror
+                        <div class="col"> <textarea class="form-control @error('jawaban') is-invalid @enderror"
                                 name="jawaban" id="jawaban" rows="4" placeholder="Masukan Jawaban">{{old('jawaban')}}</textarea>
                         </div>
                         @error('jawaban')
@@ -41,7 +41,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="kategori">Kategori</label></div>
-                        <div class="col"> <input type="text" class="form-control" @error('kategori') is-invalid @enderror
+                        <div class="col"> <input type="text" class="form-control @error('kategori') is-invalid @enderror"
                                 name="kategori" id="kategori" value="{{old('kategori')}}" placeholder="Contoh: Konsultasi, Uji Kompetensi (opsional)">
                         </div>
                         @error('kategori')
@@ -51,7 +51,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="urutan">Urutan Tampil</label></div>
-                        <div class="col"> <input type="number" class="form-control" @error('urutan') is-invalid @enderror
+                        <div class="col"> <input type="number" class="form-control @error('urutan') is-invalid @enderror"
                                 name="urutan" id="urutan" value="{{old('urutan', 0)}}">
                         </div>
                         @error('urutan')

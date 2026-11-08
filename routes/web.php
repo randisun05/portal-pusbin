@@ -193,7 +193,7 @@ Route::get('/konsultasi/cari', function () {
         'title' => "Cari Konsultasi"
     ]);
 });
-Route::get('/konsultasi/jadwal', [AdminKonsultasiController::class, 'search']);
+Route::get('/konsultasi/jadwal', [AdminKonsultasiController::class, 'search'])->middleware('throttle:20,1');
 Route::get('/konsultasi/tiket', [AdminKonsultasiController::class, 'tiket']);
 Route::get('/konsultasi/{kegiatan:slug}', [\App\Http\Controllers\Public\KonsultasiController::class, 'create']);
 Route::post('/konsultasi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\KonsultasiController::class, 'store'])->middleware('throttle:5,1');

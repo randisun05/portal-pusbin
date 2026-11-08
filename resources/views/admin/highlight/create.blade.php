@@ -38,7 +38,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="name">Judul</label></div>
-                        <div class="col"> <input type="text" class="form-control" @error('name') is-invalid @enderror
+                        <div class="col"> <input type="text" class="form-control @error('name') is-invalid @enderror"
                                 name="name" id="name" value="{{old('name')}}" placeholder="Masukan Judul">
                         </div>
                         @error('name')
@@ -50,7 +50,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="desc">Deskripsi</label></div>
-                        <div class="col"> <input type="text" class="form-control" @error('desc') is-invalid @enderror
+                        <div class="col"> <input type="text" class="form-control @error('desc') is-invalid @enderror"
                                 name="desc" id="desc" value="{{old('desc')}}"
                                 placeholder="Masukan Deskripsi"></div>
                         @error('desc')
@@ -81,7 +81,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="image">Gambar (opsional)</label></div>
-                        <div class="col"> <input type="file" class="form-control" @error('image') is-invalid @enderror
+                        <div class="col"> <input type="file" class="form-control @error('image') is-invalid @enderror"
                                 name="image" id="image" placeholder="Masukan Gambar" accept=".jpg, .jpeg, .png">
                         </div>
                         @error('image')

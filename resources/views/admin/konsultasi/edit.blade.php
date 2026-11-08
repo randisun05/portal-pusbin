@@ -24,9 +24,9 @@
               <div class="form-group mt-4 ms-5">
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="nama">NIP</label></div>
-                  <div class="col"> <input type="text" class="form-control" @error('nip') is-invalid @enderror name="nip" id="nip" value="{{old('nip', $konsultasi->nip)}}" disabled></div>
+                  <div class="col"> <input type="text" class="form-control @error('nip') is-invalid @enderror" name="nip" id="nip" value="{{old('nip', $konsultasi->nip)}}" disabled></div>
                   @error('nip')
-                  <div class="invalid-feedback">
+                  <div class="invalid-feedback d-block">
                     NIP Konsultasi Harus Diisi
                   </div>
                   @enderror
@@ -45,9 +45,9 @@
 
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="link">Jadwal</label></div>
-                  <div class="col"> <input type="text" class="form-control" @error('jadwal') is-invalid @enderror name="jadwal" id="jadwal" value="{{old('jadwal', $konsultasi->jadwal)}}" disabled></div>
+                  <div class="col"> <input type="text" class="form-control @error('jadwal') is-invalid @enderror" name="jadwal" id="jadwal" value="{{old('jadwal', $konsultasi->jadwal)}}" disabled></div>
                   @error('jadwal')
-                  <div class="invalid-feedback">
+                  <div class="invalid-feedback d-block">
                     Jadwal Konsultasi Harus Diisi
                   </div>
                   @enderror
@@ -55,9 +55,9 @@
 
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="jadwalfix">Jadwal Fix</label></div>
-                  <div class="col"> <input type="datetime-local" class="form-control" value="" @error('jadwalfix') is-invalid @enderror name="jadwalfix" id="jadwalfix" value="{{old('jadwalfix', $konsultasi->jadwalfix)}}" placeholder="Masukan Jadwalfix Kosultasi"></div>
+                  <div class="col"> <input type="datetime-local" class="form-control @error('jadwalfix') is-invalid @enderror" value="" name="jadwalfix" id="jadwalfix" value="{{old('jadwalfix', $konsultasi->jadwalfix)}}" placeholder="Masukan Jadwalfix Kosultasi"></div>
                   @error('jadwalfix')
-                  <div class="invalid-feedback">
+                  <div class="invalid-feedback d-block">
                     Jadwal Fix Konsultasi Harus Diisi
                   </div>
                   @enderror
@@ -65,9 +65,9 @@
 
                <div class="row row-cols-3 mb-4">
                 <div class="col col-lg-2"><label for="jadwalfix">Link</label></div>
-                <div class="col"> <input type="text" class="form-control" @error('link') is-invalid @enderror name="link" id="link" value="{{old('link', $konsultasi->link)}}" placeholder="Masukan link Kosultasi"></div>
+                <div class="col"> <input type="text" class="form-control @error('link') is-invalid @enderror" name="link" id="link" value="{{old('link', $konsultasi->link)}}" placeholder="Masukan link Kosultasi"></div>
                 @error('link')
-                <div class="invalid-feedback">
+                <div class="invalid-feedback d-block">
                   Link Konsultasi Harus Diisi
                 </div>
                 @enderror
@@ -75,9 +75,9 @@
 
                <div class="row row-cols-3 mb-4">
                 <div class="col col-lg-2"><label for="jadwalfix">PIC</label></div>
-                <div class="col"> <input type="text" class="form-control" @error('pic') is-invalid @enderror name="pic" id="pic" value="{{old('pic', $konsultasi->pic)}}" placeholder="Masukan PIC Kosultasi"></div>
+                <div class="col"> <input type="text" class="form-control @error('pic') is-invalid @enderror" name="pic" id="pic" value="{{old('pic', $konsultasi->pic)}}" placeholder="Masukan PIC Kosultasi"></div>
                 @error('pic')
-                <div class="invalid-feedback">
+                <div class="invalid-feedback d-block">
                   PIC Konsultasi Harus Diisi
                 </div>
                 @enderror
@@ -87,7 +87,7 @@
                  <div class="col col-lg-2"><label for="nama">Keterangan</label></div>
                   <div class=""> <textarea class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" id="keterangan" rows="8">{{ old('keterangan', $konsultasi->keterangan) }}</textarea></div>
                   @error('keterangan')
-                  <div class="invalid-feedback">
+                  <div class="invalid-feedback d-block">
                     Keterangan Harus Diisi
                 </div>
                 @enderror

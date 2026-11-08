@@ -39,7 +39,7 @@
 
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="name">Judul</label></div>
-                  <div class="col"> <input type="text" class="form-control" @error('name') is-invalid @enderror name="name" id="name" value="{{old('name', $highlight->name)}}" placeholder="Masukan Judul"></div>
+                  <div class="col"> <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{old('name', $highlight->name)}}" placeholder="Masukan Judul"></div>
                   @error('name')
                   <div class="invalid-feedback">
                       Judul Harus Diisi
@@ -49,7 +49,7 @@
 
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="desc">Deskripsi</label></div>
-                  <div class="col"> <input type="text" class="form-control" @error('desc') is-invalid @enderror name="desc" id="desc" value="{{old('desc', $highlight->desc)}}" placeholder="Masukan Deskripsi"></div>
+                  <div class="col"> <input type="text" class="form-control @error('desc') is-invalid @enderror" name="desc" id="desc" value="{{old('desc', $highlight->desc)}}" placeholder="Masukan Deskripsi"></div>
                   @error('desc')
                   <div class="invalid-feedback">
                     Deskripsi Harus Diisi
@@ -82,7 +82,7 @@
                         @if($highlight->image)
                             <img src="{{ asset('storage/' . $highlight->image) }}" style="height:80px" class="mb-2 d-block">
                         @endif
-                        <input type="file" class="form-control" @error('image') is-invalid @enderror name="image" id="image" placeholder="Masukan Gambar" accept=".jpg, .jpeg, .png">
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="image" placeholder="Masukan Gambar" accept=".jpg, .jpeg, .png">
                     </div>
                       @error('image')
                       <div class="invalid-feedback">

@@ -23,7 +23,7 @@
                 <div class="form-group mt-4 ms-5">
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="nama">Nama</label></div>
-                        <div class="col"> <input type="text" class="form-control" @error('nama') is-invalid @enderror
+                        <div class="col"> <input type="text" class="form-control @error('nama') is-invalid @enderror"
                                 name="nama" id="nama" value="{{old('nama')}}" placeholder="Masukan Nama Lengkap &amp; Gelar">
                         </div>
                         @error('nama')
@@ -35,7 +35,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="jabatan">Jabatan</label></div>
-                        <div class="col"> <input type="text" class="form-control" @error('jabatan') is-invalid @enderror
+                        <div class="col"> <input type="text" class="form-control @error('jabatan') is-invalid @enderror"
                                 name="jabatan" id="jabatan" value="{{old('jabatan')}}"
                                 placeholder="Masukan Jabatan"></div>
                         @error('jabatan')
@@ -47,7 +47,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="unit">Unit / Pokja</label></div>
-                        <div class="col"> <input type="text" class="form-control" @error('unit') is-invalid @enderror
+                        <div class="col"> <input type="text" class="form-control @error('unit') is-invalid @enderror"
                                 name="unit" id="unit" value="{{old('unit')}}"
                                 placeholder="Contoh: Pokja 1, Sekretariat, dll (opsional)"></div>
                         @error('unit')
@@ -60,7 +60,7 @@
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="parent_id">Atasan Langsung</label></div>
                         <div class="col">
-                            <select class="form-control" @error('parent_id') is-invalid @enderror name="parent_id" id="parent_id">
+                            <select class="form-control @error('parent_id') is-invalid @enderror" name="parent_id" id="parent_id">
                                 <option value="">-- Tanpa Atasan (Puncak Struktur) --</option>
                                 @foreach ($parents as $parent)
                                     <option value="{{$parent->id}}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>{{$parent->nama}} ({{$parent->jabatan}})</option>
@@ -76,7 +76,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="urutan">Urutan Tampil</label></div>
-                        <div class="col"> <input type="number" class="form-control" @error('urutan') is-invalid @enderror
+                        <div class="col"> <input type="number" class="form-control @error('urutan') is-invalid @enderror"
                                 name="urutan" id="urutan" value="{{old('urutan', 0)}}"
                                 placeholder="0"></div>
                         @error('urutan')
@@ -88,7 +88,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="deskripsi">Deskripsi Singkat</label></div>
-                        <div class="col"> <textarea class="form-control" @error('deskripsi') is-invalid @enderror
+                        <div class="col"> <textarea class="form-control @error('deskripsi') is-invalid @enderror"
                                 name="deskripsi" id="deskripsi" rows="3" placeholder="Opsional">{{old('deskripsi')}}</textarea></div>
                         @error('deskripsi')
                         <div class="invalid-feedback">
@@ -99,7 +99,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="foto">Foto</label></div>
-                        <div class="col"> <input type="file" class="form-control" @error('foto') is-invalid @enderror
+                        <div class="col"> <input type="file" class="form-control @error('foto') is-invalid @enderror"
                                 name="foto" id="foto" placeholder="Masukan Foto" accept=".jpg, .jpeg, .png">
                         </div>
                         @error('foto')

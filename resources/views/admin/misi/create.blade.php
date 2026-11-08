@@ -22,7 +22,7 @@
                 <div class="form-group mt-4 ms-5">
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="isi">Isi Misi</label></div>
-                        <div class="col"> <textarea class="form-control" @error('isi') is-invalid @enderror
+                        <div class="col"> <textarea class="form-control @error('isi') is-invalid @enderror"
                                 name="isi" id="isi" rows="2" placeholder="Masukan Isi Misi">{{old('isi')}}</textarea>
                         </div>
                         @error('isi')
@@ -34,7 +34,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="urutan">Urutan Tampil</label></div>
-                        <div class="col"> <input type="number" class="form-control" @error('urutan') is-invalid @enderror
+                        <div class="col"> <input type="number" class="form-control @error('urutan') is-invalid @enderror"
                                 name="urutan" id="urutan" value="{{old('urutan', 0)}}">
                         </div>
                         @error('urutan')

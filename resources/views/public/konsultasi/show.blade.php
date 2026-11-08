@@ -25,7 +25,7 @@
                       <div class="row mb-3">
                         <label class="row row col-4 ms-4" for="basic-default-company">Perihal Konsultasi</label>
                         <div class="col-md-6 ">
-                            <label>: {{$konsultasi->perihal}}</label>
+                            <label>: {{ optional($konsultasi->kode_konsultasi)->jenis }}</label>
                         </div>
                       </div>
                       <div class="row mb-3">
