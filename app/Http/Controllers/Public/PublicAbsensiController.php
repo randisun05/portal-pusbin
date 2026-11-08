@@ -6,10 +6,15 @@ use Carbon\Carbon;
 use App\Models\Absensi;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
+use App\Mail\SendEmailAbsensi;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
 
 class PublicAbsensiController extends Controller
 {
+    use GuardsAgainstSpam;
+
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +52,8 @@ class PublicAbsensiController extends Controller
     {
         return view('public.absensi.create', [
             'title' => "Absensi Kegiatan     {$kegiatan->nama}",
-            'kegiatan' => $kegiatan
+            'kegiatan' => $kegiatan,
+            'presensiTertutup' => $kegiatan->isPresensiTertutup(),
         ]);
     }
 
@@ -67,7 +73,31 @@ class PublicAbsensiController extends Controller
         'email' => 'required|email',
         'jabatan' => 'required|',
         'instansi' => 'required|',
+        'rating' => 'required|integer|min:1|max:4',
+        'saran' => 'nullable|string|max:2000',
+        'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:5120',
     ]);
+
+    $successMessage = 'Absensi berhasil! Cek email Anda untuk konfirmasi.';
+
+    if ($this->isSpamSubmission($request)) {
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $successMessage]);
+        }
+
+        return redirect()->route('public.absensi.index')->withSuccess($successMessage);
+    }
+
+    $kegiatan = Kegiatan::find($request->kegiatan_id);
+    if ($kegiatan && $kegiatan->isPresensiTertutup()) {
+        $message = 'Batas waktu presensi untuk kegiatan ini sudah berakhir.';
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => false, 'message' => $message], 422);
+        }
+
+        return redirect()->back()->with('error', $message);
+    }
 
     // Memeriksa apakah ada entri dengan kegiatan yang sama dan ID kegiatan yang sama
         $existingEntry = Absensi::where('kegiatan_id', $request->kegiatan_id)
@@ -75,23 +105,44 @@ class PublicAbsensiController extends Controller
         ->first();
 
         if ($existingEntry) {
-        return redirect()->back()->with('error', 'Anda sudah melakukan absensi untuk kegiatan ini.');
+        $message = 'Anda sudah melakukan absensi untuk kegiatan ini.';
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => false, 'message' => $message], 422);
+        }
+
+        return redirect()->back()->with('error', $message);
         }
 
 
-       Absensi::create([
+       $absensi = Absensi::create([
             'nip' => $request->nip,
             'nama' => $request->nama,
             'kegiatan_id' => $request->kegiatan_id,
             'email' => $request->email,
             'jabatan' => $request->jabatan,
             'instansi' => $request->instansi,
+            'rating' => $request->rating,
+            'saran' => $request->saran,
         ]);
 
-        $data = Absensi::where('nip', $request->nip)->with('kegiatan')->latest()->first();
+        if ($request->hasFile('lampiran')) {
+            $absensi->simpanLampiran($request->file('lampiran'));
+        }
 
+        $data = Absensi::where('nip', $request->nip)->where('kegiatan_id', $request->kegiatan_id)->with('kegiatan')->latest()->first();
 
-        return redirect()->route('public.konsultasi.index')->withSuccess('Absensi berhasil!');
+        try {
+            Mail::to($data->email)->send(new SendEmailAbsensi($data));
+        } catch (\Throwable $e) {
+            // Absensi tetap berhasil walau email konfirmasi gagal terkirim
+        }
+
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $successMessage]);
+        }
+
+        return redirect()->route('public.absensi.index')->withSuccess($successMessage);
     }
 
     /**

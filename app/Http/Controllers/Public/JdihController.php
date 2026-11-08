@@ -10,13 +10,9 @@ class JdihController extends Controller
 {
     public function index()
     {
-        // $jdihs = Jdihjfk::latest()->filter(request(['search']))->paginate(6);
-        // return $jdihs;
-
         return view('public.jdihjfk.index', [
-            "title" => "JDIH JFK",
-            "jdihs" => Jdihjfk::latest()->filter(request(['search']))->paginate(6)
-
+            "title" => "Repository JF MASN",
+            "jdihs" => Jdihjfk::published()->latest()->filter(request(['search']))->paginate(6),
         ]);
     }
 }

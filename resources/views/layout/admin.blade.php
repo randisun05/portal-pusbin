@@ -14,7 +14,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
-    <title>Admin Web Pusbin</title>
+    <title>Admin Direktorat JF MASN</title>
     <meta name="description" content="" />
     <!-- Favicon -->
     <link href="{{asset('assets/img/logo-pusbin.png')}}" rel="icon">
@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <!-- Icons. Uncomment required icon fonts -->
@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/css/core.css')}}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{asset('assets-admin/css/demo.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets-admin/css/admin-theme.css')}}" />
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
     <link rel="stylesheet" href="{{asset('assets-admin/vendor/libs/apex-charts/apex-charts.css')}}" />
@@ -42,8 +43,8 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{asset('assets-admin/js/config.js')}}"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
-  <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets-admin/vendor/trix/trix.css') }}">
+  <script type="text/javascript" src="{{ asset('assets-admin/vendor/trix/trix.umd.min.js') }}"></script>
 
 
 

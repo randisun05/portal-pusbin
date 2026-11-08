@@ -45,78 +45,30 @@ class AdminKonsultasiController extends Controller
             ]);
     }
 
-
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the individual Konsultasi Q&A tickets, with a
+     * link to answer each one.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function tiketIndex()
     {
-        $konsultasi = Kegiatan::findOrFail($id);
+        $tikets = Konsultasi::with('kode_konsultasi')->latest();
 
-        return view('public.konsultasi.create', [
-            'title' => "Daftar Konsultasi Online",
-            'konsultasi' => $konsultasi,
+        if (request('search')) {
+            $search = request('search');
+            $tikets->where(function ($query) use ($search) {
+                $query->where('tiket', 'like', '%' . $search . '%')
+                    ->orWhere('nama', 'like', '%' . $search . '%')
+                    ->orWhere('nip', 'like', '%' . $search . '%');
+            });
+        }
+
+        return view('admin.konsultasi.tiket', [
+            'tikets' => $tikets->paginate(10),
         ]);
-
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // return $request;
-
-
-        $kode = KodeKonsultasi::where('id', $request->kode_id)->get('kode');
-        do {
-            $array = [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0];
-            $random = Arr::random($array, 4);
-            $tiket = $kode[0]->kode;
-            foreach($random as $r){
-                $tiket = $tiket . $r;
-            }
-        } while(Konsultasi::where('tiket', $tiket)->exists());
-
-        // $array = [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0];
-        // $random = Arr::random($array, 4);
-        // $tiket = $kode;
-        // foreach($random as $r){
-        //     $tiket = $tiket . $r;
-        // }
-
-        $validatedData = $request->validate([
-            "*" => 'required',
-        ]);
-
-        $validatedData['tiket'] = $tiket;
-
-        // if($request->tiket = ""){
-        //     $validateData['tiket'] = $tiket;
-        // }
-
-        Konsultasi::create($validatedData);
-        $data = [
-            'nip' => $request->nip,
-            'email' => $request->nip,
-            'tiket' => $tiket
-        ];
-
-        Mail::to($data['email'])->send(new SendEmail($data));
-        dd("Email Berhasil dikirim.");
-        return view('konsultasi.tiket',[
-            "tiket" => $tiket,
-            "title" => "Nomor Tiket",
-        ]);
-
-        Alert::success('Success Title', 'Success Message');
-
-    }
 
     /**
      * Display the specified resource.
@@ -135,12 +87,27 @@ class AdminKonsultasiController extends Controller
 
     public function search(Request $request)
     {
+        $konsultasi = null;
 
         if ($request->has('search')) {
-            $konsultasi = Konsultasi::where('tiket','LIKE','%'.$request->search)->first();
+            // Wajib cocok persis dengan nomor tiket: pencarian parsial/kosong akan membocorkan
+            // data (NIP, link, PIC) milik tiket orang lain.
+            $nomor = trim((string) $request->query('search'));
+
+            if ($nomor !== '') {
+                $konsultasi = Konsultasi::with('kode_konsultasi')->where('tiket', $nomor)->first();
+            }
         }
 
-        return view('konsultasi.show',['konsultasi'=>$konsultasi,  'title' => "Cari Konsultasi",]);
+        return view('public.konsultasi.show',['konsultasi'=>$konsultasi,  'title' => "Cari Konsultasi",]);
+    }
+
+    public function tiket(Request $request)
+    {
+        return view('public.konsultasi.tiket', [
+            'tiket' => $request->query('tiket'),
+            'title' => "Nomor Tiket",
+        ]);
     }
 
     /**
@@ -169,6 +136,7 @@ class AdminKonsultasiController extends Controller
             'jadwalfix' => 'required',
             'link' => 'required',
             'pic' => 'required',
+            'keterangan' => 'nullable|string|max:1000',
         ]);
 
         $validateData['jawab'] = 1;
@@ -176,7 +144,7 @@ class AdminKonsultasiController extends Controller
         Konsultasi::where('id', $konsultasi->id)
                 ->update($validateData);
 
-        return redirect('/admin/konsultasi/')->with('success','Konsultasi Telah Dijawab');
+        return redirect('/admin/konsultasi-tiket')->with('success','Konsultasi Telah Dijawab');
     }
 
     /**

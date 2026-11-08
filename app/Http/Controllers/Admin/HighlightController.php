@@ -6,20 +6,26 @@ use App\Models\highlight;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Laravel\Facades\Image;
-use Intervention\Image\ImageManager;
 
 class HighlightController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource, dikelompokkan per bagian beranda.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $activeGroup = $request->get('group', highlight::GROUP_HERO);
+
+        if (! array_key_exists($activeGroup, highlight::groups())) {
+            $activeGroup = highlight::GROUP_HERO;
+        }
+
         return view('admin.highlight.index', [
-            "highlights" => highlight::all()
+            'highlights' => highlight::group($activeGroup)->get(),
+            'groups' => highlight::groups(),
+            'activeGroup' => $activeGroup,
         ]);
     }
 
@@ -28,10 +34,14 @@ class HighlightController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $activeGroup = $request->get('group', highlight::GROUP_HERO);
+
         return view('admin.highlight.create', [
-            'title' => "Highlight",
+            'title' => 'Highlight',
+            'groups' => highlight::groups(),
+            'activeGroup' => $activeGroup,
         ]);
     }
 
@@ -43,21 +53,24 @@ class HighlightController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request ->validate([
-            "*" => 'required',
-            'image' => 'image|file|max:1024',
-           ]);
+        $validatedData = $request->validate([
+            'group' => 'required|in:' . implode(',', array_keys(highlight::groups())),
+            'name' => 'required',
+            'desc' => 'required',
+            'icon' => 'nullable|string',
+            'link' => 'nullable|string',
+            'image' => 'nullable|image|file|max:1024',
+        ]);
 
-        $file = $request->file('image')->store('post-image');
+        if ($request->file('image')) {
+            $validatedData['image'] = $request->file('image')->store('post-image');
+        }
 
-
-        $validatedData['image'] = $file;
-
+        $validatedData['urutan'] = highlight::group($validatedData['group'])->count();
 
         highlight::create($validatedData);
 
-
-           return redirect()->to('/admin/highlight')->with('success', 'Highlight Berhasil Dibuat');
+        return redirect()->to('/admin/highlight?group=' . $validatedData['group'])->with('success', 'Highlight Berhasil Dibuat');
     }
 
     /**
@@ -82,8 +95,8 @@ class HighlightController extends Controller
     public function edit(highlight $highlight)
     {
         return view('admin.highlight.edit',[
-            'highlights' => highlight::all(),
-            'highlight' => $highlight
+            'highlight' => $highlight,
+            'groups' => highlight::groups(),
            ]);
     }
 
@@ -97,23 +110,24 @@ class HighlightController extends Controller
     public function update(Request $request, highlight $highlight)
     {
         $validateData = $request->validate([
+            'group' => 'required|in:' . implode(',', array_keys(highlight::groups())),
             'name' => 'required',
             'desc' => 'required',
-            'image' => 'image|file|max:1024',
-
+            'icon' => 'nullable|string',
+            'link' => 'nullable|string',
+            'image' => 'nullable|image|file|max:1024',
         ]);
 
-        if($request->file('image')){
-            if($request->oldImage){
-                Storage::delete($request->oldImage);
+        if ($request->file('image')) {
+            if ($highlight->image) {
+                Storage::delete($highlight->image);
             }
             $validateData['image'] = $request->file('image')->store('post-image');
         }
 
-        highlight::where('id', $highlight->id)
-                ->update($validateData);
+        $highlight->update($validateData);
 
-        return redirect('/admin/highlight')->with('success','Highlight Berhasil Diupdate');
+        return redirect('/admin/highlight?group=' . $validateData['group'])->with('success','Highlight Berhasil Diupdate');
     }
 
     /**
@@ -127,7 +141,8 @@ class HighlightController extends Controller
         if($highlight->image){
             Storage::delete($highlight->image);
         }
-       highlight::destroy($highlight->id);
-        return redirect('/admin/highlight')->with('success','Highlight Berhasil Dihapus');
+        $group = $highlight->group;
+        highlight::destroy($highlight->id);
+        return redirect('/admin/highlight?group=' . $group)->with('success','Highlight Berhasil Dihapus');
     }
 }

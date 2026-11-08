@@ -6,68 +6,47 @@
 
 
 <!-- Form Show Konsultasi -->
-
+<main>
+<section class="section">
 @if ($konsultasi != null)
     @if ($konsultasi->jawab == 1)
-    <div class="container-fluid mt-4">
+    <div class="container">
         <div class="col-md-6 offset-md-3 card">
             <div class="card-header">
             <h5 class="mb-0">Jadwal Konsultasi</h5>
             </div>
-            <form>
-                    <div class="row mb-3 mt-3">
-                        <label class="row row col-4 ms-4" for="basic-default-name">NIP Pengusul</label>
-                        <div class="col-md-6 ">
-                          <label>: {{$konsultasi->nip}}</label>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label class="row row col-4 ms-4" for="basic-default-company">Perihal Konsultasi</label>
-                        <div class="col-md-6 ">
-                            <label>: {{$konsultasi->perihal}}</label>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label class="row row col-4 ms-4" for="basic-default-email">Jadwal Konsultasi</label>
-                        <div class="col-md-6 ">
-                          <label>: {{$konsultasi->jadwalfix}}</label>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label class="row row col-4 ms-4" for="basic-default-email">Link Konsultasi</label>
-                        <div class="col-md-6 ">
-                          <label>: {{$konsultasi->link}}</label>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label class="row row col-4 ms-4" for="basic-default-phone">Person In Charge</label>
-                        <div class="col-md-6">
-                          <label name="pic">: {{$konsultasi->pic}}</label>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label class="row row col-4 ms-4" for="basic-default-message">Keterangan</label>
-                        <div class="col-md-6">
-                          <label>:{{$konsultasi->keterangan}}</label>
-                        </div>
-                      </div>
-            </form>
+            <dl class="row mb-0 p-3">
+                <dt class="col-sm-4">NIP Pengusul</dt>
+                <dd class="col-sm-8 text-break">{{ $konsultasi->nip }}</dd>
+                <dt class="col-sm-4">Perihal Konsultasi</dt>
+                <dd class="col-sm-8 text-break">{{ optional($konsultasi->kode_konsultasi)->jenis }}</dd>
+                <dt class="col-sm-4">Jadwal Konsultasi</dt>
+                <dd class="col-sm-8 text-break">{{ $konsultasi->jadwalfix }}</dd>
+                <dt class="col-sm-4">Link Konsultasi</dt>
+                <dd class="col-sm-8 text-break">{{ $konsultasi->link }}</dd>
+                <dt class="col-sm-4">Person In Charge</dt>
+                <dd class="col-sm-8 text-break">{{ $konsultasi->pic }}</dd>
+                <dt class="col-sm-4">Keterangan</dt>
+                <dd class="col-sm-8 text-break">{{ $konsultasi->keterangan }}</dd>
+            </dl>
         </div>
     </div>
     @elseif ($konsultasi->jawab == 0)
-    <div class="">
-        <p class="text-center fs-4 padingfooter">Tiket Belum Dijawab</p>
+    <div class="container">
+        <p class="text-center fs-4">Tiket Belum Dijawab</p>
     </div>
     @endif
     @else
-<p class="text-center fs-4 padingfooter">Tiket Usul Tidak Tersedia</p>
+<div class="container">
+    <p class="text-center fs-4">Tiket Usul Tidak Tersedia</p>
+</div>
 @endif
 
-                <div class="text-center mb-0">
-                    <a href="/konsultasi/cari"><u>Kembali </u></a>
+                <div class="text-center mt-4">
+                    <a href="/konsultasi/cari" class="btn btn-outline-secondary">Kembali</a>
                 </div>
-<div class="padingfooter">
+</section>
+</main>
 @include('layout.web.footer')
-</div>
 
 @endsection

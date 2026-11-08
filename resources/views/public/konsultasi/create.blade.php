@@ -3,19 +3,26 @@
 @include('layout.web.nav')
 @include('layout.web.header-detail')
 @include('layout.partial.notif')
+<main>
 <!-- Form Usulan Konsultasi -->
-<div class="container-xxl py-4">
+<section class="section">
+<div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div class="tp-blog-main-img mt-15 p-relative">
-                <img class="w-img" src="{{asset ('assets/img/konsul1.png') }} " style="width: 100%" alt="blog">
-                <img class="w-img" src="{{asset ('assets/img/konsul1.png') }}" style="width: 100%" alt="blog">
-            </div>
+            @if($kegiatan->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($kegiatan->image))
+                <img class="img-fluid rounded" src="{{ asset('storage/' . $kegiatan->image) }}" alt="{{ $kegiatan->nama }}">
+            @else
+                <div class="d-flex align-items-center justify-content-center bg-light rounded" style="height: 260px;">
+                    <i class="bi bi-calendar-event fs-1 text-muted"></i>
+                </div>
+            @endif
         </div>
         <div class="col-md-6 ">
             <form class="Konsultasi" id="form-konsultasi" action="/konsultasi/{{ $kegiatan->slug }}/store"
-                method="POST">
+                method="POST" enctype="multipart/form-data">
                 @csrf
+                @include('layout.partial.honeypot')
+                @include('layout.partial.recaptcha')
                 {{-- ID KEGIATAN --}}
                 <input type="hidden" id="kegiatan_id" name="kegiatan_id" value="{{ $kegiatan->id }}">
 
@@ -93,6 +100,20 @@
                     @enderror
                 </div>
 
+                {{-- LAMPIRAN --}}
+                <div class="mb-3">
+                    <label for="lampiran" class="form-label">LAMPIRAN (opsional)</label>
+                    <input type="file" class="form-control @error('lampiran') is-invalid @enderror" id="lampiran"
+                        name="lampiran">
+                    <div class="form-text">PDF/JPG/PNG/DOC/DOCX, maksimal 5MB.</div>
+
+                    @error('lampiran')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
                 {{-- Button --}}
                 <div class="col text-center m-3">
                     <button type="button" class="btn btn-primary" id="btn-konfirmasi">DAFTAR</button>
@@ -102,8 +123,8 @@
         </form>
     </div>
 </div>
-
-
+</section>
+</main>
 
 @include('layout.web.footer')
 

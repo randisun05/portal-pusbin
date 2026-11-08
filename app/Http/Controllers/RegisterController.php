@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,7 @@ class RegisterController extends Controller
     {
         return view('register.register', [
             'title' => "Register",
-            'users' => User::all(),
+            'users' => User::with('role')->get(),
 
             ]);
     }
@@ -31,6 +32,7 @@ class RegisterController extends Controller
     {
         return view('register.index', [
             'title' => "Register",
+            'roles' => Role::all(),
         ]);
     }
 
@@ -46,10 +48,11 @@ class RegisterController extends Controller
             'name'=>'required|max:255',
             'username'=>['required','min:3','max:255','unique:users'],
             'email'=>'required|unique:users',
-            'password'=>'required|min:5|max:255'
+            'password'=>'required|min:8|max:255',
+            'role_id'=>'nullable|exists:roles,id',
+            'nip'=>'nullable|string|unique:users,nip',
            ]);
 
-        //    $validatedData['password'] = bcrypt($$validatedData['password']);
            $validatedData['password'] = Hash::make($validatedData['password']);
 
            User::create($validatedData);
@@ -65,10 +68,9 @@ class RegisterController extends Controller
      */
     public function show(User $user)
     {
-        return $user;
-        return view('register.register', [
-            'title' => "Register",
-            'user' => $user
+        return view('register.show', [
+            'title' => "Detail Admin",
+            'user' => $user,
 
             ]);
     }
@@ -83,7 +85,8 @@ class RegisterController extends Controller
     {
         return view('register.edit', [
             'title' => "Register",
-            'user' => $user
+            'user' => $user,
+            'roles' => Role::all(),
 
             ]);
     }
@@ -99,16 +102,20 @@ class RegisterController extends Controller
     {
         $validatedData = $request ->validate([
             'name'=>'required|max:255',
-            'username'=>['required','min:3','max:255','unique:users'],
-            'email'=>'required|unique:users',
-            'password'=>'required|min:5|max:255'
+            'username'=>['required','min:3','max:255','unique:users,username,' . $user->id],
+            'email'=>'required|unique:users,email,' . $user->id,
+            'password'=>'nullable|min:8|max:255',
+            'role_id'=>'nullable|exists:roles,id',
+            'nip'=>'nullable|string|unique:users,nip,' . $user->id,
            ]);
 
-        //    $validatedData['password'] = bcrypt($$validatedData['password']);
-           $validatedData['password'] = Hash::make($validatedData['password']);
+           if (! empty($validatedData['password'])) {
+               $validatedData['password'] = Hash::make($validatedData['password']);
+           } else {
+               unset($validatedData['password']);
+           }
 
-           User::where('id', $user->id)
-           ->update($validatedData);
+           $user->update($validatedData);
 
            return redirect()->to('/admin/register')->with('success', 'Admin Berhasil Diupdate');
     }

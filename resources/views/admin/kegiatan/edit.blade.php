@@ -33,6 +33,17 @@
                         @enderror
                     </div>
 
+                    <div class="mb-3">
+                        <label for="batas_presensi" class="form-label">Batas Akhir Presensi (opsional)</label>
+                        <input type="datetime-local" class="form-control @error('batas_presensi') is-invalid @enderror" id="batas_presensi" name="batas_presensi" value="{{old('batas_presensi', $kegiatan->batas_presensi)}}">
+                        <div class="form-text">Kosongkan jika presensi tidak dibatasi waktu. Setelah batas ini, peserta tidak bisa lagi mengisi presensi.</div>
+                        @error('batas_presensi')
+                        <div class="invalid-feedback">
+                            {{ $message}}
+                        </div>
+                        @enderror
+                    </div>
+
                         <div class="mb-3">
                             <label for="title" class="form-label">Link Kegiatan</label>
                             <input type="text" class="form-control @error('link') is-invalid @enderror" id="link" name="link" value="{{old('link', $kegiatan->link)}}">

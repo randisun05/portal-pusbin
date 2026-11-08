@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Public;
 
 use App\Models\Post;
+use App\Models\Faq;
+use App\Models\Jdihjfk;
+use App\Models\Profil;
 use App\Models\Layanan;
 use App\Models\Kegiatan;
-use App\Models\highlight;
+use App\Models\MisiItem;
+use App\Models\highlight as Highlight;
+use App\Models\PesanKontak;
+use App\Models\OrganisasiUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Concerns\GuardsAgainstSpam;
 
 class PublicController extends Controller
 {
-
-    public function portal()
-    {
-       $layanans = Layanan::latest()->where('status','1')->get();
-       return view('portal.welcome',[
-        'layanans' => $layanans,
-       ]);
-    }
+    use GuardsAgainstSpam;
 
     public function web()
     {
@@ -40,6 +40,16 @@ class PublicController extends Controller
             "posts" => $posts,
             "layanans" => $layanans,
             'kegiatans' => $kegiatans,
+            'faqs' => Faq::orderBy('urutan')->limit(4)->get(),
+            'peraturans' => Jdihjfk::published()->latest()->limit(3)->get(),
+            'profil' => Profil::current(),
+            'heroHighlights' => Highlight::group(Highlight::GROUP_HERO)->get(),
+            'aboutHighlights' => Highlight::group(Highlight::GROUP_ABOUT)->get(),
+            'fungsiHighlights' => Highlight::group(Highlight::GROUP_FUNGSI)->get(),
+            'jumlahOrganisasi' => OrganisasiUnit::count(),
+            'jumlahLayanan' => Layanan::where('status', 1)->count(),
+            'jumlahKegiatan' => Kegiatan::count(),
+            'jumlahPublikasi' => Post::count(),
         ]);
     }
 
@@ -54,64 +64,59 @@ class PublicController extends Controller
 
     public function about()
     {
-
-       return view('public.about.tentang-kami',[
-        'title' => "Tentang Kami",
-       ]);
+        return view('public.about.tentang-kami',[
+            'title' => "Tentang Kami",
+            'profil' => Profil::current(),
+            'jumlahLayanan' => Layanan::where('status', 1)->count(),
+            'jumlahKegiatan' => Kegiatan::count(),
+            'jumlahPublikasi' => Post::count(),
+            'jumlahOrganisasi' => OrganisasiUnit::count(),
+        ]);
     }
 
     public function kapus()
     {
+        $kapus = OrganisasiUnit::whereNull('parent_id')->orderBy('urutan')->first();
 
-
-       return view('public.about.kepala',[
-        'title' => "Kepala Pusat Pembinaan Jabatan Fungsional Kepegawaian",
-       ]);
+        return view('public.about.kepala',[
+            'title' => "Direktur Jabatan Fungsional Manajemen Aparatur Sipil Negara",
+            'kapus' => $kapus,
+        ]);
     }
 
     public function struktur()
     {
+        $tree = OrganisasiUnit::with('children.children.children')
+            ->whereNull('parent_id')
+            ->orderBy('urutan')
+            ->get();
 
-       return view('public.about.struktur',[
-        'title' => "Struktur Organisasi",
-       ]);
+        $units = OrganisasiUnit::orderBy('unit')->orderBy('urutan')->get();
+
+        return view('public.about.struktur',[
+            'title' => "Struktur Organisasi",
+            'tree' => $tree,
+            'units' => $units,
+            'daftarUnit' => $units->pluck('unit')->filter()->unique()->values(),
+        ]);
     }
 
     public function visimisi()
     {
-
-       return view('public.about.visi-misi',[
-        'title' => "Visi Misi",
-       ]);
-    }
-    public function kebutuhan()
-    {
-
-       return view('public.layanan.pengajuan-rekomendasi',[
-        'title' => "Rekomendasi Kebutuhan Jabatan Fungsional Kepegawaian",
-       ]);
-    }
-
-    public function pengembangan()
-    {
-        return view('public.layanan.pengembangan-kompetensi',[
-            'title' => "Pengembangan Kompetensi Jabatan Fungsional Kepegawaian",
+        return view('public.about.visi-misi',[
+            'title' => "Visi Misi",
+            'profil' => Profil::current(),
+            'misis' => MisiItem::orderBy('urutan')->get(),
         ]);
     }
 
-    public function ujikom()
+    public function layananHalaman($slug)
     {
+        $halaman = \App\Models\LayananHalaman::active()->where('slug', $slug)->firstOrFail();
 
-        return view('public.layanan.pendaftaran-ukom',[
-            'title' => "Uji Kompetensi Jabatan Fungsional Kepegawaian",
-        ]);
-
-    }
-
-    public function audiwan()
-    {
-        return view('public.layanan.perpindahan-audiwan',[
-            'title' => "Perpindahan Audiwan Ke Jabatan Fungsional Kepegawaian Lainnya",
+        return view('public.layanan.halaman', [
+            'title' => $halaman->judul,
+            'halaman' => $halaman,
         ]);
     }
 
@@ -119,7 +124,34 @@ class PublicController extends Controller
     {
         return view('public.about.kontak',[
             'title' => "Kontak Kami",
+            'profil' => Profil::current(),
         ]);
+    }
+
+    public function kontakStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'email' => 'required|email',
+            'telepon' => 'nullable',
+            'subjek' => 'nullable',
+            'pesan' => 'required',
+            'lampiran' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:5120',
+        ]);
+
+        if ($this->isSpamSubmission($request)) {
+            return redirect('/about/kontak-kami')->with('success', 'Terima kasih, pesan Anda berhasil terkirim. Kami akan segera merespon.');
+        }
+
+        unset($validatedData['lampiran']);
+
+        $pesan = PesanKontak::create($validatedData);
+
+        if ($request->hasFile('lampiran')) {
+            $pesan->simpanLampiran($request->file('lampiran'));
+        }
+
+        return redirect('/about/kontak-kami')->with('success', 'Terima kasih, pesan Anda berhasil terkirim. Kami akan segera merespon.');
     }
 
 

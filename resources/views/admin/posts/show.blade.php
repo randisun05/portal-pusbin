@@ -33,7 +33,7 @@
             <div><i class="fas fa-user me-2"></i><a href="/author/{{ $post->author->username }}" class="text-decoration-none">{{ $post->author->name }}</a></div>
             <div><i class="far fa-calendar-alt me-2"></i>{{ $post->publish_at }}</div>
             <div class="text-center">
-                <img src="{{ asset('storage/' . $post->image) }}" class="mg-fluid" style="width: 50%">
+                <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" style="max-width: 50%">
             </div>
             <br>
             <div style="text-align:justify;text-justify: ">
