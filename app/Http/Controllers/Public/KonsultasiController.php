@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Public;
 use Carbon\Carbon;
 use App\Models\Absensi;
 use App\Models\Kegiatan;
+use App\Models\Konsultasi;
+use App\Models\KodeKonsultasi;
+use App\Mail\SendEmail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Mail\SendEmailKonsultasi;
 use App\Http\Controllers\Controller;
@@ -41,6 +45,54 @@ class KonsultasiController extends Controller
         'kegiatans' => $kegiatans,
         'title' => "Konsultasi"
        ]);
+    }
+
+    /**
+     * Form pengajuan tiket konsultasi (tanya-jawab) oleh pemohon.
+     */
+    public function createTiket()
+    {
+        return view('public.konsultasi.usul', [
+            'title' => 'Ajukan Konsultasi',
+            'kode' => KodeKonsultasi::orderBy('id')->get(),
+        ]);
+    }
+
+    /**
+     * Simpan usulan konsultasi, terbitkan nomor tiket, kirim email (jika bisa).
+     */
+    public function storeTiket(Request $request)
+    {
+        $data = $request->validate([
+            'nip' => 'required|digits:18',
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'instansi' => 'required|string|max:255',
+            'kode_id' => 'required|exists:kode_konsultasis,id',
+            'deskripsi' => 'required|string|max:2000',
+            'jadwal' => 'required|date|after_or_equal:today',
+        ]);
+
+        if ($this->isSpamSubmission($request)) {
+            return redirect('/konsultasi/usul')->withSuccess('Usulan konsultasi diterima.');
+        }
+
+        $kode = KodeKonsultasi::findOrFail($data['kode_id']);
+        $data['tiket'] = Konsultasi::buatNomorTiket($kode->kode);
+
+        Konsultasi::create($data);
+
+        try {
+            Mail::to($data['email'])->send(new SendEmail([
+                'nip' => $data['nip'],
+                'email' => $data['email'],
+                'tiket' => $data['tiket'],
+            ]));
+        } catch (\Throwable $e) {
+            Log::warning('Email tiket konsultasi gagal dikirim.', ['tiket' => $data['tiket'], 'error' => $e->getMessage()]);
+        }
+
+        return redirect('/konsultasi/tiket?tiket=' . $data['tiket']);
     }
 
     /**

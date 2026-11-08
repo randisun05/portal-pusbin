@@ -10,7 +10,7 @@
 <p>Kami akan segera menindaklanjuti usulan Anda.</p>
 
 <div class="mb-0">Anda dapat memantau progres usul konsultasi secara online melalui link berikut:</div>
-<strong><a href="{{ url('/konsultasi/tiket') }}">{{ url('/konsultasi/tiket') }}</a></strong>
+<strong><a href="{{ url("/konsultasi/cari") }}">{{ url("/konsultasi/cari") }}</a></strong>
 <p>
 <div class="mb-0">Regards,</div>
 <div class="mb-0">Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara</div>

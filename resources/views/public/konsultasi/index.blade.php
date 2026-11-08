@@ -6,6 +6,13 @@
 <main>
     <section class="section">
     <div class="container">
+        <div class="alert alert-light border d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
+            <span>Ingin bertanya langsung? Ajukan konsultasi dan dapatkan nomor tiket untuk memantau jawaban.</span>
+            <span>
+                <a href="/konsultasi/usul" class="btn btn-primary btn-sm">Ajukan Konsultasi</a>
+                <a href="/konsultasi/cari" class="btn btn-outline-secondary btn-sm">Cari Tiket</a>
+            </span>
+        </div>
         @if ($kegiatans->count())
         <div class="row gy-4">
             @foreach ($kegiatans as $kegiatan)

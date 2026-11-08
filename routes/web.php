@@ -88,7 +88,7 @@ Route::prefix('admin')->group(function() {
 
         // Modul operasional
         Route::get('/konsultasi-tiket', [AdminKonsultasiController::class, 'tiketIndex'])->Middleware(['prevent-back-history', 'permission:manage-konsultasi']);
-        Route::resource('/konsultasi', AdminKonsultasiController::class)->except(['create'])->Middleware(['prevent-back-history', 'permission:manage-konsultasi']);
+        Route::resource('/konsultasi', AdminKonsultasiController::class)->except(['create', 'store'])->Middleware(['prevent-back-history', 'permission:manage-konsultasi']);
         Route::resource('/repository', AdminJdifjfkController::class)->Middleware(['prevent-back-history', 'permission:manage-repository']);
         Route::group(['middleware' => ['permission:manage-survei']], function () {
             Route::resource('/survei', AdminSurveiController::class)->Middleware(['prevent-back-history']);
@@ -195,6 +195,8 @@ Route::get('/konsultasi/cari', function () {
 });
 Route::get('/konsultasi/jadwal', [AdminKonsultasiController::class, 'search'])->middleware('throttle:20,1');
 Route::get('/konsultasi/tiket', [AdminKonsultasiController::class, 'tiket']);
+Route::get('/konsultasi/usul', [\App\Http\Controllers\Public\KonsultasiController::class, 'createTiket']);
+Route::post('/konsultasi/usul', [\App\Http\Controllers\Public\KonsultasiController::class, 'storeTiket'])->middleware('throttle:5,1');
 Route::get('/konsultasi/{kegiatan:slug}', [\App\Http\Controllers\Public\KonsultasiController::class, 'create']);
 Route::post('/konsultasi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\KonsultasiController::class, 'store'])->middleware('throttle:5,1');
 

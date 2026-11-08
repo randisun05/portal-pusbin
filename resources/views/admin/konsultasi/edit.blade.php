@@ -39,6 +39,11 @@
                 </div>
 
                 <div class="row row-cols-3 mb-4">
+                  <div class="col col-lg-2"><label for="deskripsi">Pertanyaan Pemohon</label></div>
+                  <div class="col"> <textarea class="form-control" id="deskripsi" rows="4" disabled>{{ $konsultasi->deskripsi }}</textarea></div>
+                </div>
+
+                <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="jenis">Jenis Konsultasi</label></div>
                   <div class="col"> <input type="text" class="form-control" name="jenis" id="jenis" value="{{ optional($konsultasi->kode_konsultasi)->jenis }}" disabled></div>
                 </div>

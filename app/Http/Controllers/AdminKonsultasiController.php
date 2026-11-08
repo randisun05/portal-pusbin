@@ -71,59 +71,6 @@ class AdminKonsultasiController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // return $request;
-
-
-        $kode = KodeKonsultasi::where('id', $request->kode_id)->get('kode');
-        do {
-            $array = [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0];
-            $random = Arr::random($array, 4);
-            $tiket = $kode[0]->kode;
-            foreach($random as $r){
-                $tiket = $tiket . $r;
-            }
-        } while(Konsultasi::where('tiket', $tiket)->exists());
-
-        // $array = [1, 2, 3, 4, 5, 6, 7, 8 ,9, 0];
-        // $random = Arr::random($array, 4);
-        // $tiket = $kode;
-        // foreach($random as $r){
-        //     $tiket = $tiket . $r;
-        // }
-
-        $validatedData = $request->validate([
-            "*" => 'required',
-        ]);
-
-        $validatedData['tiket'] = $tiket;
-
-        // if($request->tiket = ""){
-        //     $validateData['tiket'] = $tiket;
-        // }
-
-        Konsultasi::create($validatedData);
-        $data = [
-            'nip' => $request->nip,
-            'email' => $request->nip,
-            'tiket' => $tiket
-        ];
-
-        Mail::to($data['email'])->send(new SendEmail($data));
-
-        return view('public.konsultasi.tiket',[
-            "tiket" => $tiket,
-            "title" => "Nomor Tiket",
-        ]);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Konsultasi  $konsultasi
