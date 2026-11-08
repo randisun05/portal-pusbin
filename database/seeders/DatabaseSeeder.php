@@ -19,6 +19,7 @@ use App\Models\Post;
 use App\Models\Profil;
 use App\Models\Role;
 use App\Models\Survei;
+use App\Models\SurveiGroup;
 use App\Models\SurveiIndikator;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -318,6 +319,26 @@ class DatabaseSeeder extends Seeder
         SurveiIndikator::create([
             'title' => 'Link',
         ]);
+
+        // Tautkan indikator ke survei (nomor urut = urutan pembuatan di atas) agar
+        // formulir survei publik langsung terisi pada instalasi baru.
+        $surveiIds = Survei::orderBy('id')->pluck('id')->values();
+        $indikatorIds = SurveiIndikator::orderBy('id')->pluck('id')->values();
+        $petaIndikator = [
+            1 => [9, 10, 11],   // Pengumpulan Data JFK: Nama, No HP, Link
+            2 => [9, 10],       // Pengumpulan Data Quesioner: Nama, No HP
+            3 => [8],           // Survei Pelaksanaan Pelatihan
+            4 => [3, 4, 5, 6],  // Survei Kepuasan Layanan
+            5 => [1, 2, 7],     // Survei Pelaksanaan Ujikompetensi
+        ];
+        foreach ($petaIndikator as $nomorSurvei => $daftar) {
+            foreach ($daftar as $nomorIndikator) {
+                SurveiGroup::create([
+                    'survei_id' => $surveiIds[$nomorSurvei - 1],
+                    'indikator_id' => $indikatorIds[$nomorIndikator - 1],
+                ]);
+            }
+        }
 
 
 
