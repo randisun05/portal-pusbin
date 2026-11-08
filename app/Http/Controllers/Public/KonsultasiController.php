@@ -85,6 +85,7 @@ class KonsultasiController extends Controller
         try {
             Mail::to($data['email'])->send(new SendEmail([
                 'nip' => $data['nip'],
+                'nama' => $data['nama'],
                 'email' => $data['email'],
                 'tiket' => $data['tiket'],
             ]));

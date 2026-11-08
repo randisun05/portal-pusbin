@@ -48,12 +48,16 @@ class KonsultasiAnswerTest extends TestCase
             'jadwalfix' => now()->addDay()->toDateTimeString(),
             'link' => 'https://zoom.us/j/12345',
             'pic' => 'Admin Penjawab',
+            'keterangan' => 'Siapkan SK CPNS dan SK Pangkat terakhir.',
         ]);
 
         $response->assertRedirect('/admin/konsultasi-tiket');
         $ticket->refresh();
         $this->assertTrue((bool) $ticket->jawab);
         $this->assertSame('Admin Penjawab', $ticket->pic);
+        $this->assertSame('Siapkan SK CPNS dan SK Pangkat terakhir.', $ticket->keterangan);
+
+        $this->get('/konsultasi/jadwal?search=' . $ticket->tiket)->assertSee('Siapkan SK CPNS dan SK Pangkat terakhir.');
 
         $this->actingAs($admin)
             ->get('/admin/konsultasi-tiket')
@@ -83,5 +87,16 @@ class KonsultasiAnswerTest extends TestCase
             ->assertOk()
             ->assertSee('199001012020011001')
             ->assertSee('Jabatan Fungsional Kepegawaian');
+    }
+
+    public function test_answer_form_prefills_saved_schedule_for_editing()
+    {
+        $admin = User::factory()->create();
+        $ticket = $this->makeTicket();
+        $ticket->update(['jawab' => 1, 'jadwalfix' => '2026-11-14 10:00:00', 'link' => 'https://zoom.us/j/1', 'pic' => 'PIC']);
+
+        $this->actingAs($admin)->get("/admin/konsultasi/{$ticket->id}/edit")
+            ->assertOk()
+            ->assertSee('value="2026-11-14T10:00"', false);
     }
 }

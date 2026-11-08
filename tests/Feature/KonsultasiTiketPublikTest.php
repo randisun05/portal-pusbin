@@ -47,7 +47,7 @@ class KonsultasiTiketPublikTest extends TestCase
         $this->assertSame(0, (int) $ticket->jawab);
         $response->assertRedirect('/konsultasi/tiket?tiket=' . $ticket->tiket);
 
-        Mail::assertSent(SendEmail::class, fn ($m) => $m->hasTo('pemohon@example.com'));
+        Mail::assertSent(SendEmail::class, fn ($m) => $m->hasTo('pemohon@example.com') && $m->data['nama'] === 'Pemohon Tiket' && str_contains(view('emails.tiketkonsultasi', ['data' => $m->data])->render(), 'Yth. Pemohon Tiket') && $m->data['tiket'] === $ticket->tiket);
 
         $this->get('/konsultasi/tiket?tiket=' . $ticket->tiket)->assertOk()->assertSee($ticket->tiket);
         $this->get('/konsultasi/jadwal?search=' . $ticket->tiket)->assertOk()->assertSee('Tiket Belum Dijawab');
@@ -92,5 +92,17 @@ class KonsultasiTiketPublikTest extends TestCase
 
         $this->actingAs($admin)->get('/admin/konsultasi/' . $ticket->id . '/edit')
             ->assertOk()->assertSee('Bagaimana cara mengajukan kenaikan jenjang jabatan?');
+    }
+
+    public function test_sidebar_highlights_tiket_menu_on_answer_page(): void
+    {
+        $admin = \App\Models\User::factory()->create();
+        $this->post('/konsultasi/usul', $this->payload());
+        $ticket = Konsultasi::firstOrFail();
+
+        $html = $this->actingAs($admin)->get('/admin/konsultasi/' . $ticket->id . '/edit')->getContent();
+
+        $this->assertMatchesRegularExpression('#menu-item active">\s*<a href="/admin/konsultasi-tiket"#', $html);
+        $this->assertDoesNotMatchRegularExpression('#menu-item active">\s*<a href="/admin/konsultasi"#', $html);
     }
 }

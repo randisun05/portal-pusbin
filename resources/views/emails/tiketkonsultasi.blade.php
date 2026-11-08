@@ -4,7 +4,7 @@
     <title>Tiket Konsultasi Direktorat JF MASN</title>
 </head>
 <body>
-<h3> Dear {{ $data['nip'] }}</h3>
+<h3> Yth. {{ $data['nama'] ?? $data['nip'] }}</h3>
 
 <p>Usul konsultasi anda telah dikirim ke Sistem informasi Jabatan Fungsional Kepegawaian Badan Kepegawaian Negara dengan nomor tiket <strong>{{ $data['tiket'] }}</strong>.</p>
 <p>Kami akan segera menindaklanjuti usulan Anda.</p>

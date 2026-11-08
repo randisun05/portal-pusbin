@@ -60,7 +60,7 @@
 
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="jadwalfix">Jadwal Fix</label></div>
-                  <div class="col"> <input type="datetime-local" class="form-control @error('jadwalfix') is-invalid @enderror" value="" name="jadwalfix" id="jadwalfix" value="{{old('jadwalfix', $konsultasi->jadwalfix)}}" placeholder="Masukan Jadwalfix Kosultasi"></div>
+                  <div class="col"> <input type="datetime-local" class="form-control @error('jadwalfix') is-invalid @enderror" name="jadwalfix" id="jadwalfix" value="{{ old('jadwalfix', $konsultasi->jadwalfix ? \Illuminate\Support\Carbon::parse($konsultasi->jadwalfix)->format('Y-m-d\TH:i') : '') }}" placeholder="Masukan Jadwalfix Kosultasi"></div>
                   @error('jadwalfix')
                   <div class="invalid-feedback d-block">
                     Jadwal Fix Konsultasi Harus Diisi

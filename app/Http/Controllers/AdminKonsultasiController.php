@@ -136,6 +136,7 @@ class AdminKonsultasiController extends Controller
             'jadwalfix' => 'required',
             'link' => 'required',
             'pic' => 'required',
+            'keterangan' => 'nullable|string|max:1000',
         ]);
 
         $validateData['jawab'] = 1;
