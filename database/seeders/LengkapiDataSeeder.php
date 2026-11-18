@@ -33,6 +33,7 @@ class LengkapiDataSeeder extends Seeder
         $this->ratingAbsensi();
         $this->sertifikat();
         $this->surveiPublik();
+        $this->dataTerkini();
 
         $this->command?->info('Data lengkap selesai ditambahkan (tanpa menghapus data lama).');
     }
@@ -471,6 +472,102 @@ class LengkapiDataSeeder extends Seeder
                         'velue' => $nilai, 'created_at' => $waktu, 'updated_at' => $waktu,
                     ]);
                 }
+            }
+        }
+    }
+
+    // ------------------------------------------------- berita, kegiatan, tiket
+
+    /** Konten bertanggal terkini (relatif terhadap hari ini); idempoten per slug. */
+    private function dataTerkini(): void
+    {
+        $f = $this->faker();
+        $hari = now()->startOfDay();
+
+        // Berita terbaru.
+        $berita = [
+            [1, 'Jadwal Ujikompetensi Periode IV Tahun 2026 Resmi Dibuka', 'Pendaftaran dan jadwal pelaksanaan ujikompetensi periode IV sudah dapat diakses melalui portal.', -1,
+                'Direktorat JF MASN membuka pelaksanaan ujikompetensi kenaikan jenjang periode IV. Peserta diminta memastikan data NIP dan jabatan sudah sesuai sebelum hari pelaksanaan.'],
+            [3, 'Konsultasi Online Jabatan Fungsional Kepegawaian Kembali Dibuka', 'Sesi konsultasi daring setiap Senin dan Rabu dapat dijadwalkan melalui menu Konsultasi.', -3,
+                'Peserta cukup mengisi form pengajuan tiket, lalu tim akan menetapkan jadwal dan mengirim tautan pertemuan melalui email.'],
+            [1, 'Pemutakhiran Data Pejabat Fungsional Kepegawaian Tahun 2026', 'Seluruh instansi diminta mengisi formulir pemutakhiran data pejabat fungsional sebelum akhir tahun.', -5,
+                'Pengisian dilakukan melalui menu Formulir pada portal. Berkas SK pengangkatan dilampirkan dalam format PDF dengan ukuran maksimal 5 MB.'],
+            [3, 'Rangkuman Sosialisasi Aplikasi Ujikom dan Verifikasi Sertifikat', 'Fitur QR sertifikat dan presensi daring dipaparkan kepada operator kepegawaian instansi.', -8,
+                'Sertifikat kegiatan kini dapat diverifikasi keasliannya dengan memindai kode QR atau memasukkan nomor sertifikat pada halaman verifikasi.'],
+            [2, 'Panduan Pengajuan Usul Penetapan Angka Kredit', 'Langkah, kelengkapan berkas, dan estimasi waktu proses penetapan angka kredit.', -11,
+                'Berkas usul diverifikasi kelengkapannya, dinilai oleh tim penilai, kemudian ditetapkan oleh pejabat berwenang. Pemohon menerima pemberitahuan hasil melalui sistem.'],
+            [1, 'Jadwal Layanan Akhir Tahun 2026', 'Penyesuaian jam layanan konsultasi dan verifikasi pada periode akhir tahun.', -13,
+                'Layanan tetap dapat diajukan melalui portal selama libur. Pengajuan akan diproses pada hari kerja berikutnya.'],
+        ];
+        foreach ($berita as [$kategori, $judul, $ringkas, $offset, $isi]) {
+            $slug = Str::slug($judul);
+            if (DB::table('posts')->where('slug', $slug)->exists()) {
+                continue;
+            }
+            $rel = "post-image/berita-$slug.jpg";
+            DummyImage::card("{$this->disk}/$rel", $judul, DB::table('categories')->where('id', $kategori)->value('name') ?? 'Berita');
+            $tgl = $hari->copy()->addDays($offset);
+            DB::table('posts')->insert([
+                'category_id' => $kategori, 'user_id' => 1, 'title' => $judul, 'slug' => $slug,
+                'excerpt' => $ringkas, 'image' => $rel, 'body' => "<p>$isi</p><p>Informasi lebih lanjut dapat diperoleh melalui menu Konsultasi atau Kontak pada portal.</p>",
+                'views' => mt_rand(40, 400), 'publish_at' => $tgl->format('Y-m-d'),
+                'created_at' => $tgl->copy()->setTime(9, 0), 'updated_at' => $tgl->copy()->setTime(9, 0),
+            ]);
+        }
+
+        // Kegiatan mendatang.
+        $senin = $hari->copy()->next('Monday');
+        $rabu = $hari->copy()->next('Wednesday');
+        $kegiatan = [
+            ['Konsultasi Online Senin', 'Konsultasi', $senin->copy()->setTime(9, 0), 'Sesi konsultasi daring seputar JF Kepegawaian, setiap Senin.'],
+            ['Konsultasi Online Rabu', 'Konsultasi', $rabu->copy()->setTime(10, 0), 'Sesi konsultasi daring seputar uji kompetensi, setiap Rabu.'],
+            ['Konsultasi Online Senin', 'Konsultasi', $senin->copy()->addWeek()->setTime(9, 0), 'Sesi konsultasi daring seputar JF Kepegawaian, setiap Senin.'],
+            ['Webinar Evaluasi Layanan dan Rencana Pembinaan JF Tahun 2027', 'Webinar', $hari->copy()->addDays(30)->setTime(10, 0), 'Evaluasi layanan 2026 dan paparan rencana pembinaan jabatan fungsional 2027.'],
+            ['Ujikompetensi Kenaikan Jenjang Periode I Tahun 2027', 'Uji Kompetensi', \Illuminate\Support\Carbon::create(2027, 2, 9, 9, 0), 'Uji kompetensi kenaikan jenjang JF Kepegawaian periode I tahun 2027.'],
+        ];
+        foreach ($kegiatan as [$nama, $jenis, $waktu, $desc]) {
+            $slug = Str::slug($nama . ' ' . $waktu->format('d-m-Y'));
+            if (DB::table('kegiatans')->where('slug', $slug)->exists()) {
+                continue;
+            }
+            $rel = "post-image/kegiatan-$slug.jpg";
+            DummyImage::card("{$this->disk}/$rel", $nama, $jenis);
+            DB::table('kegiatans')->insert([
+                'nama' => $nama, 'slug' => $slug, 'deskripsi' => $desc, 'waktu' => $waktu->format('Y-m-d H:i:s'),
+                'batas_presensi' => null, 'link' => 'https://zoom.example.go.id/j/' . mt_rand(100000000, 999999999),
+                'jenis' => $jenis, 'image' => $rel, 'status' => '1',
+                'created_at' => now(), 'updated_at' => now(),
+            ]);
+        }
+
+        // Tiket konsultasi mendatang (dua sudah dijadwalkan, empat menunggu).
+        if (! DB::table('konsultasis')->where('jadwal', '>', now())->exists()) {
+            $instansi = ['Kementerian Keuangan', 'Pemerintah Provinsi Jawa Barat', 'Kementerian Agama', 'Pemerintah Kota Surabaya', 'Kantor Regional BKN', 'Pemerintah Kabupaten Sleman'];
+            $topik = [
+                [2, 'Persiapan berkas ujikompetensi periode berikutnya'],
+                [1, 'Konversi angka kredit setelah perubahan nomenklatur'],
+                [3, 'Pembinaan pejabat fungsional baru di instansi'],
+                [1, 'Penyusunan SKP pejabat fungsional kepegawaian'],
+                [2, 'Syarat kenaikan jenjang ahli muda ke ahli madya'],
+                [3, 'Permohonan narasumber sosialisasi di instansi'],
+            ];
+            $pic = ['Rizky Fauzan Hakim, S.T.', 'Citra Lestari Anggraini, S.Sos.'];
+            $seq = (int) DB::table('konsultasis')->max('id');
+            foreach ($topik as $i => [$kode, $perihal]) {
+                $jadwal = $hari->copy()->addDays($i + 1)->setTime(9 + ($i % 5), 0);
+                $dijadwalkan = $i < 2;
+                $seq++;
+                DB::table('konsultasis')->insert([
+                    'nip' => $this->nip(), 'nama' => $f->name(), 'email' => $f->unique()->safeEmail(),
+                    'instansi' => $instansi[$i], 'kode_id' => $kode, 'deskripsi' => $perihal,
+                    'jadwal' => $jadwal->format('Y-m-d H:i:s'),
+                    'jadwalfix' => $dijadwalkan ? $jadwal->format('Y-m-d H:i:s') : null,
+                    'link' => $dijadwalkan ? 'https://zoom.example.go.id/j/' . mt_rand(100000000, 999999999) : null,
+                    'pic' => $dijadwalkan ? $pic[$i % 2] : null, 'keterangan' => $dijadwalkan ? $perihal : null,
+                    'tiket' => sprintf('%03d-%s-%03d', $kode, $hari->format('ymd'), $seq),
+                    'jawab' => $dijadwalkan ? 1 : 0,
+                    'created_at' => now(), 'updated_at' => now(),
+                ]);
             }
         }
     }
