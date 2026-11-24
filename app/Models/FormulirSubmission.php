@@ -8,6 +8,7 @@ use App\Models\Concerns\HasLampiran;
 
 class FormulirSubmission extends Model
 {
+    use \App\Models\Concerns\Auditable;
     use HasFactory;
     use HasLampiran;
 

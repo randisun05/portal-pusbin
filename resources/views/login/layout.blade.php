@@ -57,7 +57,7 @@
         background: color-mix(in srgb, var(--accent-color), transparent 88%); color: var(--accent-color);
     }
     .login-form-panel h1 { font-size: 28px; font-weight: 700; margin: 0 0 6px; }
-    .login-form-panel .login-sub { color: color-mix(in srgb, var(--default-color), transparent 35%); font-size: 15px; margin-bottom: 28px; }
+    .login-form-panel .login-sub { color: color-mix(in srgb, var(--default-color), transparent 15%); font-size: 15px; margin-bottom: 28px; }
     .login-form-panel .form-control { padding: 11px 14px; }
     .login-form-panel .btn-login { width: 100%; padding: 12px; font-size: 16px; }
     .login-form-panel .password-wrap { position: relative; }
@@ -69,7 +69,7 @@
     .login-form-panel .login-switch { margin: 28px 0 0; padding-top: 20px; border-top: 1px solid #eceff3; font-size: 14px; text-align: center; }
     .login-form-panel .login-switch a { color: var(--accent-color); font-weight: 600; }
     .login-form-panel .login-back { text-align: center; margin: 14px 0 0; font-size: 13px; }
-    .login-form-panel .login-back a { color: color-mix(in srgb, var(--default-color), transparent 35%); }
+    .login-form-panel .login-back a { color: color-mix(in srgb, var(--default-color), transparent 15%); text-decoration: underline; }
 
     @media (max-width: 767.98px) {
         .login-shell { grid-template-columns: 1fr; min-height: 0; max-width: 460px; }

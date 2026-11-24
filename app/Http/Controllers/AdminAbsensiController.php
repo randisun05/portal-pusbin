@@ -45,7 +45,7 @@ class AdminAbsensiController extends Controller
      */
     public function export()
     {
-        $nama = request('search') ? optional(Kegiatan::find(request('search')))->nama : 'Semua-Kegiatan';
+        $nama = (request('search') ? optional(Kegiatan::find(request('search')))->nama : null) ?: 'Semua-Kegiatan';
         $filename = 'Absensi-' . str_replace(' ', '-', $nama) . '-' . now()->format('Ymd-His') . '.xlsx';
 
         return Excel::download(new AbsensiExport(request('search')), $filename);

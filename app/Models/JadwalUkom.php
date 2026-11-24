@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class JadwalUkom extends Model
 {
+    use \App\Models\Concerns\Auditable;
     use HasFactory;
     protected $guarded =['id'];
 }

@@ -31,6 +31,30 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // Kredensial API BKN (apimws) untuk profil SIASN & publikasi sertifikat ke MyASN.
+    // Nilainya sama dengan project ujikom-pusbin; isi hanya di .env, jangan di-commit.
+    'bkn' => [
+        'client_id' => env('BKN_CLIENT_ID'),
+        'client_secret' => env('BKN_CLIENT_SECRET'),
+        'base_url' => env('BKN_API_URL', 'https://apimws.bkn.go.id:8243/pusbin/1'),
+        'siasn_client_id' => env('SIASN_CLIENT_ID', 'internalpusbinjf'),
+        'siasn_username' => env('SIASN_USERNAME'),
+        'siasn_password' => env('SIASN_PASSWORD'),
+        'siasn_token' => env('SIASN_AUTH_TOKEN'),
+    ],
+
+    // Publikasi sertifikat ke riwayat sertifikasi MyASN (save lalu upload PDF).
+    // Nonaktif selama MYASN_CERT_URL kosong; kirim lalu memakai jalur Manajemen JF di bawah.
+    'myasn' => [
+        'url' => env('MYASN_CERT_URL'),
+        'timeout' => (int) env('MYASN_CERT_TIMEOUT', 30),
+        'upload_timeout' => (int) env('MYASN_CERT_UPLOAD_TIMEOUT', 120),
+        'id_ref_dokumen' => (int) env('MYASN_CERT_ID_REF_DOKUMEN', 1689),
+        'lembaga_id' => env('MYASN_CERT_LEMBAGA_ID'),
+        'lembaga_nama' => env('MYASN_CERT_LEMBAGA_NAMA', 'Pusat Pembinaan Jabatan Fungsional BKN'),
+        'rumpun_jabatan_id' => env('MYASN_CERT_RUMPUN_ID'),
+    ],
+
     'jf_management' => [
         'url' => env('JF_MANAGEMENT_API_URL'),
         'key' => env('JF_MANAGEMENT_API_KEY'),

@@ -42,6 +42,12 @@ class JfManagementService
      */
     public function send(Sertifikat $sertifikat): Sertifikat
     {
+        // MyASN (BKN) dipakai bila MYASN_CERT_URL terisi; kalau tidak, jalur Manajemen JF di bawah.
+        $myasn = app(MyAsnPublisher::class);
+        if ($myasn->available()) {
+            return $myasn->publish($sertifikat);
+        }
+
         $payload = $this->buildPayload($sertifikat);
         $url = config('services.jf_management.url');
 

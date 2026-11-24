@@ -14,7 +14,7 @@
             @if (session()->has('success'))
                 <div class="text-center mb-4 p-4" style="background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 90%), var(--surface-color)); border-radius: 16px;">
                     <div style="font-size: 3rem;">{{ session('badgeIcon', '🏆') }}</div>
-                    <h4 class="mt-2 mb-1">Terima kasih atas kontribusi Anda!</h4>
+                    <h2 class="h4 mt-2 mb-1">Terima kasih atas kontribusi Anda!</h2>
                     <p class="text-muted mb-2">{{ session('success') }}</p>
                     @if (session()->has('badgeLabel'))
                         <span class="badge rounded-pill" style="background: var(--accent-color); padding: 8px 18px; font-size: .85rem;">
@@ -32,14 +32,14 @@
                         <tr>
                             <th scope="col" class="text-center" width="10%">No</th>
                             <th scope="col" class="text-center">Nama Survei</th>
-                            <th scope="col" class="text-center"></th>
+                            <th scope="col" class="text-center"><span class="visually-hidden">Aksi</span></th>
                         </tr>
                     </thead>
                     @foreach ($surveis as $survei )
                         <tr>
                             <td class="text-center">{{$loop->iteration}}.</td>
                             <td>{{$survei->title}}</td>
-                            <td class="text-center"><a href="/survei/{{$survei->id}}/create" class="badge bg-warning">Isi Survei</a></td>
+                            <td class="text-center"><a href="/survei/{{$survei->id}}/create" class="badge bg-warning text-dark">Isi Survei</a></td>
                         </tr>
                     @endforeach
                 </table>

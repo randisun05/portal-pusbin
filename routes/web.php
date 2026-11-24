@@ -108,7 +108,7 @@ Route::prefix('admin')->group(function() {
             Route::get('/formulir/{formulir}/submissions', [\App\Http\Controllers\Admin\AdminFormulirController::class, 'submissions'])->Middleware(['prevent-back-history']);
             Route::get('/formulir/{formulir}/export', [\App\Http\Controllers\Admin\AdminFormulirController::class, 'export'])->Middleware(['prevent-back-history']);
         });
-        Route::resource('/dashboard', AdminDashboardController::class)->Middleware(['prevent-back-history']);
+        Route::resource('/dashboard', AdminDashboardController::class)->Middleware(['prevent-back-history', 'permission:manage-dashboard']);
         Route::resource('/jadwalukom', AdminJadwalController::class)->Middleware(['prevent-back-history', 'permission:manage-jadwalukom']);
         Route::get('/absensi/export', [AdminAbsensiController::class, 'export'])->Middleware(['prevent-back-history', 'permission:manage-absensi']);
         Route::get('/absensi/daftar-hadir', [AdminAbsensiController::class, 'cetakDaftarHadir'])->Middleware(['prevent-back-history', 'permission:manage-absensi']);
@@ -138,6 +138,9 @@ Route::prefix('admin')->group(function() {
 
         // Laporan & monitoring
         Route::get('/auditlog', [AdminAuditLogController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-auditlog']);
+        Route::get('/data-pribadi', [\App\Http\Controllers\Admin\AdminDataPribadiController::class, 'index'])->Middleware(['prevent-back-history', 'permission:export-data-pribadi']);
+        Route::post('/data-pribadi/export', [\App\Http\Controllers\Admin\AdminDataPribadiController::class, 'export'])->Middleware(['prevent-back-history', 'permission:export-data-pribadi']);
+        Route::post('/data-pribadi/anonimkan', [\App\Http\Controllers\Admin\AdminDataPribadiController::class, 'anonimkan'])->Middleware(['prevent-back-history', 'permission:export-data-pribadi']);
         Route::get('/pengunjung', [AdminPengunjungController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-pengunjung']);
         Route::get('/absensi-statistik', [AdminAbsensiStatController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
         Route::get('/survei-statistik', [AdminSurveiStatController::class, 'index'])->Middleware(['prevent-back-history', 'permission:view-statistik']);
@@ -150,12 +153,12 @@ Route::prefix('admin')->group(function() {
 // route login
 Route::get('/login', [LoginController::class, 'index'] )->name('login')->Middleware('guest');
 Route::get('/login/sso', [LoginController::class, 'sso'])->Middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate'] )->middleware('throttle:5,1');
-Route::get('/login/sso/redirect', [LoginController::class, 'ssoRedirect'])->middleware(['guest', 'throttle:10,1']);
-Route::get('/login/sso/callback', [LoginController::class, 'ssoCallback'])->middleware(['guest', 'throttle:10,1']);
+Route::post('/login', [LoginController::class, 'authenticate'] )->middleware('throttle:5,1,login');
+Route::get('/login/sso/redirect', [LoginController::class, 'ssoRedirect'])->middleware(['guest', 'throttle:10,1,sso-redirect']);
+Route::get('/login/sso/callback', [LoginController::class, 'ssoCallback'])->middleware(['guest', 'throttle:10,1,sso-callback']);
 Route::post('/logout', [LoginController::class, 'logout'] );
 Route::get('/login/verifikasi-2fa', [LoginController::class, 'showTwoFactorChallenge']);
-Route::post('/login/verifikasi-2fa', [LoginController::class, 'verifyTwoFactor'])->middleware('throttle:5,1');
+Route::post('/login/verifikasi-2fa', [LoginController::class, 'verifyTwoFactor'])->middleware('throttle:5,1,login-2fa');
 
 //ROUTE PUBLIC
 //route halaman awal web
@@ -167,8 +170,8 @@ Route::get('/webpusbin', [\App\Http\Controllers\Public\PublicController::class, 
 //route publikasi
 Route::get('/publikasi', [\App\Http\Controllers\Public\PostController::class, 'index']);       //daftar publikasi
 Route::get('/publikasi/{post:slug}', [\App\Http\Controllers\Public\PostController::class, 'show'] );    //halaman single post
-Route::post('/publikasi/{post:slug}/komentar', [\App\Http\Controllers\Public\PostController::class, 'storeComment'])->middleware('throttle:5,1');
-Route::post('/publikasi/{post:slug}/react', [\App\Http\Controllers\Public\PostController::class, 'react'])->middleware('throttle:30,1');
+Route::post('/publikasi/{post:slug}/komentar', [\App\Http\Controllers\Public\PostController::class, 'storeComment'])->middleware('throttle:5,1,komentar');
+Route::post('/publikasi/{post:slug}/react', [\App\Http\Controllers\Public\PostController::class, 'react'])->middleware('throttle:30,1,react');
 Route::get('/categories/{category:slug}', function(Category $category ) {
     return view('public.berita.category', [
         'title' => $category -> name,
@@ -193,23 +196,23 @@ Route::get('/konsultasi/cari', function () {
         'title' => "Cari Konsultasi"
     ]);
 });
-Route::get('/konsultasi/jadwal', [AdminKonsultasiController::class, 'search'])->middleware('throttle:20,1');
+Route::get('/konsultasi/jadwal', [AdminKonsultasiController::class, 'search'])->middleware('throttle:20,1,konsultasi-jadwal');
 Route::get('/konsultasi/tiket', [AdminKonsultasiController::class, 'tiket']);
 Route::get('/konsultasi/usul', [\App\Http\Controllers\Public\KonsultasiController::class, 'createTiket']);
-Route::post('/konsultasi/usul', [\App\Http\Controllers\Public\KonsultasiController::class, 'storeTiket'])->middleware('throttle:5,1');
+Route::post('/konsultasi/usul', [\App\Http\Controllers\Public\KonsultasiController::class, 'storeTiket'])->middleware('throttle:5,1,konsultasi-usul');
 Route::get('/konsultasi/{kegiatan:slug}', [\App\Http\Controllers\Public\KonsultasiController::class, 'create']);
-Route::post('/konsultasi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\KonsultasiController::class, 'store'])->middleware('throttle:5,1');
+Route::post('/konsultasi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\KonsultasiController::class, 'store'])->middleware('throttle:5,1,konsultasi-store');
 
 //ROUTE ABSENSI
 Route::get('/absensi', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'index'])->name('public.absensi.index');
 Route::get('/absensi/{kegiatan:slug}', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'create']);
-Route::post('/absensi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'store'])->middleware('throttle:5,1');
+Route::post('/absensi/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicAbsensiController::class, 'store'])->middleware('throttle:5,1,absensi-store');
 
 //ROUTE KEGIATAN
 Route::get('/kegiatan', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'index'])->name('public.kegiatan.index');
 Route::get('/kegiatan/{kegiatan:slug}', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'show']);
 Route::get('/kegiatan/{kegiatan:slug}/create', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'create']);
-Route::post('/kegiatan/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'store'])->middleware('throttle:5,1');
+Route::post('/kegiatan/{kegiatan:slug}/store', [\App\Http\Controllers\Public\PublicKegiatanController::class, 'store'])->middleware('throttle:5,1,kegiatan-store');
 
 
 //ROUTE REPOSITORY
@@ -218,34 +221,34 @@ Route::get('/repository', [\App\Http\Controllers\Public\JdihController::class, '
 //ROUTE VERIFIKASI SERTIFIKAT
 Route::get('/verifikasi-sertifikat', [\App\Http\Controllers\Public\SertifikatVerifikasiController::class, 'index'])
     ->name('public.sertifikat.verifikasi')
-    ->middleware('throttle:10,1');
+    ->middleware('throttle:10,1,verifikasi-sertifikat');
 
 //ROUTE UNDUH SERTIFIKAT MANDIRI
 Route::get('/sertifikat/unduh', [\App\Http\Controllers\Public\SertifikatUnduhController::class, 'index'])->name('public.sertifikat.unduh');
-Route::post('/sertifikat/unduh', [\App\Http\Controllers\Public\SertifikatUnduhController::class, 'unduh'])->middleware('throttle:10,1');
+Route::post('/sertifikat/unduh', [\App\Http\Controllers\Public\SertifikatUnduhController::class, 'unduh'])->middleware('throttle:10,1,sertifikat-unduh');
 
 //ROUTE PENCARIAN
 Route::get('/cari', [\App\Http\Controllers\Public\SearchController::class, 'index'])->name('public.search.index');
 
 //ROUTE FAQ
 Route::get('/faq', [\App\Http\Controllers\Public\FaqController::class, 'index']);
-Route::post('/chat/ask', [\App\Http\Controllers\Public\FaqController::class, 'ask'])->middleware('throttle:12,1');
+Route::post('/chat/ask', [\App\Http\Controllers\Public\FaqController::class, 'ask'])->middleware('throttle:12,1,chat');
 
 //ROUTE SURVEI
 Route::get('/survei', [\App\Http\Controllers\Public\SurveiPublicController::class, 'index'])->name('public.survei.index');
 Route::get('/survei/{survei}/create', [\App\Http\Controllers\Public\SurveiPublicController::class, 'create']);
-Route::post('/survei/{survei}', [\App\Http\Controllers\Public\SurveiPublicController::class, 'store'])->middleware('throttle:5,1');
+Route::post('/survei/{survei}', [\App\Http\Controllers\Public\SurveiPublicController::class, 'store'])->middleware('throttle:5,1,survei-store');
 
 //ROUTE FORMULIR
 Route::get('/form', [\App\Http\Controllers\Public\PublicFormulirController::class, 'index'])->name('public.formulir.index');
 Route::get('/form/{formulir:slug}', [\App\Http\Controllers\Public\PublicFormulirController::class, 'create']);
-Route::post('/form/{formulir:slug}', [\App\Http\Controllers\Public\PublicFormulirController::class, 'store'])->middleware('throttle:5,1');
+Route::post('/form/{formulir:slug}', [\App\Http\Controllers\Public\PublicFormulirController::class, 'store'])->middleware('throttle:5,1,formulir-store');
 
 //ROUTE ABOUT
 Route::get('/layanan/{slug}', [\App\Http\Controllers\Public\PublicController::class, 'layananHalaman']);
 Route::get('/about/tentang-kami', [\App\Http\Controllers\Public\PublicController::class, 'about']);
 Route::get('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontak']);
-Route::post('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontakStore'])->middleware('throttle:5,1');
+Route::post('/about/kontak-kami', [\App\Http\Controllers\Public\PublicController::class, 'kontakStore'])->middleware('throttle:5,1,kontak');
 Route::get('/about/kepala-pusat', [\App\Http\Controllers\Public\PublicController::class, 'kapus']);
 Route::get('/about/visi-misi', [\App\Http\Controllers\Public\PublicController::class, 'visimisi']);
 Route::get('/about/struktur-organisasi', [\App\Http\Controllers\Public\PublicController::class, 'struktur']);

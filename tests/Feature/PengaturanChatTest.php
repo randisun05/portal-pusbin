@@ -81,7 +81,7 @@ class PengaturanChatTest extends TestCase
 
     public function test_gemini_service_calls_correct_endpoint_and_parses_response()
     {
-        config(['services.gemini.api_key' => 'fake-test-key']);
+        config(['services.gemini.api_key' => 'fake-test-key', 'services.gemini.keys' => [], 'services.gemini.model' => 'gemini-2.0-flash']);
         PengaturanChat::current()->update(['provider' => 'gemini']);
         Pengetahuan::create(['judul' => 'Materi X', 'isi' => 'Isi materi X.', 'aktif' => true]);
 

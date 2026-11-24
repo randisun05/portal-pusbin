@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Dashboard extends Model
 {
-    use HasFactory;
+    use HasFactory, \App\Models\Concerns\Auditable;
     protected $guarded = ['id'];
 }

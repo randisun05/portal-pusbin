@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 offset-lg-3">
-            <p class="text-muted text-center">Isi formulir berikut untuk mengajukan konsultasi. Anda akan menerima nomor tiket untuk memantau jawaban di halaman <a href="/konsultasi/cari">Cari Tiket</a>.</p>
+            <p class="text-muted text-center">Isi formulir berikut untuk mengajukan konsultasi. Anda akan menerima nomor tiket untuk memantau jawaban di halaman <a href="/konsultasi/cari" class="text-decoration-underline">Cari Tiket</a>.</p>
             <form class="Konsultasi" id="form-usul" action="/konsultasi/usul" method="POST">
                 @csrf
                 @include('layout.partial.honeypot')

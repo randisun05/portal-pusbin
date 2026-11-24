@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SurveiGroup extends Model
 {
+    use \App\Models\Concerns\Auditable;
     use HasFactory;
     protected $guarded = ['id'];
 

@@ -77,9 +77,23 @@ class SurveiPublicController extends Controller
     public function store(Request $request, Survei $survei)
     {
         $validatedData = $request->validate([
-            'nip' => 'required',
+            'nip' => 'required|digits:18',
             'jawaban' => 'required|array',
+            'jawaban.*' => 'required|string|max:2000',
         ]);
+
+        // Hanya indikator milik survei ini yang boleh dijawab, dan semuanya wajib terisi
+        // (sama dengan aturan di formulir). Mencegah error 500 / data yatim dari request buatan.
+        $indikatorSurvei = SurveiGroup::where('survei_id', $survei->id)->pluck('indikator_id')->map(fn ($id) => (string) $id);
+        $indikatorDijawab = collect(array_keys($validatedData['jawaban']))->map(fn ($id) => (string) $id);
+        if ($indikatorDijawab->diff($indikatorSurvei)->isNotEmpty() || $indikatorSurvei->diff($indikatorDijawab)->isNotEmpty()) {
+            return back()->withErrors(['jawaban' => 'Jawaban survei tidak lengkap atau tidak sesuai dengan indikator.'])->withInput();
+        }
+
+        // Satu NIP hanya sekali per survei: jawaban ganda menggandakan hitungan responden/statistik dan lencana.
+        if (SurveiPublic::where('nip', $validatedData['nip'])->where('survei_id', $survei->id)->exists()) {
+            return back()->withErrors(['nip' => 'NIP ini sudah pernah mengisi survei tersebut.'])->withInput();
+        }
 
         if ($this->isSpamSubmission($request)) {
             return redirect('/survei')->with('success', 'Terima kasih, survei Anda berhasil dikirim.');

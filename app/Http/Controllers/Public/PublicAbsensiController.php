@@ -67,9 +67,9 @@ class PublicAbsensiController extends Controller
     {
         // Validate request including file validation
       $request->validate([
-        'nip' => 'required|',
+        'nip' => 'required|digits:18',
         'nama' => 'required|',
-        'kegiatan_id' => 'required',
+        'kegiatan_id' => 'required|exists:kegiatans,id',
         'email' => 'required|email',
         'jabatan' => 'required|',
         'instansi' => 'required|',

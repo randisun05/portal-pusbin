@@ -12,7 +12,7 @@
                 <input type="text" name="search" class="form-control" value="{{ $search }}" placeholder="Cari judul atau isi publikasi...">
             </div>
             <div class="col-md-4">
-                <select name="category" class="form-select" onchange="this.form.submit()">
+                <select name="category" class="form-select" aria-label="Kategori publikasi" onchange="this.form.submit()">
                     <option value="">Semua Kategori</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->slug }}" {{ $categorySlug === $category->slug ? 'selected' : '' }}>{{ $category->name }}</option>

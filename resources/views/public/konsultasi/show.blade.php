@@ -17,7 +17,7 @@
             </div>
             <dl class="row mb-0 p-3">
                 <dt class="col-sm-4">NIP Pengusul</dt>
-                <dd class="col-sm-8 text-break">{{ $konsultasi->nip }}</dd>
+                <dd class="col-sm-8 text-break">{{ mask_nip($konsultasi->nip) }}</dd>
                 <dt class="col-sm-4">Perihal Konsultasi</dt>
                 <dd class="col-sm-8 text-break">{{ optional($konsultasi->kode_konsultasi)->jenis }}</dd>
                 <dt class="col-sm-4">Jadwal Konsultasi</dt>

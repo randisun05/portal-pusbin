@@ -60,7 +60,7 @@
 
                     <div class="mb-3">
                         <label for="nip" class="form-label">NIP</label>
-                        <input type="text" class="form-control @error('nip') is-invalid @enderror" name="nip" id="nip" value="{{ old('nip') }}" required>
+                        <input type="text" inputmode="numeric" maxlength="18" pattern="[0-9]{18}" title="NIP 18 digit angka" class="form-control @error('nip') is-invalid @enderror" name="nip" id="nip" value="{{ old('nip') }}" required>
                         @error('nip')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
@@ -75,7 +75,7 @@
                             @foreach ($groups as $group)
                                 <tr>
                                     <th scope="row">{{ $group->indikator->title }}</th>
-                                    <td><input type="text" class="form-control" name="jawaban[{{ $group->indikator_id }}]" required></td>
+                                    <td><input type="text" class="form-control" name="jawaban[{{ $group->indikator_id }}]" aria-label="Jawaban: {{ $group->indikator->title }}" required></td>
                                 </tr>
                             @endforeach
                         </table>
@@ -144,7 +144,7 @@
                             @foreach ($groups as $group)
                                 <tr>
                                     <th scope="row">{{ $group->indikator->title }}</th>
-                                    <td><input type="text" class="form-control" name="jawaban[{{ $group->indikator_id }}]" required></td>
+                                    <td><input type="text" class="form-control" name="jawaban[{{ $group->indikator_id }}]" aria-label="Jawaban: {{ $group->indikator->title }}" required></td>
                                 </tr>
                             @endforeach
                         </table>

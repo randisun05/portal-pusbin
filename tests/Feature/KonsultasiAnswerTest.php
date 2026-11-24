@@ -85,7 +85,8 @@ class KonsultasiAnswerTest extends TestCase
 
         $this->get('/konsultasi/jadwal?search=JFK1234')
             ->assertOk()
-            ->assertSee('199001012020011001')
+            ->assertSee('199001********1001')
+            ->assertDontSee('199001012020011001')
             ->assertSee('Jabatan Fungsional Kepegawaian');
     }
 

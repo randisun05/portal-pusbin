@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>@yield('title', 'Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara | Badan Kepegawaian Negara')</title>
+    <meta name="description" content="@yield('meta_description', 'Portal resmi Direktorat Jabatan Fungsional Manajemen ASN (BKN): informasi, layanan konsultasi, kegiatan, dan sertifikat jabatan fungsional.')">
+    <title>@hasSection('title')@yield('title')@elseif(isset($title) && is_string($title) && $title !== '')@php($__judul = trim(preg_replace('/\s+/', ' ', $title))){{ \Illuminate\Support\Str::contains(mb_strtolower($__judul), 'direktorat') ? $__judul : $__judul . ' | Direktorat JF MASN - BKN' }}@else Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara | Badan Kepegawaian Negara @endif</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicons -->

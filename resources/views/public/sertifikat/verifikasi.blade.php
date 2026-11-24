@@ -34,7 +34,7 @@
                             </tr>
                             <tr>
                                 <th>NIP</th>
-                                <td>{{ $sertifikat->absensi->nip }}</td>
+                                <td>{{ mask_nip($sertifikat->absensi->nip) }}</td>
                             </tr>
                             <tr>
                                 <th>Instansi</th>

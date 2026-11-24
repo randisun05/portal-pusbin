@@ -12,7 +12,7 @@
             </div>
             <div class="d-none d-md-flex align-items-center gap-4">
                 <form action="/cari" method="GET" class="d-flex align-items-center topbar-search">
-                    <input type="text" name="q" placeholder="Cari di situs ini.." class="form-control form-control-sm" style="width: 180px;">
+                    <input type="text" name="q" placeholder="Cari di situs ini.." aria-label="Cari di situs ini" class="form-control form-control-sm" style="width: 180px;">
                     <button type="submit" class="btn btn-sm btn-link text-white p-0 ms-1"><i class="bi bi-search"></i></button>
                 </form>
                 <div class="social-links d-flex align-items-center">

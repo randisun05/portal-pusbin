@@ -30,30 +30,30 @@
 
                 @foreach ($formulir->fields as $field)
                     <div class="mb-4">
-                        <label class="form-label">
+                        <label class="form-label"{!! in_array($field->tipe, ['radio', 'checkbox', 'rating']) ? '' : ' for="field' . $field->id . '"' !!}>
                             {{ $field->label }}
                             @if($field->wajib)<span class="text-danger">*</span>@endif
                         </label>
 
                         @switch($field->tipe)
                             @case('textarea')
-                                <textarea class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" rows="4" {{ $field->wajib ? 'required' : '' }}>{{ old('data.'.$field->id) }}</textarea>
+                                <textarea id="field{{ $field->id }}" class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" rows="4" {{ $field->wajib ? 'required' : '' }}>{{ old('data.'.$field->id) }}</textarea>
                                 @break
 
                             @case('number')
-                                <input type="number" class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" value="{{ old('data.'.$field->id) }}" {{ $field->wajib ? 'required' : '' }}>
+                                <input type="number" id="field{{ $field->id }}" class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" value="{{ old('data.'.$field->id) }}" {{ $field->wajib ? 'required' : '' }}>
                                 @break
 
                             @case('email')
-                                <input type="email" class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" value="{{ old('data.'.$field->id) }}" {{ $field->wajib ? 'required' : '' }}>
+                                <input type="email" id="field{{ $field->id }}" class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" value="{{ old('data.'.$field->id) }}" {{ $field->wajib ? 'required' : '' }}>
                                 @break
 
                             @case('date')
-                                <input type="date" class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" value="{{ old('data.'.$field->id) }}" {{ $field->wajib ? 'required' : '' }}>
+                                <input type="date" id="field{{ $field->id }}" class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" value="{{ old('data.'.$field->id) }}" {{ $field->wajib ? 'required' : '' }}>
                                 @break
 
                             @case('select')
-                                <select class="form-select @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" {{ $field->wajib ? 'required' : '' }}>
+                                <select id="field{{ $field->id }}" class="form-select @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" {{ $field->wajib ? 'required' : '' }}>
                                     <option value="" disabled {{ old('data.'.$field->id) ? '' : 'selected' }}>Pilih salah satu</option>
                                     @foreach ($field->opsiList() as $opsi)
                                         <option value="{{ $opsi }}" {{ old('data.'.$field->id) === $opsi ? 'selected' : '' }}>{{ $opsi }}</option>
@@ -80,7 +80,7 @@
                                 @break
 
                             @case('file')
-                                <input type="file" class="form-control @error('lampiran.'.$field->id) is-invalid @enderror" name="lampiran[{{ $field->id }}]" {{ $field->wajib ? 'required' : '' }}>
+                                <input type="file" id="field{{ $field->id }}" class="form-control @error('lampiran.'.$field->id) is-invalid @enderror" name="lampiran[{{ $field->id }}]" {{ $field->wajib ? 'required' : '' }}>
                                 <div class="form-text">PDF/JPG/PNG/DOC/DOCX, maksimal 5MB.</div>
                                 @error('lampiran.'.$field->id)<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                                 @break
@@ -95,7 +95,7 @@
                                 @break
 
                             @default
-                                <input type="text" class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" value="{{ old('data.'.$field->id) }}" {{ $field->wajib ? 'required' : '' }}>
+                                <input type="text" id="field{{ $field->id }}" class="form-control @error('data.'.$field->id) is-invalid @enderror" name="data[{{ $field->id }}]" value="{{ old('data.'.$field->id) }}" {{ $field->wajib ? 'required' : '' }}>
                         @endswitch
 
                         @error('data.'.$field->id)<div class="invalid-feedback d-block">{{ $message }}</div>@enderror

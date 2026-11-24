@@ -51,7 +51,7 @@
                             @enderror
                           </div>
                           <div class="form-floating">
-                            <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror" id="nip" placeholder="NIP" value="{{ old('nip')}}">
+                            <input type="text" inputmode="numeric" maxlength="18" pattern="[0-9]{18}" title="NIP 18 digit angka" name="nip" class="form-control @error('nip') is-invalid @enderror" id="nip" placeholder="NIP" value="{{ old('nip')}}">
                             <label for="nip">NIP (opsional, untuk login SSO SIASN)</label>
                             @error('nip')
                             <div class="invalid-feedback">

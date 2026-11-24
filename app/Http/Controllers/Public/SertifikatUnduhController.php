@@ -37,12 +37,13 @@ class SertifikatUnduhController extends Controller
     public function unduh(Request $request)
     {
         $validated = $request->validate([
-            'nip' => 'required',
+            'nip' => 'required|digits:18',
+            'email' => 'required|email',
             'kegiatan_id' => 'required|exists:kegiatans,id',
         ]);
 
         if ($this->isSpamSubmission($request)) {
-            return back()->withInput()->with('error', 'NIP tidak ditemukan pada kegiatan tersebut. Pastikan Anda sudah mengisi absensi.');
+            return back()->withInput()->with('error', 'Data tidak ditemukan pada kegiatan tersebut. Pastikan NIP dan email sama dengan yang Anda isi saat presensi.');
         }
 
         $absensi = Absensi::where('nip', $validated['nip'])
@@ -50,8 +51,9 @@ class SertifikatUnduhController extends Controller
             ->with('sertifikat')
             ->first();
 
-        if (! $absensi) {
-            return back()->withInput()->with('error', 'NIP tidak ditemukan pada kegiatan tersebut. Pastikan Anda sudah mengisi absensi.');
+        // Faktor kedua: email yang dipakai saat mengisi presensi. Pesan sengaja sama dengan NIP tidak ditemukan.
+        if (! $absensi || strcasecmp(trim((string) $absensi->email), trim($validated['email'])) !== 0) {
+            return back()->withInput()->with('error', 'Data tidak ditemukan pada kegiatan tersebut. Pastikan NIP dan email sama dengan yang Anda isi saat presensi.');
         }
 
         if (! $absensi->sertifikat) {

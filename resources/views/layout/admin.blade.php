@@ -17,7 +17,7 @@
     <title>Admin Direktorat JF MASN</title>
     <meta name="description" content="" />
     <!-- Favicon -->
-    <link href="{{asset('assets/img/logo-pusbin.png')}}" rel="icon">
+    <link href="{{asset('assets/img/logo/favicon.png')}}" rel="icon">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -602,7 +602,8 @@ h6 {
   border-color: var(--accent-color);
 }
 
-.footer h4 {
+.footer h4,
+.footer .footer-title {
   font-size: 16px;
   font-weight: bold;
   position: relative;
@@ -896,6 +897,7 @@ section,
   z-index: 3;
 }
 
+.hero .welcome h1,
 .hero .welcome h2 {
   margin: 0;
   font-size: 48px;
@@ -918,6 +920,7 @@ section,
   border-radius: 4px;
 }
 
+.hero .content .why-box h2,
 .hero .content .why-box h3 {
   color: var(--contrast-color);
   font-weight: 700;
@@ -961,6 +964,7 @@ section,
   color: var(--accent-color);
 }
 
+.hero .content .icon-box h3,
 .hero .content .icon-box h4 {
   font-size: 20px;
   font-weight: 700;
@@ -999,6 +1003,7 @@ section,
   line-height: 0;
 }
 
+.about .content ul h4,
 .about .content ul h5 {
   font-size: 18px;
   font-weight: 700;

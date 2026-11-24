@@ -123,9 +123,9 @@ class KonsultasiController extends Controller
 
          // Validate request including file validation
       $request->validate([
-        'nip' => 'required|',
+        'nip' => 'required|digits:18',
         'nama' => 'required|',
-        'kegiatan_id' => 'required',
+        'kegiatan_id' => 'required|exists:kegiatans,id',
         'email' => 'required|email',
         'jabatan' => 'required|',
         'instansi' => 'required|',
@@ -161,7 +161,12 @@ class KonsultasiController extends Controller
         $data = Absensi::where('nip', $request->nip)->with('kegiatan')->latest()->first();
 
 
-        Mail::to($data['email'])->send(new SendEmailKonsultasi($data));
+        try {
+            Mail::to($data['email'])->send(new SendEmailKonsultasi($data));
+        } catch (\Throwable $e) {
+            // Pendaftaran tetap berhasil walau email konfirmasi gagal terkirim
+            Log::warning('Email konfirmasi konsultasi gagal dikirim.', ['absensi_id' => $absensi->id, 'error' => $e->getMessage()]);
+        }
 
         return redirect()->route('public.konsultasi.index')->withSuccess('Pendaftaran berhasil, cek email anda!');
     }

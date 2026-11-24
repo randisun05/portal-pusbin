@@ -109,30 +109,10 @@
 <!-- End of Main Content -->
 
         <script>
-
-            const title = document.querySelector('#title');
-            const title = document.querySelector('#slug');
-
-            title.addEventListner('change', function(){
-                fetch('/admin/publikasi/cekSlug?title=' + title.value)
-                .then(response => response.json())
-                .then(data => slug.value = data.slug)
+            // Lampiran file langsung di dalam editor Trix tidak didukung (gunakan kolom Dokumen)
+            document.addEventListener('trix-files-accept', function (e) {
+                e.preventDefault();
             });
-
-        // const title = document.querySelector('#title');
-        // const slug = document.querySelector('#slug');
-
-        // title.addEventListener('change', function(){
-        //     fetch('/admin/publikasi/checkSlug?title=' + title.value)
-        //     .then(response => response.json())
-        //     .then(data => slug.value = data.slug)
-        // });
-        // document.addEventListener('trix-files-accept',function(e){
-        //     e.preventDefault();
-        // })
-        document.addEventListener('trix-files-accept',function(e){
-    e.preventDefault();
-})
         </script>
 
 

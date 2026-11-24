@@ -51,8 +51,8 @@
  * lisensi -- lihat Flexor/Readme.txt dan https://bootstrapmade.com/license/.
  */
 .footer .credits {
-  font-size: 11px;
-  opacity: .55;
+  font-size: 12px;
+  color: #5f5c5b; /* kontras >= 4.5:1 pada latar footer terang (Lighthouse) */
   margin-top: 6px;
 }
 .footer .credits a {

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class Konsultasi extends Model
 {
+    use \App\Models\Concerns\Auditable;
     use HasFactory;
     protected $guarded = ['id'];
 

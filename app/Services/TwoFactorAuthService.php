@@ -26,6 +26,14 @@ class TwoFactorAuthService
         return $this->engine->generateSecretKey();
     }
 
+    /** Nama yang tampil di aplikasi authenticator; APP_NAME bawaan "Laravel" diganti nama portal. */
+    public function issuer(): string
+    {
+        $nama = (string) config('app.name');
+
+        return ($nama === '' || strcasecmp($nama, 'Laravel') === 0) ? 'Portal Pusbin JF MASN' : $nama;
+    }
+
     /**
      * Buat data URI kode QR yang bisa dipindai aplikasi authenticator
      * (Google Authenticator, Authy, dsb).
@@ -33,14 +41,14 @@ class TwoFactorAuthService
     public function qrCodeDataUri(User $user, string $secret): string
     {
         $url = $this->engine->getQRCodeUrl(
-            config('app.name', 'Direktorat JF MASN'),
+            $this->issuer(),
             $user->email,
             $secret
         );
 
         $qrCode = new QrCode($url);
-        $qrCode->setSize(200);
-        $qrCode->setMargin(6);
+        $qrCode->setSize(240);
+        $qrCode->setMargin(24); // zona hening >= 4 modul agar mudah dipindai kamera
 
         return $qrCode->writeDataUri();
     }

@@ -14,7 +14,7 @@
             </div>
 
             <div class="col-lg-2 col-md-3 footer-links">
-                <h4>Profil</h4>
+                <h2 class="footer-title">Profil</h2>
                 <ul>
                     <li><a href="/about/tentang-kami">Tentang Kami</a></li>
                     <li><a href="/about/kepala-pusat">Direktur</a></li>
@@ -24,7 +24,7 @@
             </div>
 
             <div class="col-lg-3 col-md-3 footer-links">
-                <h4>Tautan Cepat</h4>
+                <h2 class="footer-title">Tautan Cepat</h2>
                 <ul>
                     <li><a href="/publikasi">Publikasi</a></li>
                     <li><a href="/kegiatan">Kegiatan</a></li>
@@ -36,7 +36,7 @@
             </div>
 
             <div class="col-lg-3 col-md-12 footer-contact-col">
-                <h4>Kontak</h4>
+                <h2 class="footer-title">Kontak</h2>
                 <div class="footer-contact pt-2">
                     <p>{{ $profil->alamat ?? 'Jl. Mayjen Sutoyo No. 12, Jakarta Timur, 13640 - Indonesia' }}</p>
                     @if($profil->telepon ?? false)

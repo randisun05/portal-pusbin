@@ -14,7 +14,7 @@ trait Auditable
 
         static::updated(function ($model) {
             $changes = $model->getChanges();
-            foreach (['updated_at', 'password', 'remember_token', 'email_verified_at'] as $hidden) {
+            foreach (array_merge(['updated_at', 'password', 'remember_token', 'email_verified_at'], $model->auditIgnore ?? []) as $hidden) {
                 unset($changes[$hidden]);
             }
             if (empty($changes)) {

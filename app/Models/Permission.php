@@ -39,6 +39,7 @@ class Permission extends Model
                 'manage-absensi' => 'Kelola Absensi',
                 'manage-formulir' => 'Kelola Formulir',
                 'manage-kodekonsultasi' => 'Kelola Kode Konsultasi',
+                'manage-dashboard' => 'Kelola Dashboard Eksternal',
                 'manage-sertifikat' => 'Kelola Sertifikat',
                 'manage-sertifikat-template' => 'Kelola Template & Penomoran Sertifikat',
             ],
@@ -49,6 +50,7 @@ class Permission extends Model
             ],
             'Administrasi' => [
                 'manage-users' => 'Kelola Admin & Role',
+                'export-data-pribadi' => 'Ekspor Data Pribadi per NIP',
             ],
         ];
     }

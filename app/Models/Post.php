@@ -10,6 +10,9 @@ use App\Services\HtmlSanitizer;
 
 class Post extends Model
 {
+    /** Penghitung tayang berubah di setiap kunjungan publik; tidak dicatat di audit log. */
+    public array $auditIgnore = ['views'];
+
     use HasFactory;
     use Sluggable;
     use Auditable;

@@ -29,6 +29,7 @@ class SertifikatUnduhTest extends TestCase
     {
         return Absensi::create([
             'kegiatan_id' => $kegiatan->id,
+            'email' => 'peserta@example.com',
             'nip' => $nip,
             'nama' => 'Peserta Ujikom',
             'email' => 'peserta@example.com',
@@ -59,6 +60,7 @@ class SertifikatUnduhTest extends TestCase
         $response = $this->post('/sertifikat/unduh', [
             'nip' => '199001012020011001',
             'kegiatan_id' => $kegiatan->id,
+            'email' => 'peserta@example.com',
         ]);
 
         $response->assertOk();
@@ -73,6 +75,7 @@ class SertifikatUnduhTest extends TestCase
         $response = $this->post('/sertifikat/unduh', [
             'nip' => '000000000000000000',
             'kegiatan_id' => $kegiatan->id,
+            'email' => 'peserta@example.com',
         ]);
 
         $response->assertRedirect();
@@ -88,6 +91,7 @@ class SertifikatUnduhTest extends TestCase
         $response = $this->post('/sertifikat/unduh', [
             'nip' => '199001012020011001',
             'kegiatan_id' => $kegiatan->id,
+            'email' => 'peserta@example.com',
         ]);
 
         $response->assertRedirect();
@@ -107,6 +111,7 @@ class SertifikatUnduhTest extends TestCase
         $response = $this->post('/sertifikat/unduh', [
             'nip' => '199001012020011001',
             'kegiatan_id' => $kegiatan->id,
+            'email' => 'peserta@example.com',
             'website' => 'http://spambot.example.com',
         ]);
 
@@ -138,10 +143,59 @@ class SertifikatUnduhTest extends TestCase
         $response = $this->post('/sertifikat/unduh', [
             'nip' => '222222222222222222',
             'kegiatan_id' => $kegiatan->id,
+            'email' => 'peserta@example.com',
         ]);
 
         $response->assertOk();
         $expectedFilename = str_replace('/', '-', $sertifikatB->nomor_sertifikat);
         $this->assertStringContainsString($expectedFilename, $response->headers->get('content-disposition'));
+    }
+
+    public function test_wrong_email_is_rejected_with_same_message_as_unknown_nip()
+    {
+        $kegiatan = $this->makeKegiatan();
+        $absensi = $this->makeAbsensi($kegiatan, '199001012020011001');
+        Sertifikat::create(['absensi_id' => $absensi->id, 'nomor_sertifikat' => Sertifikat::generateNomor()]);
+
+        $salah = $this->post('/sertifikat/unduh', ['nip' => '199001012020011001', 'kegiatan_id' => $kegiatan->id, 'email' => 'orang-lain@example.com']);
+        $salah->assertRedirect();
+        $pesanEmail = session('error');
+        $this->assertStringContainsString('tidak ditemukan', $pesanEmail);
+
+        $this->post('/sertifikat/unduh', ['nip' => '000000000000000000', 'kegiatan_id' => $kegiatan->id, 'email' => 'peserta@example.com']);
+        $this->assertSame($pesanEmail, session('error'));
+    }
+
+    public function test_email_match_is_case_insensitive_and_required()
+    {
+        $kegiatan = $this->makeKegiatan();
+        $absensi = $this->makeAbsensi($kegiatan, '199001012020011001');
+        Sertifikat::create(['absensi_id' => $absensi->id, 'nomor_sertifikat' => Sertifikat::generateNomor()]);
+
+        $this->post('/sertifikat/unduh', ['nip' => '199001012020011001', 'kegiatan_id' => $kegiatan->id, 'email' => 'PESERTA@Example.com'])
+            ->assertOk()->assertHeader('content-type', 'application/pdf');
+
+        $this->post('/sertifikat/unduh', ['nip' => '199001012020011001', 'kegiatan_id' => $kegiatan->id])
+            ->assertSessionHasErrors('email');
+    }
+
+    public function test_numbering_continues_across_prefix_change_and_after_deletion()
+    {
+        $kegiatan = $this->makeKegiatan();
+        $a = $this->makeAbsensi($kegiatan, '111111111111111111');
+        $b = $this->makeAbsensi($kegiatan, '222222222222222222');
+        $c = $this->makeAbsensi($kegiatan, '333333333333333333');
+
+        $s1 = Sertifikat::create(['absensi_id' => $a->id, 'nomor_sertifikat' => Sertifikat::generateNomor()]);
+        $s2 = Sertifikat::create(['absensi_id' => $b->id, 'nomor_sertifikat' => Sertifikat::generateNomor()]);
+        $this->assertStringEndsWith('/00002', $s2->nomor_sertifikat);
+
+        $s1->delete();
+        $s3 = Sertifikat::create(['absensi_id' => $c->id, 'nomor_sertifikat' => Sertifikat::generateNomor()]);
+        $this->assertStringEndsWith('/00003', $s3->nomor_sertifikat);
+
+        \App\Models\PengaturanSertifikat::current()->update(['prefix' => 'BARU']);
+        $this->assertStringStartsWith('BARU/', Sertifikat::generateNomor());
+        $this->assertStringEndsWith('/00004', Sertifikat::generateNomor());
     }
 }

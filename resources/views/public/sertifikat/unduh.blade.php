@@ -9,8 +9,8 @@
 <div class="container-fluid">
     <div class="row py-5">
         <div class="col-md-6 offset-md-3 py-4">
-            <h4 class="mb-3 text-center">Unduh Sertifikat</h4>
-            <p class="text-center text-muted mb-4">Masukkan NIP dan pilih kegiatan yang Anda ikuti untuk langsung mengunduh sertifikat Anda, apabila sudah diterbitkan oleh panitia.</p>
+            <h2 class="h4 mb-3 text-center">Unduh Sertifikat</h2>
+            <p class="text-center text-muted mb-4">Masukkan NIP, email yang Anda pakai saat presensi, dan pilih kegiatan yang Anda ikuti untuk langsung mengunduh sertifikat Anda, apabila sudah diterbitkan oleh panitia.</p>
 
             @if (session()->has('error'))
                 <div class="alert alert-danger text-center">{{ session('error') }}</div>
@@ -34,8 +34,14 @@
 
                 <div class="mb-3">
                     <label for="nip" class="form-label">NIP</label>
-                    <input type="text" class="form-control @error('nip') is-invalid @enderror" name="nip" id="nip" value="{{ old('nip') }}" required>
+                    <input type="text" inputmode="numeric" maxlength="18" pattern="[0-9]{18}" title="NIP 18 digit angka" class="form-control @error('nip') is-invalid @enderror" name="nip" id="nip" value="{{ old('nip') }}" required>
                     @error('nip')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email (sama dengan saat presensi)</label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" autocomplete="email" required>
+                    @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
 
                 <div class="col text-center m-3">

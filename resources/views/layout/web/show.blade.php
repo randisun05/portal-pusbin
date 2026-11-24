@@ -17,7 +17,7 @@
                         <li>
                             <i class="bi {{ $item->icon ?: 'bi-check-circle' }}"></i>
                             <div>
-                                <h5>{{ $item->name }}</h5>
+                                <h4>{{ $item->name }}</h4>
                                 <p>{{ $item->desc }}</p>
                             </div>
                         </li>
@@ -25,7 +25,7 @@
                         <li>
                             <i class="bi bi-calendar-check"></i>
                             <div>
-                                <h5>Dilaksanakan 4 Periode Dalam 1 Tahun</h5>
+                                <h4>Dilaksanakan 4 Periode Dalam 1 Tahun</h4>
                                 <p>Jadwal ujikom terbuka setiap periode dan dapat diikuti sesuai jenjang jabatan fungsional.</p>
                             </div>
                         </li>

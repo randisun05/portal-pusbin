@@ -47,10 +47,10 @@ class RegisterController extends Controller
         $validatedData = $request ->validate([
             'name'=>'required|max:255',
             'username'=>['required','min:3','max:255','unique:users'],
-            'email'=>'required|unique:users',
+            'email'=>'required|email|unique:users',
             'password'=>'required|min:8|max:255',
             'role_id'=>'nullable|exists:roles,id',
-            'nip'=>'nullable|string|unique:users,nip',
+            'nip'=>'nullable|digits:18|unique:users,nip',
            ]);
 
            $validatedData['password'] = Hash::make($validatedData['password']);
@@ -103,10 +103,10 @@ class RegisterController extends Controller
         $validatedData = $request ->validate([
             'name'=>'required|max:255',
             'username'=>['required','min:3','max:255','unique:users,username,' . $user->id],
-            'email'=>'required|unique:users,email,' . $user->id,
+            'email'=>'required|email|unique:users,email,' . $user->id,
             'password'=>'nullable|min:8|max:255',
             'role_id'=>'nullable|exists:roles,id',
-            'nip'=>'nullable|string|unique:users,nip,' . $user->id,
+            'nip'=>'nullable|digits:18|unique:users,nip,' . $user->id,
            ]);
 
            if (! empty($validatedData['password'])) {
@@ -128,6 +128,10 @@ class RegisterController extends Controller
      */
     public function destroy(User $user)
     {
+        if ($user->id === auth()->id()) {
+            return redirect('/admin/register')->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+        }
+
         User::destroy($user->id);
 
         return redirect('/admin/register')->with('success','Admin Berhasil Dihapus');

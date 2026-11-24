@@ -62,7 +62,7 @@
 
             @if($related->isNotEmpty())
                 <div class="mt-5">
-                    <h4 class="mb-3">Publikasi Terkait</h4>
+                    <h2 class="h4 mb-3">Publikasi Terkait</h2>
                     <div class="row g-3">
                         @foreach ($related as $r)
                             @php
@@ -84,7 +84,7 @@
             @endif
 
             <div class="mt-5" id="komentar">
-                <h4 class="mb-3">Komentar ({{ $comments->count() }})</h4>
+                <h2 class="h4 mb-3">Komentar ({{ $comments->count() }})</h2>
 
                 @if (session()->has('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>

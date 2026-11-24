@@ -19,6 +19,7 @@
                     @if ($fields->isEmpty())
                         <p class="text-muted mb-0">Belum ada field. Tambahkan di sebelah kanan.</p>
                     @else
+                        <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -56,6 +57,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        </div>
                     @endif
                 </div>
             </div>

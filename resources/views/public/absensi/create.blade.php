@@ -70,7 +70,7 @@
 
                     <div class="mb-3">
                         <label for="nip" class="form-label">NIP</label>
-                        <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip"
+                        <input type="text" inputmode="numeric" maxlength="18" pattern="[0-9]{18}" title="NIP 18 digit angka" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip"
                             required maxlength="18" value="{{ old('nip') }}"
                             onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Masukan NIP">
                         @error('nip')<div class="invalid-feedback">{{ $message }}</div>@enderror

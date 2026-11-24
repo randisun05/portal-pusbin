@@ -146,6 +146,14 @@
                 </a>
               </li>
               @endif
+              @if($me->hasPermission('manage-dashboard'))
+              <li class="menu-item {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
+                <a href="/admin/dashboard" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
+                  <div data-i18n="Analytics">Dashboard Eksternal</div>
+                </a>
+              </li>
+              @endif
               @if($me->hasPermission('manage-kodekonsultasi'))
               <li class="menu-item {{ Request::is('admin/kodekonsultasi*') ? 'active' : '' }}">
                 <a href="/admin/kodekonsultasi" class="menu-link">
@@ -247,6 +255,14 @@
                 <a href="/admin/auditlog" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
                   <div data-i18n="Analytics">Audit Trail</div>
+                </a>
+              </li>
+              @endif
+              @if($me->hasPermission('export-data-pribadi'))
+              <li class="menu-item {{ Request::is('admin/data-pribadi*') ? 'active' : '' }}">
+                <a href="/admin/data-pribadi" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-export"></i>
+                  <div data-i18n="Analytics">Ekspor Data Pribadi</div>
                 </a>
               </li>
               @endif

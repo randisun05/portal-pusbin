@@ -61,8 +61,7 @@ class DatabaseSeeder extends Seeder
         $permissionIds = [];
         foreach (Permission::definitions() as $grup => $items) {
             foreach ($items as $slug => $label) {
-                $permissionIds[$slug] = Permission::create([
-                    'slug' => $slug,
+                $permissionIds[$slug] = Permission::updateOrCreate(['slug' => $slug], [
                     'label' => $label,
                     'grup' => $grup,
                 ])->id;
@@ -70,7 +69,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // Admin: semua permission kecuali manajemen admin/role.
-        $adminRole->permissions()->sync(collect($permissionIds)->except('manage-users')->values());
+        $adminRole->permissions()->sync(collect($permissionIds)->except(['manage-users', 'export-data-pribadi'])->values());
 
         // Editor: hanya modul konten.
         $editorRole->permissions()->sync(collect($permissionIds)->only([
