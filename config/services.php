@@ -31,4 +31,91 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // Kredensial API BKN (apimws) untuk profil SIASN & publikasi sertifikat ke MyASN.
+    // Nilainya sama dengan project ujikom-pusbin; isi hanya di .env, jangan di-commit.
+    'bkn' => [
+        'client_id' => env('BKN_CLIENT_ID'),
+        'client_secret' => env('BKN_CLIENT_SECRET'),
+        'base_url' => env('BKN_API_URL', 'https://apimws.bkn.go.id:8243/pusbin/1'),
+        'siasn_client_id' => env('SIASN_CLIENT_ID', 'internalpusbinjf'),
+        'siasn_username' => env('SIASN_USERNAME'),
+        'siasn_password' => env('SIASN_PASSWORD'),
+        'siasn_token' => env('SIASN_AUTH_TOKEN'),
+    ],
+
+    // Publikasi sertifikat ke riwayat sertifikasi MyASN (save lalu upload PDF).
+    // Nonaktif selama MYASN_CERT_URL kosong; kirim lalu memakai jalur Manajemen JF di bawah.
+    'myasn' => [
+        'url' => env('MYASN_CERT_URL'),
+        'timeout' => (int) env('MYASN_CERT_TIMEOUT', 30),
+        'upload_timeout' => (int) env('MYASN_CERT_UPLOAD_TIMEOUT', 120),
+        'id_ref_dokumen' => (int) env('MYASN_CERT_ID_REF_DOKUMEN', 1689),
+        'lembaga_id' => env('MYASN_CERT_LEMBAGA_ID'),
+        'lembaga_nama' => env('MYASN_CERT_LEMBAGA_NAMA', 'Pusat Pembinaan Jabatan Fungsional BKN'),
+        'rumpun_jabatan_id' => env('MYASN_CERT_RUMPUN_ID'),
+    ],
+
+    'jf_management' => [
+        'url' => env('JF_MANAGEMENT_API_URL'),
+        'key' => env('JF_MANAGEMENT_API_KEY'),
+    ],
+
+    'anthropic' => [
+        'api_key' => env('ANTHROPIC_API_KEY'),
+    ],
+
+    'gemini' => [
+        // Satu key (cara lama). Tetap dipakai sebagai GEMINI_API_KEY_1 bila _1 kosong.
+        'api_key' => env('GEMINI_API_KEY'),
+        // Hingga 5 key dipakai bergantian: jika kuota key sebelumnya habis atau error
+        // otomatis pindah ke key berikutnya (lihat App\Services\GeminiKeyPool).
+        'keys' => [
+            env('GEMINI_API_KEY_1') ?: env('GEMINI_API_KEY'),
+            env('GEMINI_API_KEY_2'),
+            env('GEMINI_API_KEY_3'),
+            env('GEMINI_API_KEY_4'),
+            env('GEMINI_API_KEY_5'),
+        ],
+        'model' => env('GEMINI_MODEL', 'gemini-2.0-flash'),
+    ],
+
+    'recaptcha' => [
+        'site_key' => env('RECAPTCHA_SITE_KEY'),
+        'secret_key' => env('RECAPTCHA_SECRET_KEY'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | SSO SIASN (BKN)
+    |--------------------------------------------------------------------------
+    |
+    | Endpoint & struktur config di bawah ini disalin dari implementasi
+    | Laravel nyata yang sudah dipakai untuk integrasi SIASN
+    | (kanekescom/laravel-siasn-api), bukan dikira-kira - supaya kalau nanti
+    | dibutuhkan integrasi SIASN lain (bukan cuma SSO), konvensi nama env
+    | sudah konsisten. Login SSO SIASN otomatis nonaktif (tidak muncul di
+    | halaman login) selama SIASN_SSO_CLIENT_ID kosong, karena client_id ini
+    | harus didaftarkan resmi ke tim integrasi SIASN BKN - tidak bisa diisi
+    | sembarangan.
+    |
+    */
+    'siasn' => [
+        'mode' => env('SIASN_MODE', 'training'),
+
+        'sso' => [
+            'production' => [
+                'url' => env('SIASN_SSO_URL', 'https://sso-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token'),
+                'client_id' => env('SIASN_SSO_CLIENT_ID'),
+            ],
+            'training' => [
+                'url' => env('SIASN_SSO_URL_TRAINING', 'https://iam-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token'),
+                'client_id' => env('SIASN_SSO_CLIENT_ID_TRAINING', env('SIASN_SSO_CLIENT_ID')),
+            ],
+
+            // Callback login MyASN. Kosongkan untuk memakai {APP_URL}/login/sso/callback.
+            // Alamat ini harus terdaftar sebagai valid redirect URI untuk client_id di SSO SIASN.
+            'redirect_uri' => env('SIASN_SSO_REDIRECT_URI'),
+        ],
+    ],
+
 ];

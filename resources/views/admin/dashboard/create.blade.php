@@ -23,45 +23,37 @@
               <div class="form-group mt-4 ms-5">
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="nama">Nama Dashboard</label></div>
-                    <div class="col"> <input type="text" class="form-control" @error('nama') is-invalid @enderror name="nama" id="nama"
+                    <div class="col"> <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama"
                     value="{{old('nama')}}" placeholder="Masukan Nama Dashboard"></div>
                     @error('nama')
-                    <div class="invalid-feedback">
-                      Masukan Nama Dashboard
-                    </div>
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="row row-cols-3 mb-4">
-                  <div class="col col-lg-2"><label for="desc">Descripsi Layanan</label></div>
-                  <div class="col"> <input type="text" class="form-control" @error('deskripsi') is-invalid @enderror name="deskripsi" id="deskripsi"
+                  <div class="col col-lg-2"><label for="desc">Deskripsi</label></div>
+                  <div class="col"> <input type="text" class="form-control @error('deskripsi') is-invalid @enderror" name="deskripsi" id="deskripsi"
                     value="{{old('deskripsi')}}" placeholder="Masukan Deskripsi Dashboard"></div>
                     @error('deskripsi')
-                    <div class="invalid-feedback">
-                        Masukan Deskripsi Dashboard
-                    </div>
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="row row-cols-3 mb-4">
-                  <div class="col col-lg-2"><label for="link">Link Layanan</label></div>
-                  <div class="col"> <input type="text" class="form-control" @error('link') is-invalid @enderror name="link" id="link"
+                  <div class="col col-lg-2"><label for="link">Link Dashboard</label></div>
+                  <div class="col"> <input type="url" class="form-control @error('link') is-invalid @enderror" name="link" id="link"
                     value="{{old('link')}}" placeholder="Masukan Link Dashboard"></div>
                     @error('link')
-                    <div class="invalid-feedback">
-                        Masukan Link Dashboard
-                    </div>
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="row row-cols-3 mb-4">
                   <div class="col col-lg-2"><label for="image">image</label></div>
-                  <div class="col"> <input type="file" class="form-control" @error('image') is-invalid @enderror name="image" id="image"
+                  <div class="col"> <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="image"
                     placeholder="Masukan image Dashboard"></div>
                     @error('image')
-                    <div class="invalid-feedback">
-                        Masukan Image Dashboard
-                    </div>
+                    <div class="invalid-feedback d-block">{{ $message }}</div>
                      @enderror
                 </div>
               </div>

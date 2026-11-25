@@ -58,7 +58,7 @@
 
             <p>Demikian informasi dari kami.</p>
             <p>Terimakasih,</p>
-            <p>Pusat Pembinaan Jabatan Fungsional Kepegawaian</p>
+            <p>Direktorat Jabatan Fungsional Manajemen Aparatur Sipil Negara</p>
         </div>
     </div>
 </body>

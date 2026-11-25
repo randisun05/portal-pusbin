@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SendEmailKonsultasi extends Mailable
+class SendEmailKonsultasi extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     public $data;
@@ -25,7 +25,7 @@ class SendEmailKonsultasi extends Mailable
 
     public function build()
     {
-        return $this->subject('Informasi Konsultasi Pusbin JFK')
+        return $this->subject('Informasi Konsultasi Direktorat JF MASN')
                     ->view('emails.emailkonsultasi');
     }
 }

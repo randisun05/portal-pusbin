@@ -18,10 +18,14 @@ class PreventBackHistory
     {
         $response = $next($request);
 
-        return $response->header('Cache-Control','nocache, no-store, max-age=0, must-revalidate')
+        // Gunakan $response->headers (HeaderBag bawaan Symfony) alih-alih method
+        // ->header() milik Illuminate\Http\Response, karena response file download
+        // (mis. Excel::download()) mengembalikan BinaryFileResponse yang tidak
+        // memiliki method ->header().
+        $response->headers->set('Cache-Control', 'nocache, no-store, max-age=0, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT');
 
-            ->header('Pragma','no-cache')
-
-            ->header('Expires','Sun, 02 Jan 1990 00:00:00 GMT');
+        return $response;
     }
 }

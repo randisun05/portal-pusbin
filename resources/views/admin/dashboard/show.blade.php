@@ -21,9 +21,9 @@
     <div class="container py-5 px-lg-5 col-4 col-sm-8 col-md-6 col-lg-5 col-xl-4">
         <div class="row g-4">
             <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-                <a href="{{$dashboard->link}}" target="_blank">
+                <a href="{{$dashboard->link}}" target="_blank" rel="noopener noreferrer">
                 <div class="feature-item bg-light rounded text-center p-4">
-                    <img src="{{asset('storage/' . $dashboard->image)}}" alt="" width="350px">
+                    @if($dashboard->image)<img src="{{asset('storage/' . $dashboard->image)}}" alt="{{ $dashboard->nama }}" class="img-fluid" style="max-width:350px">@endif
                     <h5 class="mb-3">{{$dashboard->nama}}</h5>
                     <p class="m-0">{{$dashboard->deskripsi}}</p>
                 </a>

@@ -44,7 +44,7 @@
                                 @method('delete')
                                 @csrf
                                 <button class="badge bg-danger border-0"
-                                    onclick="return confirm('Lanjutkan Hapus Publkasi')"><i
+                                    onclick="return confirm('Lanjutkan hapus publikasi')"><i
                                         class="fas fa-trash"></i></button>
                             </form>
                     </tr>

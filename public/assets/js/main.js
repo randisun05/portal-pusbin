@@ -840,8 +840,10 @@
 
 	////////////////////////////////////////////////////
 	// 35. Nice Select Js
-	$('select').niceSelect();
-	$('.tp-header-search-category select').niceSelect();
+	if ($.fn.niceSelect) {
+		$('select').niceSelect();
+		$('.tp-header-search-category select').niceSelect();
+	}
 
 	////////////////////////////////////////////////////
 	// 36. Jquery Appear raidal

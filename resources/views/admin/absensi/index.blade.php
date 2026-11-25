@@ -41,6 +41,14 @@
                 <div class="col-auto">
                   <button type="submit" class="btn btn-primary">Cari</button>
                 </div>
+                <div class="col-auto ms-auto">
+                  <a href="/admin/absensi/export{{ request('search') ? '?search='.request('search') : '' }}" class="btn btn-success">
+                    <i class="fas fa-file-excel"></i> Export Excel
+                  </a>
+                  <a href="/admin/absensi/daftar-hadir{{ request('search') ? '?search='.request('search') : '' }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-print"></i> Cetak Daftar Hadir
+                  </a>
+                </div>
             </form>
         </div>
 
@@ -55,6 +63,7 @@
                             <th class="text-center">Jabatan</th>
                             <th class="text-center">Instansi</th>
                             <th class="text-center">Nama Kegiatan</th>
+                            <th class="text-center">Lampiran</th>
                         </tr>
                     </thead>
                     @foreach ($absensis as $absensi )
@@ -65,6 +74,15 @@
                         <td>{{$absensi->jabatan}}</td>
                         <td>{{$absensi->instansi}}</td>
                         <td>{{$absensi->kegiatan->nama}}</td>
+                        <td class="text-center">
+                            @forelse ($absensi->lampirans as $lampiran)
+                                <a href="{{ asset('storage/' . $lampiran->path) }}" target="_blank" class="badge bg-secondary text-decoration-none" title="{{ $lampiran->nama_asli }} ({{ $lampiran->ukuranFormatted() }})">
+                                    <i class="fas fa-paperclip"></i> Unduh
+                                </a>
+                            @empty
+                                <span class="text-muted">-</span>
+                            @endforelse
+                        </td>
                     </tr>
                     @endforeach
 
@@ -76,6 +94,7 @@
                             <th class="text-center">Jabatan</th>
                             <th class="text-center">Instansi</th>
                             <th class="text-center">Nama Kegiatan</th>
+                            <th class="text-center">Lampiran</th>
                         </tr>
                         </tr>
                     </tfoot>

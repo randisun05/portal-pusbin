@@ -5,33 +5,42 @@
 
 @include('layout.web.header-detail')
 
-    <!-- team-details-area-start -->
-    <div class="team-details-area pt-120 mb-55">
+    <!-- Direktur Section -->
+    <section class="section">
         <div class="container">
-            <div class="row gx-0">
-                <div class="offset-xl-1 col-xl-4 col-lg-5 h-100">
-                    <div class="tp-team-details-thumb tp-thumb">
-                        <div class="tp-thumb-overlay wow"></div>
-                        <img class="w-100" src="{{asset ('assets/img/team/team-thumb.jpg') }}" alt="team">
+            @if($kapus)
+                <div class="row gy-4 align-items-center">
+                    <div class="col-lg-4" data-aos="fade-up">
+                        @if($kapus->foto)
+                            <img class="img-fluid rounded" src="{{ asset('storage/' . $kapus->foto) }}" alt="{{ $kapus->nama }}">
+                        @else
+                            <div class="w-100 d-flex align-items-center justify-content-center bg-light rounded" style="min-height: 320px;">
+                                <span class="display-4 fw-bold text-secondary">{{ strtoupper(substr($kapus->nama, 0, 1)) }}</span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="col-lg-7 offset-lg-1" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="mb-1">{{ $kapus->nama }}</h3>
+                        <span class="d-block mb-3" style="color: var(--accent-color); font-weight: 600;">{{ $kapus->jabatan }}</span>
+                        @if($kapus->deskripsi)
+                            <p class="prose-content">{{ $kapus->deskripsi }}</p>
+                        @endif
+                        <ul class="list-unstyled mt-3">
+                            @if($kapus->email)
+                                <li class="mb-2"><i class="bi bi-envelope me-2"></i><b>Email:</b> <a href="mailto:{{ $kapus->email }}">{{ $kapus->email }}</a></li>
+                            @endif
+                            @if($kapus->telepon)
+                                <li class="mb-2"><i class="bi bi-telephone me-2"></i><b>Telepon:</b> <a href="tel:{{ $kapus->telepon }}">{{ $kapus->telepon }}</a></li>
+                            @endif
+                            <li><i class="bi bi-diagram-3 me-2"></i><b>Struktur Organisasi:</b> <a href="/about/struktur-organisasi">Lihat Bagan Lengkap</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-xl-6 col-lg-6">
-                    <div class="tp-team-details-content h-100">
-                        <h3 class="tp-team-details-title">Dr. Achmad Slamet Hidayat, S.Pd., M.Si.</h3>
-                        <span class="tp-team-details-subtitle">Kepala Pusat Pembinaan Jabatan Fungsional Kepegawaian</span>
-                        <p>This is the main factor that sets us apart from our competition and allows us to deliver a specialist business consultancy service</p>
-                        <div class="tp-team-details-list">
-                            <p><b>Responsibility:</b><a href="#">Consultant</a></p>
-                            <p><b>Email Address:</b><a href="#">needhelp@gmail.com</a></p>
-                            <p><b>Phone Number:</b><a href="#">+1 888 098-90987</a></p>
-                            <p><b>Web Address:</b><a href="#"> www.yourdomain.com</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @else
+                <p class="text-center text-muted">Data Direktur belum tersedia. Silakan tambahkan melalui menu admin &raquo; Struktur Organisasi.</p>
+            @endif
         </div>
-    </div>
-    <!-- team-details-area-end -->
+    </section><!-- /Direktur Section -->
 </main>
 
 

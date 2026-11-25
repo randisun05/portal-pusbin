@@ -24,7 +24,7 @@
                 <div class="form-group mt-4 ms-5">
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="nama">Nama Layanan</label></div>
-                        <div class="col"> <input type="text" class="form-control" @error('nama') is-invalid @enderror
+                        <div class="col"> <input type="text" class="form-control @error('nama') is-invalid @enderror"
                                 name="nama" id="nama" value="{{old('nama', $layanan->nama)}}"
                                 placeholder="Masukan Nama Layanan"></div>
                         @error('nama')
@@ -49,7 +49,7 @@
 
                     <div class="row row-cols-3 mb-4">
                         <div class="col col-lg-2"><label for="link">Link Layanan</label></div>
-                        <div class="col"> <input type="text" class="form-control" @error('link') is-invalid @enderror
+                        <div class="col"> <input type="text" class="form-control @error('link') is-invalid @enderror"
                                 name="link" id="link" value="{{old('link', $layanan->link)}}"
                                 placeholder="Masukan Link Layanan"></div>
                         @error('link')
@@ -59,10 +59,19 @@
                         @enderror
                     </div>
 
+                <div class="row row-cols-3 mb-4">
+                      <div class="col col-lg-2"><label for="icon">Icon</label></div>
+                      <div class="col">
+                        <input type="text" class="form-control @error('icon') is-invalid @enderror" name="icon" id="icon" value="{{old('icon', $layanan->icon)}}" placeholder="mis. bi-headset">
+                        <div class="form-text">Nama class dari <a href="https://icons.getbootstrap.com/" target="_blank">Bootstrap Icons</a>, contoh: <code>bi-headset</code>. Jika diisi, icon dipakai menggantikan gambar di kartu layanan beranda.</div>
+                        @error('icon')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                      </div>
+                    </div>
+
                     <div class="row row-cols-3 mb-4">
-                        <div class="col col-lg-2"><label for="logo">Image</label></div>
+                        <div class="col col-lg-2"><label for="logo">Image (opsional)</label></div>
                         <input type="hidden" name="oldImage" value="{{ $layanan->image}}">
-                        <div class="col"> <input type="file" class="form-control" @error('image') is-invalid @enderror
+                        <div class="col"> <input type="file" class="form-control @error('image') is-invalid @enderror"
                                 name="image" id="image" placeholder="Masukan Image Layanan" accept=".jpg, .png, .jpeg">
                         </div>
                         @error('image')

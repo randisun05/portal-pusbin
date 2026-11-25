@@ -26,6 +26,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
+                            <th class="text-center">Icon</th>
                             <th class="text-center">Nama Layanan</th>
                             <th class="text-center">Deskripsi</th>
                             <th class="text-center">Link Layanan</th>
@@ -35,6 +36,7 @@
                     @foreach ($layanans as $layanan )
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
+                        <td class="text-center">@if($layanan->icon)<i class="bi {{ $layanan->icon }}"></i> <small class="text-muted">{{ $layanan->icon }}</small>@else - @endif</td>
                         <td>{{$layanan->nama}}</td>
                         <td>{{$layanan->deskripsi}}</td>
                         <td>{{$layanan->link}}</td>
@@ -56,6 +58,7 @@
                     <tfoot>
                         <tr>
                             <th class="text-center">No</th>
+                            <th class="text-center">Icon</th>
                             <th class="text-center">Nama Layanan</th>
                             <th class="text-center">Deskripsi</th>
                             <th class="text-center">Link Layanan</th>

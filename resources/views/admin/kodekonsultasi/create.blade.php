@@ -45,37 +45,4 @@
 
 <!-- End of Main Content -->
 
-
-        <script>
-
-            // const title = document.querySelector('#title');
-            // const slug = document.querySelector('#slug');
-
-            // title.addEventListener('change', function(){
-            //     fetch('/admin/publikasi/cekSlug?title='+title.value)
-            //     .then(response => response.json())
-            //     .then(data => slug.value = data.slug)
-            // });
-
-        const title = document.querySelector('#title');
-        const slug = document.querySelector('#slug');
-
-        title.addEventListener('change', function(){
-            fetch('/admin/publikasi/checkSlug?title=' + title.value)
-            .then(response => response.json())
-            .then(data => slug.value = data.slug)
-        });
-
-
-        // document.addEventListener('trix-files-accept',function(e){
-        //     e.preventDefault();
-        // })
-
-
-        document.addEventListener('trix-files-accept',function(e){
-    e.preventDefault();
-})
-        </script>
-
-
 @endsection

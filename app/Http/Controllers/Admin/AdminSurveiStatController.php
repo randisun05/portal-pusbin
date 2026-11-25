@@ -1,0 +1,96 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Exports\SurveiResponseExport;
+use App\Models\Survei;
+use App\Models\SurveiGroup;
+use App\Models\SurveiPublic;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Public\SurveiPublicController;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+
+class AdminSurveiStatController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $surveis = Survei::all()
+            ->map(function ($survei) {
+                $survei->jumlah_responden = SurveiPublic::where('survei_id', $survei->id)->distinct('nip')->count('nip');
+                return $survei;
+            });
+
+        $selected = null;
+        $indikatorStats = collect();
+
+        if ($request->survei) {
+            $selected = Survei::find($request->survei);
+
+            if ($selected) {
+                $groups = SurveiGroup::with('indikator')->where('survei_id', $selected->id)->get();
+
+                $indikatorStats = $groups->map(function ($group) use ($selected) {
+                    $answers = SurveiPublic::where('survei_id', $selected->id)
+                        ->where('indikator_id', $group->indikator_id)
+                        ->get();
+
+                    if ($selected->type === 1) {
+                        return [
+                            'indikator' => optional($group->indikator)->title,
+                            'type' => 'text',
+                            'answers' => $answers->pluck('velue'),
+                        ];
+                    }
+
+                    $counts = $answers->groupBy('velue')->map->count();
+
+                    return [
+                        'indikator' => optional($group->indikator)->title,
+                        'type' => 'chart',
+                        'labels' => $counts->keys(),
+                        'values' => $counts->values(),
+                    ];
+                });
+            }
+        }
+
+        $leaderboard = SurveiPublic::select('nip', DB::raw('count(distinct survei_id) as jumlah'))
+            ->groupBy('nip')
+            ->orderByDesc('jumlah')
+            ->limit(10)
+            ->get()
+            ->map(function ($row) {
+                $row->badge = SurveiPublicController::badgeFor((int) $row->jumlah);
+                return $row;
+            });
+
+        return view('admin.survei.statistik', [
+            'title' => 'Statistik Survei',
+            'surveis' => $surveis,
+            'selected' => $selected,
+            'indikatorStats' => $indikatorStats,
+            'leaderboard' => $leaderboard,
+        ]);
+    }
+
+    /**
+     * Ekspor seluruh jawaban responden untuk satu survei ke Excel.
+     *
+     * @param  \App\Models\Survei  $survei
+     * @return \Illuminate\Http\Response
+     */
+    public function export(Survei $survei)
+    {
+        $filename = 'Survei-' . str_replace(' ', '-', $survei->title) . '-' . now()->format('Ymd-His') . '.xlsx';
+
+        return Excel::download(new SurveiResponseExport($survei->id), $filename);
+    }
+}

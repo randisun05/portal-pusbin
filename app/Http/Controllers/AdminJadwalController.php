@@ -15,8 +15,18 @@ class AdminJadwalController extends Controller
     public function index()
     {
         return view('admin.jadwalukom.index', [
-            "jadwals" => JadwalUkom::all()
+            "jadwals" => JadwalUkom::orderBy('periode')->get()
         ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show(JadwalUkom $jadwalukom)
+    {
+        return redirect("/admin/jadwalukom/{$jadwalukom->id}/edit");
     }
 
     /**
@@ -26,7 +36,7 @@ class AdminJadwalController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.jadwalukom.create');
     }
 
     /**
@@ -37,55 +47,57 @@ class AdminJadwalController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validatedData = $request->validate([
+            'periode' => 'required|string|max:255',
+            'bulan' => 'required|string|max:255',
+            'batasdaftar' => 'required|string|max:255',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\JadwalUkom  $jadwalUkom
-     * @return \Illuminate\Http\Response
-     */
-    public function show(JadwalUkom $jadwalUkom)
-    {
-        //
+        JadwalUkom::create($validatedData);
+
+        return redirect('/admin/jadwalukom')->with('success', 'Jadwal Ujikom berhasil ditambahkan');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\JadwalUkom  $jadwalUkom
      * @return \Illuminate\Http\Response
      */
-    public function edit(JadwalUkom $jadwalUkom)
+    public function edit(JadwalUkom $jadwalukom)
     {
-        return $jadwalUkom;
-        return view('admin.jadwalukom.edit',[
-            'jadwal' => JadwalUkom::all(),
-            'jadwal' => $jadwalUkom
-           ]);
+        return view('admin.jadwalukom.edit', [
+            'jadwal' => $jadwalukom,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\JadwalUkom  $jadwalUkom
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, JadwalUkom $jadwalUkom)
+    public function update(Request $request, JadwalUkom $jadwalukom)
     {
-        //
+        $validatedData = $request->validate([
+            'periode' => 'required|string|max:255',
+            'bulan' => 'required|string|max:255',
+            'batasdaftar' => 'required|string|max:255',
+        ]);
+
+        $jadwalukom->update($validatedData);
+
+        return redirect('/admin/jadwalukom')->with('success', 'Jadwal Ujikom berhasil diupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\JadwalUkom  $jadwalUkom
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JadwalUkom $jadwalUkom)
+    public function destroy(JadwalUkom $jadwalukom)
     {
-        //
+        $jadwalukom->delete();
+
+        return redirect('/admin/jadwalukom')->with('success', 'Jadwal Ujikom berhasil dihapus');
     }
 }

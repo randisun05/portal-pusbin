@@ -49,14 +49,11 @@ class AdminDashboardController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request ->validate([
-            "*" => 'required',
-            'image' => 'image|file|max:1024',
-           ]);
+        $validatedData = $request->validate($this->rules());
 
-        $file = $request->file('image')->store('post-image');
-
-        $validatedData['image'] = $file;
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = $request->file('image')->store('dashboard-image', 'public');
+        }
 
         Dashboard::create($validatedData);
 
@@ -100,21 +97,16 @@ class AdminDashboardController extends Controller
      */
     public function update(Request $request, Dashboard $dashboard)
     {
-        $validateData = $request->validate([
-            "*" => 'required',
-            'image' => 'image|file|max:1024',
+        $validateData = $request->validate($this->rules());
 
-        ]);
-
-        if($request->file('image')){
-            if($request->oldImage){
-                Storage::delete($request->oldImage);
+        if ($request->hasFile('image')) {
+            if ($dashboard->image) {
+                Storage::disk('public')->delete($dashboard->image);
             }
-            $validateData['image'] = $request->file('image')->store('post-image');
+            $validateData['image'] = $request->file('image')->store('dashboard-image', 'public');
         }
 
-        Dashboard::where('id', $dashboard->id)
-                ->update($validateData);
+        $dashboard->update($validateData);
 
         return redirect('/admin/dashboard')->with('success','Dashboard Berhasil Diupdate');
     }
@@ -128,13 +120,23 @@ class AdminDashboardController extends Controller
 
     public function destroy(Dashboard $dashboard)
     {
-        if($dashboard->image){
-            Storage::delete($dashboard->image);
+        if ($dashboard->image) {
+            Storage::disk('public')->delete($dashboard->image);
         }
-        Dashboard::destroy($dashboard->id);
+        $dashboard->delete();
         return redirect('/admin/dashboard')->with('success','Dashboard Berhasil Dihapus');
     }
 
+
+    private function rules(): array
+    {
+        return [
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:255',
+            'link' => ['required', 'url', 'max:2000', 'regex:/^https?:\/\//i'],
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
+        ];
+    }
 
     public function home()
     {
